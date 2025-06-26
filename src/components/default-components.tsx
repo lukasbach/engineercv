@@ -1,5 +1,5 @@
 import { Document, Page, View } from "@react-pdf/renderer";
-import React, { FC } from "react";
+import React from "react";
 import z from "zod";
 import { ComponentDefinition, defineComponent } from "./define-component.js";
 import { PdfMarkdown } from "./pdf-markdown.js";
@@ -16,11 +16,9 @@ const documentComponent = defineComponent({
 const pageComponent = defineComponent({
   name: "page",
   schema: z.object({
-    config: z
-      .object({
-        size: z.string().optional(),
-      })
-      .optional(),
+    config: z.object({
+      size: z.string(),
+    }),
   }),
   component: ({ children, styles, spec }) => (
     <Page size={spec.config?.size as any} style={styles.page}>
@@ -76,18 +74,13 @@ export const buildComponentRegistry = (
     }
     return component;
   },
-  get: new Proxy<Record<string, FC<any>>>(
-    {},
-    {
-      get: (_, name: string) => {
-        const component = components.find((c) => c.name === name);
-        if (!component) {
-          throw new Error(`Component ${name} not found`);
-        }
-        return component;
-      },
-    },
-  ),
+  parseSpec: (spec: any) =>
+    components
+      .reduce(
+        (prev, { schema }) => z.intersection(prev, schema),
+        z.object({}) as z.ZodType<any>,
+      )
+      .parse(spec),
 });
 
 export type ComponentRegistry = ReturnType<typeof buildComponentRegistry>;

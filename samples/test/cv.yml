@@ -1,9 +1,6 @@
 info:
   name: John Doe
 
-config:
-  size: A4
-
 title:
   items:
     - "[john.doe@outlook.com](mailto:john.doe@outlook.com)"
