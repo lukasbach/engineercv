@@ -1,6 +1,5 @@
 import { Command, Option } from "commander";
-
-interface Options {}
+import { generate } from "../domain/generate/generate.js";
 
 export const generateCommand = new Command("generate");
 
@@ -12,4 +11,4 @@ generateCommand.addOption(
   new Option("--number <number>").argParser((v) => parseInt(v, 10)),
 );
 
-generateCommand.action((name, _options: Options) => {});
+generateCommand.action((globPattern) => generate(globPattern));

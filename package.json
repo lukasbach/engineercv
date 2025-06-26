@@ -21,13 +21,18 @@
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.3.0",
+    "@react-pdf/stylesheet": "^6.1.0",
     "commander": "^14.0.0",
     "glob": "^11.0.3",
-    "yaml": "^2.8.0"
+    "react": "^19.1.0",
+    "ts-deepmerge": "^7.0.3",
+    "yaml": "^2.8.0",
+    "zod": "^3.25.67"
   },
   "devDependencies": {
     "@lukasbach/eslint-config-deps": "^1.0.7",
     "@types/node": "^24.0.4",
+    "@types/react": "^19",
     "esbuild": "^0.25.5",
     "esbuild-runner": "^2.2.2",
     "eslint": "8",
