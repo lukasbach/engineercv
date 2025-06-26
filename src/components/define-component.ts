@@ -1,8 +1,8 @@
 import { PropsWithChildren } from "react";
 import { z } from "zod";
-import { Styles } from "@react-pdf/stylesheet";
+import { Style } from "@react-pdf/stylesheet";
 
-export type ComponentDefinition<T, S extends Styles> = {
+export type ComponentDefinition<T, S extends Style> = {
   name: string;
   overwrites?: string;
   schema: z.ZodType<T>;
@@ -10,6 +10,6 @@ export type ComponentDefinition<T, S extends Styles> = {
   defaultStyles?: S;
 };
 
-export const defineComponent = <T, S extends Styles>(
+export const defineComponent = <T, S extends Style>(
   definition: ComponentDefinition<T, S>,
 ): ComponentDefinition<T, S> => definition;
