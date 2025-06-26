@@ -1,7 +1,8 @@
-import { Document, Page, Text, View } from "@react-pdf/renderer";
+import { Document, Page, View } from "@react-pdf/renderer";
 import React, { FC } from "react";
 import z from "zod";
 import { ComponentDefinition, defineComponent } from "./define-component.js";
+import { PdfMarkdown } from "./pdf-markdown.js";
 
 const documentComponent = defineComponent({
   name: "document",
@@ -44,12 +45,14 @@ const titleComponent = defineComponent({
     spec.title && (
       <View style={styles.title}>
         {spec.title.items?.map((item, index) => (
-          <Text key={index} style={styles.titleText}>
+          <PdfMarkdown key={index} style={styles.titleText}>
             {item}
-          </Text>
+          </PdfMarkdown>
         ))}
         {spec.title.summary && (
-          <Text style={styles.titleSummary}>{spec.title.summary}</Text>
+          <PdfMarkdown style={styles.titleSummary}>
+            {spec.title.summary}
+          </PdfMarkdown>
         )}
       </View>
     ),
