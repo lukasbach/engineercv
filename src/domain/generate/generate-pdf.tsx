@@ -3,6 +3,7 @@ import { StyleSheet, render } from "@react-pdf/renderer";
 import * as yaml from "yaml";
 import { merge } from "ts-deepmerge";
 import { buildComponentRegistry } from "../../components/default-components.js";
+import { DocumentGlobalsProvider } from "../../components/document-globals.js";
 
 export const generatePdf = async (config: string): Promise<void> => {
   const components = buildComponentRegistry();
@@ -24,11 +25,13 @@ export const generatePdf = async (config: string): Promise<void> => {
   };
 
   const document = (
-    <ComponentRenderer component="document">
-      <ComponentRenderer component="page">
-        <ComponentRenderer component="title" />
+    <DocumentGlobalsProvider value={{ styles: spec.styles, spec }}>
+      <ComponentRenderer component="document">
+        <ComponentRenderer component="page">
+          <ComponentRenderer component="title" />
+        </ComponentRenderer>
       </ComponentRenderer>
-    </ComponentRenderer>
+    </DocumentGlobalsProvider>
   );
 
   await render(document, "output.pdf");
