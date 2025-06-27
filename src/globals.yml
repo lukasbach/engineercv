@@ -1,2 +1,7 @@
 config:
   size: A4
+
+strings:
+  experience: Experience
+  untilNow: Present
+  bullet: "\u2022"

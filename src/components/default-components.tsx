@@ -63,7 +63,7 @@ const pageComponent = defineComponent({
   },
 });
 
-const titleComponent = defineComponent({
+const titleSectionComponent = defineComponent({
   name: "title",
   schema: z.object({
     info: z.object({ name: z.string() }),
@@ -120,7 +120,164 @@ const titleComponent = defineComponent({
       paddingLeft: 0,
       marginLeft: 0,
     },
-    summary: {},
+    summary: {
+      marginTop: "8pt",
+    },
+  } as const,
+});
+
+const sectionHeaderComponent = defineComponent({
+  name: "sectionHeader",
+  schema: z.object({}),
+  additionalProps: z.object({ children: z.any(), style: z.any() }),
+  component: ({ children, styles, style }) => (
+    <Text style={[styles.container, style]}>{children}</Text>
+  ),
+  defaultStyles: {
+    container: {
+      borderBottom: "1pt solid black",
+      marginTop: "8pt",
+      marginBottom: "6pt",
+      paddingBottom: "2pt",
+      fontSize: "14pt",
+    },
+  },
+});
+
+const listItemComponent = defineComponent({
+  name: "listItem",
+  schema: z.object({
+    strings: z.object({
+      bullet: z.string(),
+    }),
+  }),
+  additionalProps: z.object({ children: z.string(), style: z.any() }),
+  component: ({ children, styles, style, spec, getComponent }) => {
+    const Markdown = getComponent(markdownComponent);
+    return (
+      <View style={[styles.container, style]}>
+        <View style={styles.bullet}>
+          <Text>{spec.strings.bullet}</Text>
+        </View>
+        <View style={styles.text}>
+          <Markdown>{children}</Markdown>
+        </View>
+      </View>
+    );
+  },
+  defaultStyles: {
+    container: { display: "flex", flexDirection: "row" },
+    bullet: { height: "100%", marginRight: "4pt" },
+    text: { flex: 1 },
+  } as const,
+});
+
+const detailsItemComponent = defineComponent({
+  name: "detailsItem",
+  schema: z.object({}),
+  additionalProps: z.object({
+    style: z.any(),
+    title: z.string().optional(),
+    details: z.string().optional(),
+    right: z.string().optional(),
+    separator: z.string().optional(),
+  }),
+  component: ({
+    title,
+    details,
+    right,
+    separator,
+    styles,
+    style,
+    getComponent,
+  }) => {
+    const Markdown = getComponent(markdownComponent);
+    return (
+      <View style={[styles.container, style]}>
+        <View style={styles.leftContent}>
+          {title && <Markdown style={styles.title}>{title}</Markdown>}
+          {title && details && <Text>{separator ?? "\u00A0–\u00A0"}</Text>}
+          {details && <Markdown style={styles.details}>{details}</Markdown>}
+        </View>
+        {right && (
+          <View style={styles.rightContent}>
+            <Markdown>{right}</Markdown>
+          </View>
+        )}
+      </View>
+    );
+  },
+  defaultStyles: {
+    container: {
+      display: "flex",
+      flexDirection: "row",
+      marginBottom: "4pt",
+    },
+    title: {},
+    details: {},
+    leftContent: {
+      display: "flex",
+      flexDirection: "row",
+      flexGrow: 1,
+    },
+    rightContent: {},
+  } as const,
+});
+
+const experienceSectionComponent = defineComponent({
+  name: "experience",
+  schema: z.object({
+    strings: z.object({
+      experience: z.string(),
+      untilNow: z.string(),
+    }),
+    experience: z.object({
+      sections: z.array(
+        z.object({
+          title: z.string(),
+          company: z.string().optional(),
+          start: z.string(),
+          end: z.string().optional(),
+          items: z.string().array().optional(),
+        }),
+      ),
+    }),
+  }),
+  component: ({ spec, styles, getComponent }) => {
+    const SectionHeader = getComponent(sectionHeaderComponent);
+    const ListItem = getComponent(listItemComponent);
+    const DetailsItem = getComponent(detailsItemComponent);
+    return (
+      <>
+        <SectionHeader style={styles.header}>
+          {spec.strings.experience}
+        </SectionHeader>
+        {spec.experience.sections.map((section, index) => (
+          <View key={index} style={styles.section}>
+            <DetailsItem
+              style={styles.details}
+              title={section.title}
+              details={section.company}
+              right={`${section.start} – ${section.end ?? spec.strings.untilNow}`}
+            />
+            {section.items?.map((item, itemIndex) => (
+              <ListItem key={itemIndex} style={styles.listItem}>
+                {item}
+              </ListItem>
+            ))}
+          </View>
+        ))}
+      </>
+    );
+  },
+  defaultStyles: {
+    container: {},
+    header: {},
+    section: {
+      marginBottom: "8pt",
+    },
+    details: {},
+    listItem: {},
   } as const,
 });
 
@@ -128,7 +285,11 @@ export const defaultComponents = [
   markdownComponent,
   documentComponent,
   pageComponent,
-  titleComponent,
+  titleSectionComponent,
+  sectionHeaderComponent,
+  listItemComponent,
+  detailsItemComponent,
+  experienceSectionComponent,
 ];
 
 const baseSpecSchema = z.object({

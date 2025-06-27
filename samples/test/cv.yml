@@ -43,10 +43,10 @@ experience:
       end: 2019/12
       items:
         - Assisted in the development of web applications using JavaScript and Python.
-        - Participated in code reviews and contributed to team discussions on best practices.
+        - Participated in code reviews and contributed to team discussions on best practices. Participated in code reviews and contributed to team discussions on best practices. Participated in code reviews and contributed to team discussions on best practices.
         - Gained experience in Agile methodologies and version control systems.
 
-projects:
+projects: 
   sections:
     - title: Kanban Board Application
       url: https://github.com/johndoe/kanban-board
