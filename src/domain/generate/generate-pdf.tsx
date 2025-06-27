@@ -36,6 +36,7 @@ export const generatePdf = async (config: any): Promise<void> => {
         <ComponentRenderer name="page">
           <ComponentRenderer name="title" />
           <ComponentRenderer name="experience" />
+          <ComponentRenderer name="projects" />
         </ComponentRenderer>
       </ComponentRenderer>
     </DocumentGlobalsProvider>

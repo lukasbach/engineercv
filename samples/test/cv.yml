@@ -32,6 +32,7 @@ experience:
   sections:
     - title: Software Engineer
       company: Tech Company
+      location: Karlsruhe, Germany
       start: 2020/01
       items:
         - Developed and maintained web applications using React and Node.js.
@@ -49,13 +50,16 @@ experience:
 projects: 
   sections:
     - title: Kanban Board Application
-      url: https://github.com/johndoe/kanban-board
+      link: "[github.com/johndoe/kanban-board](https://github.com/johndoe/kanban-board)"
       items:
         - Developed a Kanban board application using React and Node.js.
         - Implemented drag-and-drop functionality for task management.
         - Integrated with a RESTful API for data persistence.
     - title: E-commerce Website
-      url: https://github.com/johndoe/e-commerce-website
+      start: 2021/03
+      end: 2021/12
+      details: Details
+      link: "[github.com/johndoe/e-commerce-website](https://github.com/johndoe/e-commerce-website)"
       items:
         - Built a full-stack e-commerce website using MERN stack (MongoDB, Express, React, Node.js).
         - Implemented user authentication and payment processing.

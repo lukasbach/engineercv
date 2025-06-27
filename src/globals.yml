@@ -3,5 +3,8 @@ config:
 
 strings:
   experience: Experience
+  projects: Projects
+  education: Education
+  skills: Skills
   untilNow: Present
   bullet: "\u2022"
