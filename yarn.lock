@@ -811,6 +811,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:*":
+  version: 24.0.6
+  resolution: "@types/node@npm:24.0.6"
+  dependencies:
+    undici-types: "npm:~7.8.0"
+  checksum: 10c0/17f976364358f85294912e04f0de147da6ba5ce3fe495b758df58458241f110475905cd0bb4ace373e9c44a0a7927202043bf0501cc1f7644306bde310c62650
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:^24.0.4":
   version: 24.0.4
   resolution: "@types/node@npm:24.0.4"
@@ -847,6 +856,15 @@ __metadata:
   version: 2.0.11
   resolution: "@types/unist@npm:2.0.11"
   checksum: 10c0/24dcdf25a168f453bb70298145eb043cfdbb82472db0bc0b56d6d51cd2e484b9ed8271d4ac93000a80da568f2402e9339723db262d0869e2bf13bc58e081768d
+  languageName: node
+  linkType: hard
+
+"@types/watch@npm:^1.0.6":
+  version: 1.0.6
+  resolution: "@types/watch@npm:1.0.6"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 10c0/60e07238bfd265fa034b61f7f85f58f4131cb2b4e35012e8f1afe0b695c3c64c00cb5051c6c2ea5604950804ed43eaf1b0064f04c7ca56eb2e13c6c46ce27ee7
   languageName: node
   linkType: hard
 
@@ -1783,6 +1801,7 @@ __metadata:
     "@react-pdf/stylesheet": "npm:^6.1.0"
     "@types/node": "npm:^24.0.4"
     "@types/react": "npm:^19"
+    "@types/watch": "npm:^1.0.6"
     commander: "npm:^14.0.0"
     esbuild: "npm:^0.25.5"
     esbuild-runner: "npm:^2.2.2"
@@ -1795,6 +1814,7 @@ __metadata:
     ts-deepmerge: "npm:^7.0.3"
     tsx: "npm:^4.20.3"
     typescript: "npm:latest"
+    watch: "npm:^1.0.2"
     yaml: "npm:^2.8.0"
     zod: "npm:^3.25.67"
     zod-to-json-schema: "npm:^3.24.6"
@@ -2406,6 +2426,15 @@ __metadata:
   version: 3.3.0
   resolution: "events@npm:3.3.0"
   checksum: 10c0/d6b6f2adbccbcda74ddbab52ed07db727ef52e31a61ed26db9feb7dc62af7fc8e060defa65e5f8af9449b86b52cc1a1f6a79f2eafcf4e62add2b7a1fa4a432f6
+  languageName: node
+  linkType: hard
+
+"exec-sh@npm:^0.2.0":
+  version: 0.2.2
+  resolution: "exec-sh@npm:0.2.2"
+  dependencies:
+    merge: "npm:^1.2.0"
+  checksum: 10c0/2c2ea327775f839b872cd965dc3f48f2f600a86f795bf482f8de9db3737deca4119bbafae0d47d0093f36ce6031223174c39fb5b2850e58f9d935b5d8d6bc673
   languageName: node
   linkType: hard
 
@@ -3822,6 +3851,13 @@ __metadata:
   version: 1.4.1
   resolution: "merge2@npm:1.4.1"
   checksum: 10c0/254a8a4605b58f450308fc474c82ac9a094848081bf4c06778200207820e5193726dc563a0d2c16468810516a5c97d9d3ea0ca6585d23c58ccfff2403e8dbbeb
+  languageName: node
+  linkType: hard
+
+"merge@npm:^1.2.0":
+  version: 1.2.1
+  resolution: "merge@npm:1.2.1"
+  checksum: 10c0/09f0ed1e85f336feb32d93d1243cb8930be22c7e6e4aa0c59a08a6f680d274dbe021c7d2a35ee8383cab2524efbb3f51985c3052e3dcf134951656511edf4693
   languageName: node
   linkType: hard
 
@@ -5898,6 +5934,18 @@ __metadata:
     string_decoder: "npm:^1.1.1"
     util-deprecate: "npm:^1.0.1"
   checksum: 10c0/cfed3833a77275584e0421e44b0c95ca2f31af7f4346c3ea35527949c2d2ed708b6490bdafec958deb94fc7a5e20bb0c66f8e9942b30109b568e7244fdcb1e73
+  languageName: node
+  linkType: hard
+
+"watch@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "watch@npm:1.0.2"
+  dependencies:
+    exec-sh: "npm:^0.2.0"
+    minimist: "npm:^1.2.0"
+  bin:
+    watch: ./cli.js
+  checksum: 10c0/6914c5cd44d6e3cb60c8ab7849ec03c51a07259d86410356630729a14c3f4ccb011865cdb33a052c75fb9ead2eaa646afa32d0fe7682b0b585e65a868b153eca
   languageName: node
   linkType: hard
 

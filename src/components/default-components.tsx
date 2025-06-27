@@ -526,6 +526,7 @@ export const defaultComponents = [
 
 const baseSpecSchema = z.object({
   styles: z.any().optional(),
+  imports: z.string().array().optional(),
 });
 
 export const buildComponentRegistry = (

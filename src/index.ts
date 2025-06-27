@@ -4,6 +4,7 @@ import * as path from "path";
 import { fileURLToPath } from "url";
 import { Command } from "commander";
 import { generateCommand } from "./commands/generate.js";
+import { watchCommand } from "./commands/watch.js";
 
 const program = new Command();
 
@@ -21,6 +22,9 @@ try {
   cliVersion = "unknown";
 }
 
-program.version(cliVersion).addCommand(generateCommand);
+program
+  .version(cliVersion)
+  .addCommand(generateCommand)
+  .addCommand(watchCommand);
 
 program.parse();

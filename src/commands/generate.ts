@@ -11,4 +11,15 @@ generateCommand.addOption(
   new Option("--number <number>").argParser((v) => parseInt(v, 10)),
 );
 
-generateCommand.action((globPattern) => generate(globPattern));
+generateCommand.action(async (globPattern) => {
+  const { errors } = await generate(globPattern);
+  if (errors.length > 0) {
+    console.error("Errors occurred during generation:");
+    errors.forEach((error) => {
+      console.error(`- ${error.message}`);
+    });
+    process.exit(1);
+  } else {
+    console.log("Generation completed successfully.");
+  }
+});
