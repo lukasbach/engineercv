@@ -1,15 +1,22 @@
-import { PropsWithChildren } from "react";
 import { z } from "zod";
 import { Style } from "@react-pdf/stylesheet";
+import { FC } from "react";
 
-export type ComponentDefinition<T, S extends Style> = {
+type ComponentGetter = <P = any>(
+  componentDefinition: ComponentDefinition<any, P, any> | { name: string },
+) => FC<P>;
+
+export type ComponentDefinition<T, P, S extends Style> = {
   name: string;
   overwrites?: string;
   schema: z.ZodType<T>;
-  component: React.ComponentType<PropsWithChildren<{ spec: T; styles: S }>>;
+  additionalProps?: z.ZodType<P>;
+  component: React.ComponentType<
+    { spec: T; styles: S; globalStyles: any; getComponent: ComponentGetter } & P
+  >;
   defaultStyles?: S;
 };
 
-export const defineComponent = <T, S extends Style>(
-  definition: ComponentDefinition<T, S>,
-): ComponentDefinition<T, S> => definition;
+export const defineComponent = <T, P, S extends Style>(
+  definition: ComponentDefinition<T, P, S>,
+): ComponentDefinition<T, P, S> => definition;

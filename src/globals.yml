@@ -1,7 +1,2 @@
 config:
   size: A4
-
-styles:
-  link:
-    color: black
-    textDecoration: none

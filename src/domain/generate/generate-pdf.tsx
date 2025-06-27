@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren } from "react";
+import React, { FC } from "react";
 import { StyleSheet, render } from "@react-pdf/renderer";
 import { merge } from "ts-deepmerge";
 import { buildComponentRegistry } from "../../components/default-components.js";
@@ -8,26 +8,33 @@ export const generatePdf = async (config: any): Promise<void> => {
   const components = buildComponentRegistry();
   const spec = components.parseSpec(config);
 
-  const ComponentRenderer: FC<PropsWithChildren<{ component: string }>> = ({
-    component,
-    children,
-  }) => {
-    const { component: Comp, defaultStyles } =
-      components.getComponent(component);
-    const styles = merge(defaultStyles, spec.styles?.[component] || {});
+  const getComponent = ({ name }: { name: string }) => {
+    const { component: Comp, defaultStyles } = components.getComponent(name);
+    const styles = merge(defaultStyles, spec.styles?.[name] || {});
     const stylesheet = StyleSheet.create(styles);
-    return (
-      <Comp styles={stylesheet} spec={spec}>
-        {children}
-      </Comp>
+    return (props: any) => (
+      <Comp
+        {...props}
+        styles={stylesheet}
+        spec={spec}
+        getComponent={getComponent}
+      />
     );
+  };
+
+  const ComponentRenderer: FC<{ name: string } & any> = ({
+    name,
+    ...props
+  }) => {
+    const Comp = getComponent({ name });
+    return <Comp {...props} />;
   };
 
   const document = (
     <DocumentGlobalsProvider value={{ styles: spec.styles ?? {}, spec }}>
-      <ComponentRenderer component="document">
-        <ComponentRenderer component="page">
-          <ComponentRenderer component="title" />
+      <ComponentRenderer name="document">
+        <ComponentRenderer name="page">
+          <ComponentRenderer name="title" />
         </ComponentRenderer>
       </ComponentRenderer>
     </DocumentGlobalsProvider>

@@ -1,12 +1,40 @@
-import { Document, Page, View } from "@react-pdf/renderer";
+import { Document, Link, Page, Text, View } from "@react-pdf/renderer";
 import React from "react";
 import z from "zod";
+import ReactMarkdown from "react-markdown";
 import { ComponentDefinition, defineComponent } from "./define-component.js";
-import { PdfMarkdown } from "./pdf-markdown.js";
+
+const markdownComponent = defineComponent({
+  name: "markdown",
+  schema: z.object({}),
+  additionalProps: z.object({ children: z.any(), style: z.any().optional() }),
+  // https://www.npmjs.com/package/react-markdown#appendix-b-components
+  component: ({ children, styles, style }) => (
+    <Text style={style}>
+      <ReactMarkdown
+        components={{
+          p: (props) => <Text style={styles.paragraph}>{props.children}</Text>,
+          a: (props) => (
+            <Link src={props.href} style={styles.link}>
+              {props.children}
+            </Link>
+          ),
+        }}
+      >
+        {children}
+      </ReactMarkdown>
+    </Text>
+  ),
+  defaultStyles: {
+    link: { color: "black", textDecoration: "none" },
+    paragraph: {},
+  } as const,
+});
 
 const documentComponent = defineComponent({
   name: "document",
   schema: z.object({}),
+  additionalProps: z.object({ children: z.any() }),
   component: ({ children, styles }) => (
     <Document style={styles.document}>{children}</Document>
   ),
@@ -20,6 +48,7 @@ const pageComponent = defineComponent({
       size: z.string(),
     }),
   }),
+  additionalProps: z.object({ children: z.any(), test: z.string() }),
   component: ({ children, styles, spec }) => (
     <Page size={spec.config?.size as any} style={styles.page}>
       {children}
@@ -45,25 +74,29 @@ const titleComponent = defineComponent({
       })
       .optional(),
   }),
-  component: ({ spec, styles }) =>
-    spec.title && (
-      <View style={styles.container}>
-        <PdfMarkdown style={styles.name}>{spec.info.name}</PdfMarkdown>
-        <View style={styles.itemContainer}>
-          {spec.title.items?.map((item, index) => (
-            <PdfMarkdown
-              key={index}
-              style={[styles.item, index === 0 ? styles.firstItem : {}]}
-            >
-              {item}
-            </PdfMarkdown>
-          ))}
+  component: ({ spec, styles, getComponent }) => {
+    const Markdown = getComponent(markdownComponent);
+    return (
+      spec.title && (
+        <View style={styles.container}>
+          <Markdown style={styles.name}>{spec.info.name}</Markdown>
+          <View style={styles.itemContainer}>
+            {spec.title.items?.map((item, index) => (
+              <Markdown
+                key={index}
+                style={[styles.item, index === 0 ? styles.firstItem : {}]}
+              >
+                {item}
+              </Markdown>
+            ))}
+          </View>
+          {spec.title.summary && (
+            <Markdown style={styles.summary}>{spec.title.summary}</Markdown>
+          )}
         </View>
-        {spec.title.summary && (
-          <PdfMarkdown style={styles.summary}>{spec.title.summary}</PdfMarkdown>
-        )}
-      </View>
-    ),
+      )
+    );
+  },
   defaultStyles: {
     container: {},
     name: {
@@ -92,6 +125,7 @@ const titleComponent = defineComponent({
 });
 
 export const defaultComponents = [
+  markdownComponent,
   documentComponent,
   pageComponent,
   titleComponent,
@@ -102,7 +136,7 @@ const baseSpecSchema = z.object({
 });
 
 export const buildComponentRegistry = (
-  components: ComponentDefinition<any, any>[] = defaultComponents,
+  components: ComponentDefinition<any, any, any>[] = defaultComponents,
 ) => ({
   all: components,
   getComponent: (name: string) => {
