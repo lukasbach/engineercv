@@ -6,5 +6,6 @@ strings:
   projects: Projects
   education: Education
   skills: Skills
+  gpa: "GPA: "
   untilNow: Present
   bullet: "\u2022"
