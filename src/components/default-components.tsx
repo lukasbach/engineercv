@@ -25,13 +25,19 @@ const pageComponent = defineComponent({
       {children}
     </Page>
   ),
-  defaultStyles: { page: {} },
+  defaultStyles: {
+    page: {
+      paddingHorizontal: 20,
+      paddingVertical: 35,
+      fontSize: 12,
+    },
+  },
 });
 
 const titleComponent = defineComponent({
   name: "title",
   schema: z.object({
-    info: z.object({ name: z.string().optional() }).optional(),
+    info: z.object({ name: z.string() }),
     title: z
       .object({
         items: z.string().array().optional(),
@@ -41,20 +47,48 @@ const titleComponent = defineComponent({
   }),
   component: ({ spec, styles }) =>
     spec.title && (
-      <View style={styles.title}>
-        {spec.title.items?.map((item, index) => (
-          <PdfMarkdown key={index} style={styles.titleText}>
-            {item}
-          </PdfMarkdown>
-        ))}
+      <View style={styles.container}>
+        <PdfMarkdown style={styles.name}>{spec.info.name}</PdfMarkdown>
+        <View style={styles.itemContainer}>
+          {spec.title.items?.map((item, index) => (
+            <PdfMarkdown
+              key={index}
+              style={[styles.item, index === 0 ? styles.firstItem : {}]}
+            >
+              {item}
+            </PdfMarkdown>
+          ))}
+        </View>
         {spec.title.summary && (
-          <PdfMarkdown style={styles.titleSummary}>
-            {spec.title.summary}
-          </PdfMarkdown>
+          <PdfMarkdown style={styles.summary}>{spec.title.summary}</PdfMarkdown>
         )}
       </View>
     ),
-  defaultStyles: { title: {}, titleText: {}, titleSummary: {} },
+  defaultStyles: {
+    container: {},
+    name: {
+      fontSize: "24pt",
+      textAlign: "center",
+    },
+    itemContainer: {
+      display: "flex",
+      flexDirection: "row",
+      flexWrap: "wrap",
+      justifyContent: "center",
+    },
+    item: {
+      borderLeft: "1pt solid black",
+      paddingLeft: "5pt",
+      marginLeft: "5pt",
+      color: "black",
+    },
+    firstItem: {
+      borderLeft: "none",
+      paddingLeft: 0,
+      marginLeft: 0,
+    },
+    summary: {},
+  } as const,
 });
 
 export const defaultComponents = [
@@ -62,6 +96,10 @@ export const defaultComponents = [
   pageComponent,
   titleComponent,
 ];
+
+const baseSpecSchema = z.object({
+  styles: z.any().optional(),
+});
 
 export const buildComponentRegistry = (
   components: ComponentDefinition<any, any>[] = defaultComponents,
@@ -78,7 +116,7 @@ export const buildComponentRegistry = (
     components
       .reduce(
         (prev, { schema }) => z.intersection(prev, schema),
-        z.object({}) as z.ZodType<any>,
+        baseSpecSchema as z.ZodType<any>,
       )
       .parse(spec),
 });
