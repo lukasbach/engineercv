@@ -1,8 +1,10 @@
+# yaml-language-server: $schema=../../lib/schema.json
+
 imports:
   - "./import1.yml"
 
 info:
-  # name: John Doe
+  name: John Doe
 
 title:
   items:

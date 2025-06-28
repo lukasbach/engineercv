@@ -540,13 +540,11 @@ export const buildComponentRegistry = (
     }
     return component;
   },
-  parseSpec: (spec: any) =>
-    components
-      .reduce(
-        (prev, { schema }) => z.intersection(prev, schema),
-        baseSpecSchema as z.ZodType<any>,
-      )
-      .parse(spec),
+  specSchema: components
+    .reduce(
+      (prev, { schema }) => z.intersection(prev, schema),
+      baseSpecSchema as z.ZodType<any>,
+    ),
 });
 
 export type ComponentRegistry = ReturnType<typeof buildComponentRegistry>;

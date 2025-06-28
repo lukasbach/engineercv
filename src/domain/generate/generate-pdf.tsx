@@ -6,7 +6,7 @@ import { DocumentGlobalsProvider } from "../../components/document-globals.js";
 
 export const generatePdf = async (config: any): Promise<void> => {
   const components = buildComponentRegistry();
-  const spec = components.parseSpec(config);
+  const spec = components.specSchema.parse(config);
 
   const getComponent = ({ name }: { name: string }) => {
     const { component: Comp, defaultStyles } = components.getComponent(name);
