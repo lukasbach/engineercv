@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=../../lib/schema.json
+
+output: ../out/test/{{ source.name }}.pdf
+
+info:
+  name: John Doe
+
+title:
+  items:
+    - "{{ email 'john.doe@outlook.com' }}"
+    - "{{ phone '+1 123-(456) 7890' }}"
+    - "{{ github 'johndoe' }}"
+    - "{{ linkedin 'johndoe' }}"

@@ -1,11 +1,27 @@
 import Handlebars from "handlebars";
+import path from "path";
 import { buildComponentRegistry } from "../../components/default-components.js";
 import { merge } from "./deepmerge.js";
 
-const resolveTemplates = (config: any, fullSpec: object = config): any => {
+Handlebars.registerHelper(
+  "github",
+  (handle) => `[github.com/${handle}](https://github.com/${handle})`,
+);
+Handlebars.registerHelper(
+  "linkedin",
+  (handle) => `[linkedin.com/in/${handle}](https://linkedin.com/in/${handle})`,
+);
+Handlebars.registerHelper(
+  "phone",
+  (number) => `[${number}](tel:${number.replace(/\D/g, "")})`,
+);
+Handlebars.registerHelper("email", (email) => `[${email}](mailto:${email})`);
+
+const resolveTemplates = (config: any, handlebarVars: object = config): any => {
   if (typeof config === "string") {
     const template = Handlebars.compile(config);
-    const resolved = template(fullSpec);
+    const resolved = template(handlebarVars);
+    console.log(resolved);
     try {
       return JSON.parse(resolved);
     } catch {
@@ -14,13 +30,13 @@ const resolveTemplates = (config: any, fullSpec: object = config): any => {
   }
 
   if (Array.isArray(config)) {
-    return config.map((item) => resolveTemplates(item, fullSpec));
+    return config.map((item) => resolveTemplates(item, handlebarVars));
   }
 
   if (config && typeof config === "object") {
     const result: Record<string, unknown> = {};
     for (const [key, value] of Object.entries(config)) {
-      result[key] = resolveTemplates(value, fullSpec);
+      result[key] = resolveTemplates(value, handlebarVars);
     }
     return result;
   }
@@ -58,12 +74,22 @@ const generateCartesianProduct = (
   return result;
 };
 
-export const resolveConfig = (config: unknown) => {
+export const resolveConfig = (config: unknown, yamlFile: string) => {
   const components = buildComponentRegistry();
   const spec = components.specSchema.parse(config);
 
+  const additionalVars = {
+    source: {
+      path: yamlFile,
+      name: path.basename(yamlFile, path.extname(yamlFile)),
+    },
+  };
+
   if (!spec.variants) {
-    return { components, specs: [resolveTemplates(spec)] };
+    return {
+      components,
+      specs: [resolveTemplates({ ...spec, ...additionalVars })],
+    };
   }
 
   const { variants, ...baseSpec } = spec;

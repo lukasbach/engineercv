@@ -71,7 +71,7 @@ export const generate = async (pattern: string) => {
     const { paths, config } = await resolveConfigs(file);
     trackedFiles.push(...paths);
     try {
-      const variants = resolveConfig(config);
+      const variants = resolveConfig(config, file);
       for (const spec of variants.specs) {
         const { document } = await generatePdf(merge(globalsConfig, spec));
         const target = path.join(path.dirname(file), spec.output);
