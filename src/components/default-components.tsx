@@ -61,9 +61,11 @@ const documentComponent = defineComponent({
 const pageComponent = defineComponent({
   name: "page",
   schema: z.object({
-    config: z.object({
-      size: z.string(),
-    }),
+    config: z
+      .object({
+        size: z.string().default("Letter"),
+      })
+      .optional(),
   }),
   additionalProps: z.object({ children: z.any(), test: z.string() }),
   component: ({ children, styles, spec }) => (
@@ -167,9 +169,11 @@ const sectionHeaderComponent = defineComponent({
 const listItemComponent = defineComponent({
   name: "listItem",
   schema: z.object({
-    strings: z.object({
-      bullet: z.string(),
-    }),
+    strings: z
+      .object({
+        bullet: z.string().default("\u2022"),
+      })
+      .default({}),
   }),
   additionalProps: z.object({ children: z.string(), style: z.any() }),
   component: ({ children, styles, style, spec, getComponent }) => {
@@ -262,9 +266,11 @@ const detailsItemComponent = defineComponent({
 const dateRangeComponent = defineComponent({
   name: "dateRange",
   schema: z.object({
-    strings: z.object({
-      untilNow: z.string(),
-    }),
+    strings: z
+      .object({
+        untilNow: z.string().default("Present"),
+      })
+      .default({}),
   }),
   additionalProps: z.object({
     start: z.string().optional(),
@@ -285,28 +291,33 @@ const dateRangeComponent = defineComponent({
 const experienceSectionComponent = defineComponent({
   name: "experience",
   schema: z.object({
-    strings: z.object({
-      experience: z.string(),
-      untilNow: z.string(),
-    }),
-    experience: z.object({
-      sections: z.array(
-        z.object({
-          title: z.string(),
-          company: z.string().optional(),
-          location: z.string().optional(),
-          start: z.string(),
-          end: z.string().optional(),
-          items: z.string().array().optional(),
-        }),
-      ),
-    }),
+    strings: z
+      .object({
+        experience: z.string().default("Experience"),
+        untilNow: z.string().default("Present"),
+      })
+      .default({}),
+    experience: z
+      .object({
+        sections: z.array(
+          z.object({
+            title: z.string(),
+            company: z.string().optional(),
+            location: z.string().optional(),
+            start: z.string(),
+            end: z.string().optional(),
+            items: z.string().array().optional(),
+          }),
+        ),
+      })
+      .optional(),
   }),
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);
     const ListItem = getComponent(listItemComponent);
     const DetailsItem = getComponent(detailsItemComponent);
     const DateRange = getComponent(dateRangeComponent);
+    if (!spec.experience) return null;
     return (
       <>
         <SectionHeader style={styles.header}>
@@ -346,28 +357,33 @@ const experienceSectionComponent = defineComponent({
 const projectsSectionComponent = defineComponent({
   name: "projects",
   schema: z.object({
-    strings: z.object({
-      projects: z.string(),
-      untilNow: z.string(),
-    }),
-    projects: z.object({
-      sections: z.array(
-        z.object({
-          title: z.string(),
-          details: z.string().optional(),
-          link: z.string().optional(),
-          start: z.string().optional(),
-          end: z.string().optional(),
-          items: z.string().array().optional(),
-        }),
-      ),
-    }),
+    strings: z
+      .object({
+        projects: z.string().default("Projects"),
+        untilNow: z.string().default("Present"),
+      })
+      .default({}),
+    projects: z
+      .object({
+        sections: z.array(
+          z.object({
+            title: z.string(),
+            details: z.string().optional(),
+            link: z.string().optional(),
+            start: z.string().optional(),
+            end: z.string().optional(),
+            items: z.string().array().optional(),
+          }),
+        ),
+      })
+      .optional(),
   }),
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);
     const ListItem = getComponent(listItemComponent);
     const DetailsItem = getComponent(detailsItemComponent);
     const DateRange = getComponent(dateRangeComponent);
+    if (!spec.projects) return null;
     return (
       <>
         <SectionHeader style={styles.header}>
@@ -402,30 +418,35 @@ const projectsSectionComponent = defineComponent({
 const educationSectionComponent = defineComponent({
   name: "education",
   schema: z.object({
-    strings: z.object({
-      education: z.string(),
-      gpa: z.string(),
-      untilNow: z.string(),
-    }),
-    education: z.object({
-      sections: z.array(
-        z.object({
-          title: z.string(),
-          institution: z.string().optional(),
-          start: z.string().optional(),
-          end: z.string().optional(),
-          grade: z.string().optional(),
-          details: z.string().optional(),
-          items: z.string().array().optional(),
-        }),
-      ),
-    }),
+    strings: z
+      .object({
+        education: z.string().default("Education"),
+        gpa: z.string().default("GPA: "),
+        untilNow: z.string().default("Present"),
+      })
+      .default({}),
+    education: z
+      .object({
+        sections: z.array(
+          z.object({
+            title: z.string(),
+            institution: z.string().optional(),
+            start: z.string().optional(),
+            end: z.string().optional(),
+            grade: z.string().optional(),
+            details: z.string().optional(),
+            items: z.string().array().optional(),
+          }),
+        ),
+      })
+      .optional(),
   }),
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);
     const ListItem = getComponent(listItemComponent);
     const DetailsItem = getComponent(detailsItemComponent);
     const DateRange = getComponent(dateRangeComponent);
+    if (!spec.education) return null;
     return (
       <>
         <SectionHeader style={styles.header}>
@@ -459,20 +480,25 @@ const educationSectionComponent = defineComponent({
 const skillsSectionComponent = defineComponent({
   name: "skills",
   schema: z.object({
-    strings: z.object({
-      skills: z.string(),
-    }),
-    skills: z.object({
-      sections: z.array(
-        z.object({
-          title: z.string(),
-          items: z.string().array(),
-        }),
-      ),
-    }),
+    strings: z
+      .object({
+        skills: z.string().default("Skills"),
+      })
+      .default({}),
+    skills: z
+      .object({
+        sections: z.array(
+          z.object({
+            title: z.string(),
+            items: z.string().array(),
+          }),
+        ),
+      })
+      .optional(),
   }),
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);
+    if (!spec.skills) return null;
     return (
       <>
         <SectionHeader style={styles.header}>
@@ -527,24 +553,35 @@ export const defaultComponents = [
 const baseSpecSchema = z.object({
   styles: z.any().optional(),
   imports: z.string().array().optional(),
+  output: z.string(),
 });
 
 export const buildComponentRegistry = (
   components: ComponentDefinition<any, any, any>[] = defaultComponents,
-) => ({
-  all: components,
-  getComponent: (name: string) => {
-    const component = components.find((c) => c.name === name);
-    if (!component) {
-      throw new Error(`Component ${name} not found`);
-    }
-    return component;
-  },
-  specSchema: components
-    .reduce(
-      (prev, { schema }) => z.intersection(prev, schema),
-      baseSpecSchema as z.ZodType<any>,
-    ),
-});
+) => {
+  const specSchema = components.reduce(
+    (prev, { schema }) => z.intersection(prev, schema),
+    baseSpecSchema as z.ZodType<any>,
+  );
+  const specSchemaWithVariants = z.intersection(
+    specSchema,
+    z.object({
+      variants: z
+        .record(z.string(), z.any().array()) // zodDeepPartial(specSchema).array()
+        .optional(),
+    }),
+  );
+  return {
+    all: components,
+    getComponent: (name: string) => {
+      const component = components.find((c) => c.name === name);
+      if (!component) {
+        throw new Error(`Component ${name} not found`);
+      }
+      return component;
+    },
+    specSchema: specSchemaWithVariants,
+  };
+};
 
 export type ComponentRegistry = ReturnType<typeof buildComponentRegistry>;

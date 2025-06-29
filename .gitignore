@@ -12,3 +12,4 @@ yarn-error.log
 lib
 
 output.pdf
+samples/**/*.pdf

@@ -4,9 +4,12 @@ import * as yaml from "yaml";
 import path from "path";
 import { fileURLToPath } from "url";
 import { ZodError } from "zod";
+import { render } from "@react-pdf/renderer";
+import fsExtra from "fs-extra/esm";
 import { generatePdf } from "./generate-pdf.js";
 import { debug } from "../../cli/logging.js";
 import { merge } from "./deepmerge.js";
+import { resolveConfig } from "./resolve-config.js";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -14,6 +17,7 @@ const dirname = path.dirname(filename);
 const resolveConfigs = async (
   yamlPath: string,
 ): Promise<{ paths: string[]; config: any }> => {
+  debug(`Resolving config for ${yamlPath}`);
   const yamlConfig = yaml.parse(await readFile(yamlPath, "utf-8"));
   const importedPaths: string[] = (yamlConfig.imports || []).map(
     (importPath: string) =>
@@ -67,7 +71,14 @@ export const generate = async (pattern: string) => {
     const { paths, config } = await resolveConfigs(file);
     trackedFiles.push(...paths);
     try {
-      await generatePdf(merge(globalsConfig, config));
+      const variants = resolveConfig(config);
+      for (const spec of variants.specs) {
+        const { document } = await generatePdf(merge(globalsConfig, spec));
+        const target = path.join(path.dirname(file), spec.output);
+        await fsExtra.ensureDir(path.dirname(target));
+        await render(document, target);
+        console.log(`Generated ${spec.output} from ${file}`);
+      }
     } catch (error) {
       if (error instanceof ZodError) {
         errors.push(
@@ -79,7 +90,10 @@ export const generate = async (pattern: string) => {
       } else {
         errors.push({
           file,
-          message: error instanceof Error ? error.message : String(error),
+          message:
+            error instanceof Error
+              ? `${error.message} (Stack: ${error.stack})`
+              : String(error),
         });
       }
     }

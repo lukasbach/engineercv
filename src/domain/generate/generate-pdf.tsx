@@ -1,10 +1,10 @@
 import React, { FC } from "react";
-import { StyleSheet, render } from "@react-pdf/renderer";
+import { StyleSheet } from "@react-pdf/renderer";
 import { merge } from "ts-deepmerge";
 import { buildComponentRegistry } from "../../components/default-components.js";
 import { DocumentGlobalsProvider } from "../../components/document-globals.js";
 
-export const generatePdf = async (config: any): Promise<void> => {
+export const generatePdf = async (config: any) => {
   const components = buildComponentRegistry();
   const spec = components.specSchema.parse(config);
 
@@ -44,5 +44,5 @@ export const generatePdf = async (config: any): Promise<void> => {
     </DocumentGlobalsProvider>
   );
 
-  await render(document, "output.pdf");
+  return { document };
 };

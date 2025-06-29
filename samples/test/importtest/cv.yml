@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=../../lib/schema.json
+# yaml-language-server: $schema=../../../lib/schema.json
 
 imports:
   - "./import1.yml"
