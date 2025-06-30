@@ -1,7 +1,7 @@
 import Handlebars from "handlebars";
 import path from "path";
 import { buildComponentRegistry } from "../../components/default-components.js";
-import { merge } from "./deepmerge.js";
+import { advancedDeepmerge } from "./advanced-deepmerge.js";
 
 Handlebars.registerHelper(
   "github",
@@ -21,7 +21,6 @@ const resolveTemplates = (config: any, handlebarVars: object = config): any => {
   if (typeof config === "string") {
     const template = Handlebars.compile(config);
     const resolved = template(handlebarVars);
-    console.log(resolved);
     try {
       return JSON.parse(resolved);
     } catch {
@@ -76,7 +75,7 @@ const generateCartesianProduct = (
 
 export const resolveConfig = (config: unknown, yamlFile: string) => {
   const components = buildComponentRegistry();
-  const spec = components.specSchema.parse(config);
+  const spec = components.specSchema.parse(config, {});
 
   const additionalVars = {
     source: {
@@ -96,7 +95,7 @@ export const resolveConfig = (config: unknown, yamlFile: string) => {
   const variantCombinations = generateCartesianProduct(variants);
 
   const specs = variantCombinations.map((variantConfig) => {
-    const mergedConfig = merge(baseSpec, variantConfig);
+    const mergedConfig = advancedDeepmerge(baseSpec, variantConfig);
     return resolveTemplates(mergedConfig);
   });
 

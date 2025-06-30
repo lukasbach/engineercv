@@ -4,6 +4,10 @@ import z from "zod";
 import ReactMarkdown from "react-markdown";
 import { ComponentDefinition, defineComponent } from "./define-component.js";
 
+const arrayItemSchema = {
+  $id: z.string().optional(),
+};
+
 const joinComponents = (
   components: (ReactNode | null)[],
   seperator = "\u00A0–\u00A0",
@@ -181,7 +185,7 @@ const listItemComponent = defineComponent({
     return (
       <View style={[styles.container, style]}>
         <View style={styles.bullet}>
-          <Text>{spec.strings.bullet}</Text>
+          <Text>{spec.strings?.bullet}</Text>
         </View>
         <View style={styles.text}>
           <Markdown>{children}</Markdown>
@@ -280,7 +284,7 @@ const dateRangeComponent = defineComponent({
   component: ({ spec, start, end, styles, style }) => (
     <Text style={[styles.container, style]}>
       {start && `${start} – `}
-      {end ?? spec.strings.untilNow}
+      {end ?? spec.strings?.untilNow}
     </Text>
   ),
   defaultStyles: {
@@ -301,6 +305,7 @@ const experienceSectionComponent = defineComponent({
       .object({
         sections: z.array(
           z.object({
+            ...arrayItemSchema,
             title: z.string(),
             company: z.string().optional(),
             location: z.string().optional(),
@@ -321,7 +326,7 @@ const experienceSectionComponent = defineComponent({
     return (
       <>
         <SectionHeader style={styles.header}>
-          {spec.strings.experience}
+          {spec.strings?.experience}
         </SectionHeader>
         {spec.experience.sections.map((section, index) => (
           <View key={index} style={styles.section}>
@@ -367,6 +372,7 @@ const projectsSectionComponent = defineComponent({
       .object({
         sections: z.array(
           z.object({
+            ...arrayItemSchema,
             title: z.string(),
             details: z.string().optional(),
             link: z.string().optional(),
@@ -387,7 +393,7 @@ const projectsSectionComponent = defineComponent({
     return (
       <>
         <SectionHeader style={styles.header}>
-          {spec.strings.projects}
+          {spec.strings?.projects}
         </SectionHeader>
         {spec.projects.sections.map((section, index) => (
           <View key={index} style={styles.section}>
@@ -429,6 +435,7 @@ const educationSectionComponent = defineComponent({
       .object({
         sections: z.array(
           z.object({
+            ...arrayItemSchema,
             title: z.string(),
             institution: z.string().optional(),
             start: z.string().optional(),
@@ -450,7 +457,7 @@ const educationSectionComponent = defineComponent({
     return (
       <>
         <SectionHeader style={styles.header}>
-          {spec.strings.education}
+          {spec.strings?.education}
         </SectionHeader>
         {spec.education.sections.map((section, index) => (
           <View key={index} style={styles.section}>
@@ -459,7 +466,7 @@ const educationSectionComponent = defineComponent({
               title={section.institution}
               details={joinComponents([
                 section.details,
-                section.grade && `${spec.strings.gpa}${section.grade}`,
+                section.grade && `${spec.strings?.gpa}${section.grade}`,
               ])}
               right={<DateRange start={section.start} end={section.end} />}
               bottomMargin={!!section.items?.length}
@@ -489,6 +496,7 @@ const skillsSectionComponent = defineComponent({
       .object({
         sections: z.array(
           z.object({
+            ...arrayItemSchema,
             title: z.string(),
             items: z.string().array(),
           }),
@@ -502,7 +510,7 @@ const skillsSectionComponent = defineComponent({
     return (
       <>
         <SectionHeader style={styles.header}>
-          {spec.strings.skills}
+          {spec.strings?.skills}
         </SectionHeader>
         {spec.skills.sections.map((section, index) => (
           <View key={index} style={styles.section}>
