@@ -5,7 +5,6 @@ import {
   baseSpecSchema,
   buildComponentRegistry,
 } from "../../components/default-components.js";
-import { DocumentGlobalsProvider } from "../../components/document-globals.js";
 
 export const generatePdf = async (config: any) => {
   const components = buildComponentRegistry();
@@ -33,19 +32,16 @@ export const generatePdf = async (config: any) => {
     return <Comp {...props} />;
   };
 
-  // TODO DocumentGlobalsProvider not needed anymore
   const document = (
-    <DocumentGlobalsProvider value={{ styles: spec.styles ?? {}, spec }}>
-      <ComponentRenderer name="document">
-        <ComponentRenderer name="page">
-          <ComponentRenderer name="title" />
-          <ComponentRenderer name="skills" />
-          <ComponentRenderer name="experience" />
-          <ComponentRenderer name="projects" />
-          <ComponentRenderer name="education" />
-        </ComponentRenderer>
+    <ComponentRenderer name="document">
+      <ComponentRenderer name="page">
+        <ComponentRenderer name="title" />
+        <ComponentRenderer name="skills" />
+        <ComponentRenderer name="experience" />
+        <ComponentRenderer name="projects" />
+        <ComponentRenderer name="education" />
       </ComponentRenderer>
-    </DocumentGlobalsProvider>
+    </ComponentRenderer>
   );
 
   const fonts = baseSpecSchema.parse(config).config?.fonts ?? [];
