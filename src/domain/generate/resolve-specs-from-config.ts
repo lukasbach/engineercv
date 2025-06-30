@@ -73,7 +73,7 @@ const generateCartesianProduct = (
   return result;
 };
 
-export const resolveConfig = (config: unknown, yamlFile: string) => {
+export const resolveSpecsFromConfig = (config: unknown, yamlFile: string) => {
   const components = buildComponentRegistry();
   const spec = components.specSchema.parse(config, {});
 
