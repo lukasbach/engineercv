@@ -1,7 +1,10 @@
 import React, { FC } from "react";
 import { StyleSheet } from "@react-pdf/renderer";
 import { merge } from "ts-deepmerge";
-import { buildComponentRegistry } from "../../components/default-components.js";
+import {
+  baseSpecSchema,
+  buildComponentRegistry,
+} from "../../components/default-components.js";
 import { DocumentGlobalsProvider } from "../../components/document-globals.js";
 
 export const generatePdf = async (config: any) => {
@@ -30,6 +33,7 @@ export const generatePdf = async (config: any) => {
     return <Comp {...props} />;
   };
 
+  // TODO DocumentGlobalsProvider not needed anymore
   const document = (
     <DocumentGlobalsProvider value={{ styles: spec.styles ?? {}, spec }}>
       <ComponentRenderer name="document">
@@ -44,5 +48,7 @@ export const generatePdf = async (config: any) => {
     </DocumentGlobalsProvider>
   );
 
-  return { document };
+  const fonts = baseSpecSchema.parse(config).config?.fonts ?? [];
+
+  return { document, fonts };
 };

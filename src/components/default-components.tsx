@@ -4,10 +4,6 @@ import z from "zod";
 import ReactMarkdown from "react-markdown";
 import { ComponentDefinition, defineComponent } from "./define-component.js";
 
-const arrayItemSchema = {
-  $id: z.string().optional(),
-};
-
 const joinComponents = (
   components: (ReactNode | null)[],
   seperator = "\u00A0–\u00A0",
@@ -57,9 +53,9 @@ const documentComponent = defineComponent({
   schema: z.object({}),
   additionalProps: z.object({ children: z.any() }),
   component: ({ children, styles }) => (
-    <Document style={styles.document}>{children}</Document>
+    <Document style={styles.container}>{children}</Document>
   ),
-  defaultStyles: { document: {} },
+  defaultStyles: { container: {} },
 });
 
 const pageComponent = defineComponent({
@@ -69,16 +65,16 @@ const pageComponent = defineComponent({
       .object({
         size: z.string().default("Letter"),
       })
-      .optional(),
+      .default({}),
   }),
   additionalProps: z.object({ children: z.any(), test: z.string() }),
   component: ({ children, styles, spec }) => (
-    <Page size={spec.config?.size as any} style={styles.page}>
+    <Page size={spec.config?.size as any} style={styles.container}>
       {children}
     </Page>
   ),
   defaultStyles: {
-    page: {
+    container: {
       paddingHorizontal: 20,
       paddingVertical: 35,
       fontSize: 12,
@@ -305,7 +301,7 @@ const experienceSectionComponent = defineComponent({
       .object({
         sections: z.array(
           z.object({
-            ...arrayItemSchema,
+            $id: z.string().optional(),
             title: z.string(),
             company: z.string().optional(),
             location: z.string().optional(),
@@ -372,7 +368,7 @@ const projectsSectionComponent = defineComponent({
       .object({
         sections: z.array(
           z.object({
-            ...arrayItemSchema,
+            $id: z.string().optional(),
             title: z.string(),
             details: z.string().optional(),
             link: z.string().optional(),
@@ -435,7 +431,7 @@ const educationSectionComponent = defineComponent({
       .object({
         sections: z.array(
           z.object({
-            ...arrayItemSchema,
+            $id: z.string().optional(),
             title: z.string(),
             institution: z.string().optional(),
             start: z.string().optional(),
@@ -496,7 +492,7 @@ const skillsSectionComponent = defineComponent({
       .object({
         sections: z.array(
           z.object({
-            ...arrayItemSchema,
+            $id: z.string().optional(),
             title: z.string(),
             items: z.string().array(),
           }),
@@ -558,18 +554,36 @@ export const defaultComponents = [
   skillsSectionComponent,
 ];
 
-const baseSpecSchema = z.object({
-  styles: z.any().optional(),
+export const baseSpecSchema = z.object({
   imports: z.string().array().optional(),
   output: z.string(),
+  config: z
+    .object({
+      fonts: z
+        .array(
+          z.object({
+            family: z.string(),
+            src: z.string(),
+            fontStyle: z.string().optional(),
+            fontWeight: z.string().optional(),
+          }),
+        )
+        .optional(),
+    })
+    .default({}),
 });
 
 export const buildComponentRegistry = (
   components: ComponentDefinition<any, any, any>[] = defaultComponents,
 ) => {
+  const stylesSchema = z.object({
+    styles: z
+      .record(z.enum(components.map((c) => c.name) as [string]), z.any())
+      .optional(),
+  });
   const specSchema = components.reduce(
     (prev, { schema }) => z.intersection(prev, schema),
-    baseSpecSchema as z.ZodType<any>,
+    z.intersection(baseSpecSchema, stylesSchema) as z.ZodType<any>,
   );
   const specSchemaWithVariants = z.intersection(
     specSchema,

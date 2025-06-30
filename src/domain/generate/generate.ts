@@ -4,7 +4,7 @@ import * as yaml from "yaml";
 import path from "path";
 import { fileURLToPath } from "url";
 import { ZodError } from "zod";
-import { render } from "@react-pdf/renderer";
+import { Font, render } from "@react-pdf/renderer";
 import fsExtra from "fs-extra/esm";
 import { generatePdf } from "./generate-pdf.js";
 import { debug } from "../../cli/logging.js";
@@ -73,9 +73,19 @@ export const generate = async (pattern: string) => {
     try {
       const variants = resolveConfig(config, file);
       for (const spec of variants.specs) {
-        const { document } = await generatePdf(merge(globalsConfig, spec));
+        const { document, fonts } = await generatePdf(
+          merge(globalsConfig, spec),
+        );
         const target = path.join(path.dirname(file), spec.output);
         await fsExtra.ensureDir(path.dirname(target));
+        fonts.forEach((font) => {
+          Font.register({
+            ...(font as any),
+            src: path.isAbsolute(font.src)
+              ? font.src
+              : path.resolve(path.join(path.dirname(file), font.src)),
+          });
+        });
         await render(document, target);
         console.log(`Generated ${spec.output} from ${file}`);
       }
