@@ -24,6 +24,7 @@ try {
 
 program
   .version(cliVersion)
+  .option("-v, --verbose", "Enable verbose logging")
   .addCommand(generateCommand)
   .addCommand(watchCommand);
 

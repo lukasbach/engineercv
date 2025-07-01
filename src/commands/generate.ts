@@ -1,5 +1,6 @@
 import { Command, Option } from "commander";
 import { generate } from "../domain/generate/generate.js";
+import { logger } from "../cli/logging.js";
 
 export const generateCommand = new Command("generate");
 
@@ -14,12 +15,12 @@ generateCommand.addOption(
 generateCommand.action(async (globPattern) => {
   const { errors } = await generate(globPattern);
   if (errors.length > 0) {
-    console.error("Errors occurred during generation:");
+    logger.error("Errors occurred during generation:");
     errors.forEach((error) => {
-      console.error(`- ${error.file}: ${error.message}`);
+      logger.error(`- [${error.file}]: ${error.message}`);
     });
     process.exit(1);
   } else {
-    console.log("Generation completed successfully.");
+    logger.success("Generation completed successfully.");
   }
 });

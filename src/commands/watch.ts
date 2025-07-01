@@ -1,6 +1,7 @@
 import { Command, Option } from "commander";
 import * as fs from "fs";
 import { generate } from "../domain/generate/generate.js";
+import { logger } from "../cli/logging.js";
 
 export const watchCommand = new Command("watch");
 
@@ -13,7 +14,7 @@ watchCommand.addOption(
 watchCommand.action(async (globPattern) => {
   let trackedFiles: string[] = [];
   const onChange = async () => {
-    console.log("Generating...");
+    logger.info("Generating...");
     trackedFiles.forEach((file) => fs.unwatchFile(file, onChange));
     const output = await generate(globPattern);
     trackedFiles = output.trackedFiles;
@@ -21,14 +22,14 @@ watchCommand.action(async (globPattern) => {
       fs.watchFile(file, { interval: 1000 }, onChange),
     );
     if (output.errors.length > 0) {
-      console.error("Errors occurred during generation:");
+      logger.error("Errors occurred during generation:");
       output.errors.forEach((error) => {
-        console.error(`- ${error.file}: ${error.message}`);
+        logger.error(`- [${error.file}]: ${error.message}`);
       });
-      console.log(`Watching ${trackedFiles.length} files for changes`);
+      logger.info(`Watching {${trackedFiles.length}} files for changes`);
     } else {
-      console.log(
-        `Generated ${output.files.length} files. Watching ${trackedFiles.length} files for changes`,
+      logger.success(
+        `Generated {${output.files.length}} files. Watching {${trackedFiles.length}} files for changes`,
       );
     }
   };

@@ -6,7 +6,7 @@ import { ZodError } from "zod";
 import { Font, render } from "@react-pdf/renderer";
 import fsExtra from "fs-extra/esm";
 import { generatePdfDocument } from "./generate-pdf-document.js";
-import { debug } from "../../cli/logging.js";
+import { logger } from "../../cli/logging.js";
 import { merge } from "./deepmerge.js";
 import { resolveSpecsFromConfig } from "./resolve-specs-from-config.js";
 import { globalConfig } from "./global-config.js";
@@ -38,11 +38,11 @@ const resolveConfig = async (
   filePath: string,
   resolvingImport = false,
 ): Promise<{ paths: string[]; config: any | null }> => {
-  debug(`Resolving config for ${filePath}`);
+  logger.debug(`Resolving config for ${filePath}`);
   const config = await readConfigFile(filePath);
 
   if (!resolvingImport && !isDefiningOutput(config)) {
-    debug(`No output defined in config for ${filePath}, ignoring file.`);
+    logger.debug(`No output defined in config for ${filePath}, ignoring file.`);
     return { paths: [], config: null };
   }
 
@@ -72,7 +72,6 @@ const resolveConfig = async (
     { paths: [filePath], config },
   );
 
-  // console.debug(`Resolved config for ${yamlPath}:`, result.config);
   return result;
 };
 
@@ -85,7 +84,7 @@ const parseError = (error: unknown, file: string): Error[] => {
   if (error instanceof ZodError) {
     return error.errors.map((err) => ({
       file,
-      message: `Validation error in ${file} (${err.code}): ${err.message} at path "${err.path.join(".")}"`,
+      message: `Validation error !!${err.code}!!: ${err.message} at path [$.${err.path.join(".")}]`,
     }));
   }
   return [
@@ -119,7 +118,7 @@ const processSpec = async (file: string, spec: any) => {
 
   await render(document, target);
 
-  console.log(`Generated ${spec.output} from ${file}`);
+  logger.success(`Generated {${spec.output}} from {${file}}`);
 };
 
 export const generate = async (pattern: string) => {
@@ -147,7 +146,7 @@ export const generate = async (pattern: string) => {
     }
   }
 
-  debug("Tracked files:", trackedFiles);
+  logger.debug("Tracked files:", trackedFiles);
 
   return { trackedFiles, files, errors };
 };
