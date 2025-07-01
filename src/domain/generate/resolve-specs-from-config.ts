@@ -10,10 +10,9 @@ Handlebars.registerHelper(
   "linkedin",
   (handle) => `[linkedin.com/in/${handle}](https://linkedin.com/in/${handle})`,
 );
-Handlebars.registerHelper(
-  "phone",
-  (number) => `[${number}](tel:${number.replace(/\D/g, "")})`,
-);
+Handlebars.registerHelper("phone", (number: string) => {
+  return `[${number}](tel:${String(number).replace(/\D/g, "")})`;
+});
 Handlebars.registerHelper("email", (email) => `[${email}](mailto:${email})`);
 
 const resolveTemplates = (config: any, handlebarVars: object = config): any => {

@@ -23,7 +23,7 @@ watchCommand.action(async (globPattern) => {
     if (output.errors.length > 0) {
       console.error("Errors occurred during generation:");
       output.errors.forEach((error) => {
-        console.error(`- ${error.message}`);
+        console.error(`- ${error.file}: ${error.message}`);
       });
       console.log(`Watching ${trackedFiles.length} files for changes`);
     } else {

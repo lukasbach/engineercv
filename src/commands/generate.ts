@@ -16,7 +16,7 @@ generateCommand.action(async (globPattern) => {
   if (errors.length > 0) {
     console.error("Errors occurred during generation:");
     errors.forEach((error) => {
-      console.error(`- ${error.message}`);
+      console.error(`- ${error.file}: ${error.message}`);
     });
     process.exit(1);
   } else {

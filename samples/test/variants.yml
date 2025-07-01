@@ -9,7 +9,7 @@ variants:
     - name: John D.
       facing: public
       email: john.doe+jobsearch@outlook.com
-      phone: null
+      phone: "+999999999"
   focus:
     - focus: frontend
       skills:
