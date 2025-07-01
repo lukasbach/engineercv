@@ -1,6 +1,5 @@
-// import z from 'zod';
-// import { defineComponent } from '../../src/components/define-component';
-// import { View } from '@react-pdf/renderer';
+import "../../src/module-globals.js";
+// Outside this repo, use `import "engineercv/module-globals";`
 
 const title = defineComponent({
   name: "title",
@@ -11,10 +10,10 @@ const title = defineComponent({
     console.log("title component", spec);
     const Markdown = getComponent({name: "markdown"});
     return (
-      <View style={styles.container}>
+      <ReactPdf.View style={styles.container}>
         <Markdown style={styles.name}>{spec.info.name}</Markdown>
         <Markdown style={styles.summary}>This is my awesome custom component!</Markdown>
-      </View>
+      </ReactPdf.View>
     );
   },
   defaultStyles: {

@@ -35,7 +35,8 @@
     "yaml": "^2.8.0",
     "zod": "^3.25.67",
     "zod-deep-partial": "^1.0.0",
-    "zod-to-json-schema": "^3.24.6"
+    "zod-to-json-schema": "^3.24.6",
+    "esbuild": "^0.25.5"
   },
   "devDependencies": {
     "@lukasbach/eslint-config-deps": "^1.0.7",
@@ -43,7 +44,6 @@
     "@types/node": "^24.0.4",
     "@types/react": "^19",
     "@types/watch": "^1.0.6",
-    "esbuild": "^0.25.5",
     "esbuild-runner": "^2.2.2",
     "eslint": "8",
     "nodemon": "^3.1.10",
@@ -62,7 +62,8 @@
     "ignorePatterns": [
       "lib",
       "dist",
-      "*.js"
+      "*.js",
+      "samples"
     ]
   },
   "publish": {
