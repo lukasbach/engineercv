@@ -1,4 +1,4 @@
-import { View, Text } from "@react-pdf/renderer";
+import { Text, View } from "@react-pdf/renderer";
 import React from "react";
 import z from "zod";
 import { defineComponent } from "./define-component.js";
@@ -6,7 +6,7 @@ import { sectionHeaderComponent } from "./section-header-component.js";
 import { joinComponents } from "./utils.js";
 
 export const skillsSectionComponent = defineComponent({
-  name: "skills",
+  name: "skills" as const,
   schema: z.object({
     strings: z
       .object({
@@ -20,7 +20,7 @@ export const skillsSectionComponent = defineComponent({
             $id: z.string().optional(),
             title: z.string(),
             items: z.string().array(),
-          })
+          }),
         ),
       })
       .optional(),
@@ -44,7 +44,7 @@ export const skillsSectionComponent = defineComponent({
                   {item}
                 </Text>
               )),
-              ", "
+              ", ",
             )}
           </View>
         ))}

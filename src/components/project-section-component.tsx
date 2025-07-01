@@ -10,7 +10,7 @@ import { sectionHeaderComponent } from "./section-header-component.js";
 import { joinComponents } from "./utils.js";
 
 export const projectsSectionComponent = defineComponent({
-  name: "projects",
+  name: "projects" as const,
   schema: z.object({
     strings: z
       .object({
@@ -29,7 +29,7 @@ export const projectsSectionComponent = defineComponent({
             start: z.string().optional(),
             end: z.string().optional(),
             items: z.string().array().optional(),
-          })
+          }),
         ),
       })
       .optional(),
@@ -56,7 +56,8 @@ export const projectsSectionComponent = defineComponent({
               ])}
               right={section.link}
               separator=", "
-              bottomMargin={!!section.items?.length} />
+              bottomMargin={!!section.items?.length}
+            />
             {section.items?.map((item, itemIndex) => (
               <ListItem key={itemIndex} style={styles.listItem}>
                 {item}

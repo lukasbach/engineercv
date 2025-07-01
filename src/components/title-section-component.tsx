@@ -5,7 +5,7 @@ import { defineComponent } from "./define-component.js";
 import { markdownComponent } from "./markdown-component.js";
 
 export const titleSectionComponent = defineComponent({
-  name: "title",
+  name: "title" as const,
   schema: z.object({
     info: z.object({ name: z.string() }),
     title: z

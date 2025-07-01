@@ -3,11 +3,13 @@ import { Style } from "@react-pdf/stylesheet";
 import { FC } from "react";
 
 type ComponentGetter = <P = any>(
-  componentDefinition: ComponentDefinition<any, P, any> | { name: string },
+  componentDefinition:
+    | ComponentDefinition<string, any, P, any>
+    | { name: string },
 ) => FC<P>;
 
-export type ComponentDefinition<T, P, S extends Style> = {
-  name: string;
+export type ComponentDefinition<N extends string, T, P, S extends Style> = {
+  name: N;
   overwrites?: string;
   schema: z.ZodType<T>;
   additionalProps?: z.ZodType<P>;
@@ -23,6 +25,6 @@ export type ComponentDefinition<T, P, S extends Style> = {
   defaultStyles: S;
 };
 
-export const defineComponent = <T, P, S extends Style>(
-  definition: ComponentDefinition<T, P, S>,
-): ComponentDefinition<T, P, S> => definition;
+export const defineComponent = <N, T, P, S extends Style>(
+  definition: ComponentDefinition<N, T, P, S>,
+): ComponentDefinition<N, T, P, S> => definition;

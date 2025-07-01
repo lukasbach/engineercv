@@ -9,7 +9,7 @@ import { sectionHeaderComponent } from "./section-header-component.js";
 import { joinComponents } from "./utils.js";
 
 export const experienceSectionComponent = defineComponent({
-  name: "experience",
+  name: "experience" as const,
   schema: z.object({
     strings: z
       .object({
@@ -28,7 +28,7 @@ export const experienceSectionComponent = defineComponent({
             start: z.string(),
             end: z.string().optional(),
             items: z.string().array().optional(),
-          })
+          }),
         ),
       })
       .optional(),
@@ -52,7 +52,8 @@ export const experienceSectionComponent = defineComponent({
               right={<DateRange start={section.start} end={section.end} />}
               details={joinComponents([section.company, section.location])}
               separator=", "
-              bottomMargin={!!section.items?.length} />
+              bottomMargin={!!section.items?.length}
+            />
             {section.items?.map((item, itemIndex) => (
               <ListItem key={itemIndex} style={styles.listItem}>
                 {item}

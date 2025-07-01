@@ -41,11 +41,7 @@ export const generatePdfDocument = async (spec: any, file: string) => {
   const document = (
     <ComponentRenderer name="document">
       <ComponentRenderer name="page">
-        <ComponentRenderer name="title" />
-        <ComponentRenderer name="skills" />
-        <ComponentRenderer name="experience" />
-        <ComponentRenderer name="projects" />
-        <ComponentRenderer name="education" />
+        <ComponentRenderer name="sectionOrder" />
       </ComponentRenderer>
     </ComponentRenderer>
   );

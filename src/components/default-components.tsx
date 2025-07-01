@@ -12,6 +12,7 @@ import { documentComponent } from "./document-component.js";
 import { pageComponent } from "./page-component.js";
 import { titleSectionComponent } from "./title-section-component.js";
 import { baseSpecSchema } from "../domain/generate/base-spec-schema.js";
+import { sectionOrderComponent } from "./section-order-component.js";
 
 export const defaultComponents = {
   [markdownComponent.name]: markdownComponent,
@@ -26,10 +27,14 @@ export const defaultComponents = {
   [projectsSectionComponent.name]: projectsSectionComponent,
   [educationSectionComponent.name]: educationSectionComponent,
   [skillsSectionComponent.name]: skillsSectionComponent,
+  [sectionOrderComponent.name]: sectionOrderComponent,
 } as const;
 
 export const buildComponentRegistry = (
-  customComponents: Record<string, ComponentDefinition<any, any, any>> = {},
+  customComponents: Record<
+    string,
+    ComponentDefinition<any, any, any, any>
+  > = {},
 ) => {
   const components = Object.values({
     ...defaultComponents,

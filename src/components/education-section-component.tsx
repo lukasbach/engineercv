@@ -10,7 +10,7 @@ import { sectionHeaderComponent } from "./section-header-component.js";
 import { joinComponents } from "./utils.js";
 
 export const educationSectionComponent = defineComponent({
-  name: "education",
+  name: "education" as const,
   schema: z.object({
     strings: z
       .object({
@@ -31,7 +31,7 @@ export const educationSectionComponent = defineComponent({
             grade: z.string().optional(),
             details: z.string().optional(),
             items: z.string().array().optional(),
-          })
+          }),
         ),
       })
       .optional(),
@@ -57,7 +57,8 @@ export const educationSectionComponent = defineComponent({
                 section.grade && `${spec.strings?.gpa}${section.grade}`,
               ])}
               right={<DateRange start={section.start} end={section.end} />}
-              bottomMargin={!!section.items?.length} />
+              bottomMargin={!!section.items?.length}
+            />
             {section.items?.map((item, itemIndex) => (
               <ListItem key={itemIndex} style={styles.listItem}>
                 {item}
