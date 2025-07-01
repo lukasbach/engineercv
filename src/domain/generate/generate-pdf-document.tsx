@@ -6,9 +6,9 @@ import {
   buildComponentRegistry,
 } from "../../components/default-components.js";
 
-export const generatePdfDocument = async (rawSpec: any) => {
-  const components = buildComponentRegistry();
-  const spec = components.specSchema.parse(rawSpec);
+export const generatePdfDocument = async (spec: any) => {
+  const components = buildComponentRegistry(spec.config?.xxx || {});
+  components.specSchema.parse(spec);
 
   const getComponent = ({ name }: { name: string }) => {
     const { component: Comp, defaultStyles } = components.getComponent(name);
@@ -44,7 +44,7 @@ export const generatePdfDocument = async (rawSpec: any) => {
     </ComponentRenderer>
   );
 
-  const fonts = baseSpecSchema.parse(rawSpec).config?.fonts ?? [];
+  const fonts = baseSpecSchema.parse(spec).config?.fonts ?? [];
 
   return { document, fonts };
 };

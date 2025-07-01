@@ -1,6 +1,5 @@
 import Handlebars from "handlebars";
 import path from "path";
-import { buildComponentRegistry } from "../../components/default-components.js";
 import { advancedDeepmerge } from "./advanced-deepmerge.js";
 
 Handlebars.registerHelper(
@@ -73,10 +72,7 @@ const generateCartesianProduct = (
   return result;
 };
 
-export const resolveSpecsFromConfig = (config: unknown, yamlFile: string) => {
-  const components = buildComponentRegistry();
-  const spec = components.specSchema.parse(config, {});
-
+export const resolveSpecsFromConfig = (config: any, yamlFile: string) => {
   const additionalVars = {
     source: {
       path: yamlFile,
@@ -84,14 +80,11 @@ export const resolveSpecsFromConfig = (config: unknown, yamlFile: string) => {
     },
   };
 
-  if (!spec.variants) {
-    return {
-      components,
-      specs: [resolveTemplates({ ...spec, ...additionalVars })],
-    };
+  if (!config.variants) {
+    return [resolveTemplates({ ...config, ...additionalVars })];
   }
 
-  const { variants, ...baseSpec } = spec;
+  const { variants, ...baseSpec } = config;
   const variantCombinations = generateCartesianProduct(variants);
 
   const specs = variantCombinations.map((variantConfig) => {
@@ -99,5 +92,5 @@ export const resolveSpecsFromConfig = (config: unknown, yamlFile: string) => {
     return resolveTemplates(mergedConfig);
   });
 
-  return { components, specs };
+  return specs;
 };
