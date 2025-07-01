@@ -9,6 +9,7 @@ const title = defineComponent({
       .object({
         items: z.string().array().optional(),
         image: z.string(),
+        rounded: z.boolean().optional(),
         summary: z.string().optional(),
       })
       .optional(),
@@ -17,42 +18,65 @@ const title = defineComponent({
     const Markdown = getComponent({ name: "markdown" });
     return (
       spec.title && (
-        <ReactPdf.View style={styles.container}>
-          <ReactPdf.Image src={resolvePath(spec.title.image)} />
-          <Markdown style={styles.name}>!!!{spec.info.name}</Markdown>
-          <Markdown style={styles.summary}>
-            This is my awesome custom component!
-          </Markdown>
-          <ReactPdf.View style={styles.itemContainer}>
-            {spec.title.items?.map((item, index) => (
-              <Markdown
-                key={index}
-                style={[styles.item, index === 0 ? styles.firstItem : {}]}
-              >
-                {item}
+        <>
+          <ReactPdf.View style={styles.container}>
+            <ReactPdf.View style={styles.leftContainer}>
+              <ReactPdf.Image
+                src={resolvePath(spec.title.image)}
+                style={[
+                  styles.picture,
+                  spec.title.rounded ? { borderRadius: "9999pt" } : {},
+                ]}
+              />
+            </ReactPdf.View>
+            <ReactPdf.View style={styles.rightContainer}>
+              <Markdown style={styles.name}>{spec.info.name}</Markdown>
+              <Markdown style={styles.summary}>
+                This is my awesome custom component!
               </Markdown>
-            ))}
+              <ReactPdf.View style={styles.itemContainer}>
+                {spec.title.items?.map((item, index) => (
+                  <Markdown
+                    key={index}
+                    style={[styles.item, index === 0 ? styles.firstItem : {}]}
+                  >
+                    {item}
+                  </Markdown>
+                ))}
+              </ReactPdf.View>
+            </ReactPdf.View>
           </ReactPdf.View>
           {spec.title.summary && (
             <Markdown style={styles.summary}>{spec.title.summary}</Markdown>
           )}
-        </ReactPdf.View>
+        </>
       )
     );
   },
   defaultStyles: {
-    container: {},
+    container: {
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      width: "100%",
+    },
+    leftContainer: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    rightContainer: {
+      marginLeft: "8pt",
+      flexGrow: 1,
+    },
     name: {
       fontSize: "24pt",
-      textAlign: "center",
       marginBottom: "8pt",
-      marginTop: "8pt",
     },
     itemContainer: {
       display: "flex",
       flexDirection: "row",
       flexWrap: "wrap",
-      justifyContent: "center",
     },
     item: {
       borderLeft: "1pt solid black",
@@ -68,6 +92,10 @@ const title = defineComponent({
     summary: {
       marginTop: "8pt",
       marginBottom: "8pt",
+    },
+    picture: {
+      width: "100px",
+      overflow: "hidden",
     },
   } as const,
 });

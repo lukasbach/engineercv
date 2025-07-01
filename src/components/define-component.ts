@@ -20,7 +20,7 @@ export type ComponentDefinition<T, P, S extends Style> = {
       resolvePath: (path: string) => string;
     } & P
   >;
-  defaultStyles?: S;
+  defaultStyles: S;
 };
 
 export const defineComponent = <T, P, S extends Style>(

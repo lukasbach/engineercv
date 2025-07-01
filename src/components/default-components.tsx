@@ -13,22 +13,20 @@ import { pageComponent } from "./page-component.js";
 import { titleSectionComponent } from "./title-section-component.js";
 import { baseSpecSchema } from "../domain/generate/base-spec-schema.js";
 
-export const defaultComponents = Object.fromEntries(
-  [
-    markdownComponent,
-    documentComponent,
-    pageComponent,
-    titleSectionComponent,
-    sectionHeaderComponent,
-    listItemComponent,
-    detailsItemComponent,
-    experienceSectionComponent,
-    dateRangeComponent,
-    projectsSectionComponent,
-    educationSectionComponent,
-    skillsSectionComponent,
-  ].map((c) => [c.name, c] as const),
-);
+export const defaultComponents = {
+  [markdownComponent.name]: markdownComponent,
+  [documentComponent.name]: documentComponent,
+  [pageComponent.name]: pageComponent,
+  [titleSectionComponent.name]: titleSectionComponent,
+  [sectionHeaderComponent.name]: sectionHeaderComponent,
+  [listItemComponent.name]: listItemComponent,
+  [detailsItemComponent.name]: detailsItemComponent,
+  [experienceSectionComponent.name]: experienceSectionComponent,
+  [dateRangeComponent.name]: dateRangeComponent,
+  [projectsSectionComponent.name]: projectsSectionComponent,
+  [educationSectionComponent.name]: educationSectionComponent,
+  [skillsSectionComponent.name]: skillsSectionComponent,
+} as const;
 
 export const buildComponentRegistry = (
   customComponents: Record<string, ComponentDefinition<any, any, any>> = {},

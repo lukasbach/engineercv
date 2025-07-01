@@ -14,6 +14,8 @@ export const generatePdfDocument = async (spec: any, file: string) => {
     const styles = merge(defaultStyles, spec.styles?.[name] || {});
     const stylesheet = StyleSheet.create(styles);
     const resolvePath = (filePath: string) =>
+      filePath.startsWith("http://") ||
+      filePath.startsWith("https://") ||
       path.isAbsolute(filePath)
         ? filePath
         : path.resolve(path.join(path.dirname(file), filePath));
