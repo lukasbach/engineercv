@@ -2,14 +2,12 @@ import React, { FC } from "react";
 import { StyleSheet } from "@react-pdf/renderer";
 import { merge } from "ts-deepmerge";
 import path from "path";
-import {
-  baseSpecSchema,
-  buildComponentRegistry,
-} from "../../components/default-components.js";
+import { buildComponentRegistry } from "../../components/default-components.js";
+import { baseSpecSchema } from "./base-spec-schema.js";
 
 export const generatePdfDocument = async (spec: any, file: string) => {
   const components = buildComponentRegistry(spec.config?.components || {});
-  components.specSchema.parse(spec);
+  components.verifySpec(spec);
 
   const getComponent = ({ name }: { name: string }) => {
     const { component: Comp, defaultStyles } = components.getComponent(name);

@@ -1,4 +1,3 @@
-import z from "zod";
 import { ComponentDefinition } from "./define-component.js";
 import { listItemComponent } from "./list-item-component.js";
 import { detailsItemComponent } from "./details-item-component.js";
@@ -12,8 +11,9 @@ import { markdownComponent } from "./markdown-component.js";
 import { documentComponent } from "./document-component.js";
 import { pageComponent } from "./page-component.js";
 import { titleSectionComponent } from "./title-section-component.js";
+import { baseSpecSchema } from "../domain/generate/base-spec-schema.js";
 
-const defaultComponents = Object.fromEntries(
+export const defaultComponents = Object.fromEntries(
   [
     markdownComponent,
     documentComponent,
@@ -30,26 +30,6 @@ const defaultComponents = Object.fromEntries(
   ].map((c) => [c.name, c] as const),
 );
 
-export const baseSpecSchema = z.object({
-  imports: z.string().array().optional(),
-  output: z.string(),
-  config: z
-    .object({
-      fonts: z
-        .array(
-          z.object({
-            family: z.string(),
-            src: z.string(),
-            fontStyle: z.string().optional(),
-            fontWeight: z.string().optional(),
-          }),
-        )
-        .optional(),
-      customComponents: z.record(z.string(), z.any()).optional(),
-    })
-    .default({}),
-});
-
 export const buildComponentRegistry = (
   customComponents: Record<string, ComponentDefinition<any, any, any>> = {},
 ) => {
@@ -57,23 +37,6 @@ export const buildComponentRegistry = (
     ...defaultComponents,
     ...customComponents,
   });
-  const stylesSchema = z.object({
-    styles: z
-      .record(z.enum(components.map((c) => c.name) as [string]), z.any())
-      .optional(),
-  });
-  const specSchema = components.reduce(
-    (prev, { schema }) => z.intersection(prev, schema),
-    z.intersection(baseSpecSchema, stylesSchema) as z.ZodType<any>,
-  );
-  const specSchemaWithVariants = z.intersection(
-    specSchema,
-    z.object({
-      variants: z
-        .record(z.string(), z.any().array()) // zodDeepPartial(specSchema).array()
-        .optional(),
-    }),
-  );
   return {
     all: components,
     getComponent: (name: string) => {
@@ -83,7 +46,12 @@ export const buildComponentRegistry = (
       }
       return component;
     },
-    specSchema: specSchemaWithVariants,
+    verifySpec: (spec: unknown) => {
+      baseSpecSchema.parse(spec);
+      for (const component of components) {
+        component.schema?.parse(spec);
+      }
+    },
   };
 };
 

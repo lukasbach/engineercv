@@ -7,7 +7,6 @@ const title = defineComponent({
     info: z.object({ name: z.string() }),
   }),
   component: ({ spec, styles, getComponent }) => {
-    console.log("title component", spec);
     const Markdown = getComponent({name: "markdown"});
     return (
       <ReactPdf.View style={styles.container}>
