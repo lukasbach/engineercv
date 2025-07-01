@@ -13,8 +13,8 @@ export const experienceSectionComponent = defineComponent({
   schema: z.object({
     strings: z
       .object({
-        experience: z.string().default("Experience"),
-        untilNow: z.string().default("Present"),
+        experience: z.string().default(""),
+        untilNow: z.string().default(""),
       })
       .default({}),
     experience: z

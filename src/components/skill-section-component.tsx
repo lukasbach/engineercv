@@ -10,7 +10,7 @@ export const skillsSectionComponent = defineComponent({
   schema: z.object({
     strings: z
       .object({
-        skills: z.string().default("Skills"),
+        skills: z.string().default(""),
       })
       .default({}),
     skills: z

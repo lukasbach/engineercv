@@ -8,7 +8,7 @@ export const pageComponent = defineComponent({
   schema: z.object({
     config: z
       .object({
-        size: z.string().default("Letter"),
+        size: z.string().default(""),
       })
       .default({}),
   }),

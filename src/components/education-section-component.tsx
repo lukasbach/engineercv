@@ -14,9 +14,9 @@ export const educationSectionComponent = defineComponent({
   schema: z.object({
     strings: z
       .object({
-        education: z.string().default("Education"),
-        gpa: z.string().default("GPA: "),
-        untilNow: z.string().default("Present"),
+        education: z.string().default(""),
+        gpa: z.string().default(""),
+        untilNow: z.string().default(""),
       })
       .default({}),
     education: z

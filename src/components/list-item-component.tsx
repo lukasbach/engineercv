@@ -9,7 +9,7 @@ export const listItemComponent = defineComponent({
   schema: z.object({
     strings: z
       .object({
-        bullet: z.string().default("\u2022"),
+        bullet: z.string().default(""),
       })
       .default({}),
   }),

@@ -14,8 +14,8 @@ export const projectsSectionComponent = defineComponent({
   schema: z.object({
     strings: z
       .object({
-        projects: z.string().default("Projects"),
-        untilNow: z.string().default("Present"),
+        projects: z.string().default(""),
+        untilNow: z.string().default(""),
       })
       .default({}),
     projects: z

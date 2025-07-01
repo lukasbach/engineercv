@@ -8,7 +8,7 @@ export const dateRangeComponent = defineComponent({
   schema: z.object({
     strings: z
       .object({
-        untilNow: z.string().default("Present"),
+        untilNow: z.string().default(""),
       })
       .default({}),
   }),
