@@ -12,7 +12,13 @@ export type ComponentDefinition<T, P, S extends Style> = {
   schema: z.ZodType<T>;
   additionalProps?: z.ZodType<P>;
   component: React.ComponentType<
-    { spec: T; styles: S; globalStyles: any; getComponent: ComponentGetter } & P
+    {
+      spec: T;
+      styles: S;
+      globalStyles: any;
+      getComponent: ComponentGetter;
+      resolvePath: (path: string) => string;
+    } & P
   >;
   defaultStyles?: S;
 };
