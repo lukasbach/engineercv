@@ -2,22 +2,18 @@ import { glob } from "glob";
 import { readFile } from "fs/promises";
 import * as yaml from "yaml";
 import path from "path";
-import { ZodError, z } from "zod";
-import { Font, View, render } from "@react-pdf/renderer";
+import { ZodError } from "zod";
+import { Font, render } from "@react-pdf/renderer";
 import fsExtra from "fs-extra/esm";
-import esbuild from "esbuild";
-import os from "os";
-import React from "react";
 import { generatePdfDocument } from "./generate-pdf-document.js";
 import { debug } from "../../cli/logging.js";
 import { merge } from "./deepmerge.js";
 import { resolveSpecsFromConfig } from "./resolve-specs-from-config.js";
 import { globalConfig } from "./global-config.js";
-import { defineComponent } from "../../components/define-component.js";
+import { importJsSpec } from "./import-js-spec.js";
 
 const readConfigFile = async (filePath: string): Promise<any> => {
   const extension = path.extname(filePath);
-  const baseName = path.basename(filePath, extension);
 
   if (extension === ".yml" || extension === ".yaml") {
     return yaml.parse(await readFile(filePath, "utf-8"));
@@ -28,34 +24,27 @@ const readConfigFile = async (filePath: string): Promise<any> => {
   }
 
   if ([".js", ".mjs", ".jsx", ".ts", ".tsx"].includes(extension)) {
-    const tempFile = path.join(os.tmpdir(), `engineercv-${baseName}.js`);
-    const context = await esbuild.context({
-      entryPoints: [filePath],
-      bundle: true,
-      external: [],
-      format: "cjs",
-      target: "es2018",
-      outfile: tempFile,
-      loader: {},
-    });
-    await context.rebuild();
-    // TODO handle in seperate file
-    (global as any).React = React;
-    (global as any).z = z;
-    (global as any).View = View;
-    (global as any).defineComponent = defineComponent;
-    const moduleContent = await import(`file://${tempFile}`);
-    return moduleContent.default || moduleContent;
+    return importJsSpec(filePath);
   }
 
   throw new Error(`Unsupported file type: ${extension}`);
 };
 
+const isDefiningOutput = (config: any): boolean =>
+  config.output ||
+  Object.values(config.variants || {}).some((v: any) => !!v.output);
+
 const resolveConfig = async (
   filePath: string,
-): Promise<{ paths: string[]; config: any }> => {
+  resolvingImport = false,
+): Promise<{ paths: string[]; config: any | null }> => {
   debug(`Resolving config for ${filePath}`);
   const config = await readConfigFile(filePath);
+
+  if (!resolvingImport && !isDefiningOutput(config)) {
+    debug(`No output defined in config for ${filePath}, ignoring file.`);
+    return { paths: [], config: null };
+  }
 
   const importedPaths: string[] = (config.imports || []).map(
     (importPath: string) =>
@@ -65,7 +54,7 @@ const resolveConfig = async (
   );
   const result = (
     await Promise.all(
-      importedPaths.map((importPath) => resolveConfig(importPath)),
+      importedPaths.map((importPath) => resolveConfig(importPath, true)),
     )
   ).reduce(
     (acc, { paths, config }) => {
@@ -113,6 +102,7 @@ const parseError = (error: unknown, file: string): Error[] => {
 const processSpec = async (file: string, spec: any) => {
   const { document, fonts } = await generatePdfDocument(
     merge(globalConfig, spec),
+    file,
   );
 
   const target = path.join(path.dirname(file), spec.output);
@@ -144,6 +134,9 @@ export const generate = async (pattern: string) => {
   for (const file of files) {
     const { paths, config } = await resolveConfig(file);
     trackedFiles.push(...paths);
+    // eslint-disable-next-line no-continue
+    if (!config) continue;
+
     try {
       const specs = resolveSpecsFromConfig(config, file);
       for (const spec of specs) {
