@@ -14,3 +14,5 @@ lib
 output.pdf
 samples/**/*.pdf
 todos.md
+
+templates
