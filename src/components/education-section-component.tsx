@@ -20,20 +20,18 @@ export const educationSectionComponent = defineComponent({
       })
       .default({}),
     education: z
-      .object({
-        sections: z.array(
-          z.object({
-            $id: z.string().optional(),
-            title: z.string(),
-            institution: z.string().optional(),
-            start: z.string().optional(),
-            end: z.string().optional(),
-            grade: z.string().optional(),
-            details: z.string().optional(),
-            items: z.string().array().optional(),
-          }),
-        ),
-      })
+      .array(
+        z.object({
+          $id: z.string().optional(),
+          title: z.string(),
+          institution: z.string().optional(),
+          start: z.string().optional(),
+          end: z.string().optional(),
+          grade: z.string().optional(),
+          details: z.string().optional(),
+          items: z.string().array().optional(),
+        }),
+      )
       .optional(),
   }),
   component: ({ spec, styles, getComponent }) => {
@@ -47,7 +45,7 @@ export const educationSectionComponent = defineComponent({
         <SectionHeader style={styles.header}>
           {spec.strings?.education}
         </SectionHeader>
-        {spec.education.sections.map((section, index) => (
+        {spec.education.map((section, index) => (
           <View key={index} style={styles.section}>
             <DetailsItem
               style={styles.details}

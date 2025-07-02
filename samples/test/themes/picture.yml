@@ -19,50 +19,48 @@ title:
     Experienced software engineer with a passion for building scalable web applications. Proficient in JavaScript, React, and Node.js. Strong problem-solving skills and a commitment to delivering high-quality code.
 
 skills:
-  sections:
-    - title: Languages
-      $id: languages
-      items:
-        - JavaScript
-        - TypeScript
-    - title: Frameworks
-      items:
-        - React
-        - Node.js
-        - Express
-    - title: Tools & Technologies
-      items:
-        - Git
-        - Docker
-        - AWS
+  - title: Languages
+    $id: languages
+    items:
+      - JavaScript
+      - TypeScript
+  - title: Frameworks
+    items:
+      - React
+      - Node.js
+      - Express
+  - title: Tools & Technologies
+    items:
+      - Git
+      - Docker
+      - AWS
 
 experience:
-  sections:
-    - title: Senior Software Engineer
-      $id: company1
-      company: Tech Company
-      location: Karlsruhe, Germany
-      start: 2021/12
-      items:
-        - Item 1
-        - Item 2
-        - Item 3
-    - title: Software Engineer
-      $id: company2
-      company: Tech Company
-      location: Karlsruhe, Germany
-      start: 2020/01
-      end: 2021/12
-      items:
-        - Item 1
-        - Item 2
-        - Item 3
-    - title: Junior Developer
-      $id: company3
-      company: Startup Inc.
-      start: 2018/06
-      end: 2019/12
-      items:
-        - Item 1
-        - Item 2
-        - Item 3
+  - title: Senior Software Engineer
+    $id: company1
+    company: Tech Company
+    location: Karlsruhe, Germany
+    start: 2021/12
+    items:
+      - Item 1
+      - Item 2
+      - Item 3
+  - title: Software Engineer
+    $id: company2
+    company: Tech Company
+    location: Karlsruhe, Germany
+    start: 2020/01
+    end: 2021/12
+    items:
+      - Item 1
+      - Item 2
+      - Item 3
+  - title: Junior Developer
+    $id: company3
+    company: Startup Inc.
+    start: 2018/06
+    end: 2019/12
+    items:
+      - Item 1
+      - Item 2
+      - Item 3

@@ -14,15 +14,13 @@ export const skillsSectionComponent = defineComponent({
       })
       .default({}),
     skills: z
-      .object({
-        sections: z.array(
-          z.object({
-            $id: z.string().optional(),
-            title: z.string(),
-            items: z.string().array(),
-          }),
-        ),
-      })
+      .array(
+        z.object({
+          $id: z.string().optional(),
+          title: z.string(),
+          items: z.string().array(),
+        }),
+      )
       .optional(),
   }),
   component: ({ spec, styles, getComponent }) => {
@@ -33,7 +31,7 @@ export const skillsSectionComponent = defineComponent({
         <SectionHeader style={styles.header}>
           {spec.strings?.skills}
         </SectionHeader>
-        {spec.skills.sections.map((section, index) => (
+        {spec.skills.map((section, index) => (
           <View key={index} style={styles.section}>
             <Text style={styles.sectionTitle}>
               {section.title}:{"\u00A0"}

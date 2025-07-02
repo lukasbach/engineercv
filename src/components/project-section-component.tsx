@@ -19,19 +19,17 @@ export const projectsSectionComponent = defineComponent({
       })
       .default({}),
     projects: z
-      .object({
-        sections: z.array(
-          z.object({
-            $id: z.string().optional(),
-            title: z.string(),
-            details: z.string().optional(),
-            link: z.string().optional(),
-            start: z.string().optional(),
-            end: z.string().optional(),
-            items: z.string().array().optional(),
-          }),
-        ),
-      })
+      .array(
+        z.object({
+          $id: z.string().optional(),
+          title: z.string(),
+          details: z.string().optional(),
+          link: z.string().optional(),
+          start: z.string().optional(),
+          end: z.string().optional(),
+          items: z.string().array().optional(),
+        }),
+      )
       .optional(),
   }),
   component: ({ spec, styles, getComponent }) => {
@@ -45,20 +43,20 @@ export const projectsSectionComponent = defineComponent({
         <SectionHeader style={styles.header}>
           {spec.strings?.projects}
         </SectionHeader>
-        {spec.projects.sections.map((section, index) => (
+        {spec.projects.map((project, index) => (
           <View key={index} style={styles.section}>
             <DetailsItem
               style={styles.details}
-              title={section.title}
+              title={project.title}
               details={joinComponents([
-                section.details,
-                <DateRange start={section.start} end={section.end} />,
+                project.details,
+                <DateRange start={project.start} end={project.end} />,
               ])}
-              right={section.link}
+              right={project.link}
               separator=", "
-              bottomMargin={!!section.items?.length}
+              bottomMargin={!!project.items?.length}
             />
-            {section.items?.map((item, itemIndex) => (
+            {project.items?.map((item, itemIndex) => (
               <ListItem key={itemIndex} style={styles.listItem}>
                 {item}
               </ListItem>

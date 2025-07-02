@@ -18,19 +18,17 @@ export const experienceSectionComponent = defineComponent({
       })
       .default({}),
     experience: z
-      .object({
-        sections: z.array(
-          z.object({
-            $id: z.string().optional(),
-            title: z.string(),
-            company: z.string().optional(),
-            location: z.string().optional(),
-            start: z.string(),
-            end: z.string().optional(),
-            items: z.string().array().optional(),
-          }),
-        ),
-      })
+      .array(
+        z.object({
+          $id: z.string().optional(),
+          title: z.string(),
+          company: z.string().optional(),
+          location: z.string().optional(),
+          start: z.string(),
+          end: z.string().optional(),
+          items: z.string().array().optional(),
+        }),
+      )
       .optional(),
   }),
   component: ({ spec, styles, getComponent }) => {
@@ -44,7 +42,7 @@ export const experienceSectionComponent = defineComponent({
         <SectionHeader style={styles.header}>
           {spec.strings?.experience}
         </SectionHeader>
-        {spec.experience.sections.map((section, index) => (
+        {spec.experience.map((section, index) => (
           <View key={index} style={styles.section}>
             <DetailsItem
               style={styles.details}
