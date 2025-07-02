@@ -39,7 +39,9 @@ const header = defineComponent({
       marginBottom: "8pt",
     },
     title: {
-      fontSize: "28pt",
+      fontSize: "34pt",
+      textTransform: "uppercase",
+      letterSpacing: "4pt",
       marginBottom: "4pt",
     },
     subtitle: {
@@ -121,11 +123,4 @@ export default {
     },
   },
   order: ["header", "toAddress", "body"],
-  // styles: {
-  //   markdown: {
-  //     paragraph: {
-  //       marginBottom: "8pt",
-  //     },
-  //   },
-  // },
 };
