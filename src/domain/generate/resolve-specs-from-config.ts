@@ -1,5 +1,6 @@
 import Handlebars from "handlebars";
 import path from "path";
+import moment from "moment";
 import { advancedDeepmerge } from "./advanced-deepmerge.js";
 
 Handlebars.registerHelper(
@@ -14,6 +15,9 @@ Handlebars.registerHelper("phone", (number: string) => {
   return `[${number}](tel:${String(number).replace(/\D/g, "")})`;
 });
 Handlebars.registerHelper("email", (email) => `[${email}](mailto:${email})`);
+Handlebars.registerHelper("date", (format: string, originalDate?: string) =>
+  moment(originalDate ?? new Date()).format(format),
+);
 
 const resolveTemplates = (config: any, handlebarVars: object = config): any => {
   if (typeof config === "string") {

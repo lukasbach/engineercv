@@ -12,7 +12,7 @@ info:
   name: John Doe
   subtitle: Senior Software Engineer
 
-date: 14th August 2020
+date: "{{ date 'dddd, MMMM Do YYYY' }}"
 
 toAddress:
   - Hiring Manager
