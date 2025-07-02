@@ -1,0 +1,43 @@
+# yaml-language-server: $schema=../../../lib/schema.json
+
+output: ../../out/test/themes/cover-letter.pdf
+
+imports:
+  - ../../../src/themes/coverletter.tsx
+
+config:
+  paragraphSpacing: 18pt  
+
+info:
+  name: John Doe
+  subtitle: Senior Software Engineer
+
+date: 14th August 2020
+
+toAddress:
+  - Hiring Manager
+  - Tech Company
+  - 1234 Tech Street
+  - Karlsruhe, Germany
+
+fromAddress:
+  - John Doe
+  - 5678 Developer Lane
+  - Karlsruhe, Germany
+
+subject: Application for Software Engineer Position
+
+body: |
+  Dear Hiring Manager,
+
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+  {{ var.regards }}
+
+var:
+  regards: |
+    Best regards,
+
+    John Doe

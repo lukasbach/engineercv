@@ -17,7 +17,7 @@ const debug = (...args: any[]) =>
     : undefined;
 
 const info = (...args: any[]) =>
-  console.info(chalk.blue("info"), " ", ...renderArgs(args));
+  console.info(chalk.blue("info"), "    ", ...renderArgs(args));
 
 const warn = (...args: any[]) =>
   console.warn(chalk.yellow("warn"), "    ", ...renderArgs(args));
