@@ -24,7 +24,7 @@ export const markdownComponent = defineComponent({
                 <View
                   style={[styles.paragraph, { marginBottom: paragraphSpacing }]}
                 >
-                  <Text>{props.children}</Text>
+                  <Text>{`${props.children}`.replaceAll("\n", "")}</Text>
                 </View>
               ) : (
                 <Text style={styles.paragraph}>{props.children}</Text>

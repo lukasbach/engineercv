@@ -87,7 +87,9 @@ const toAddress = defineComponent({
 const body = defineComponent({
   name: "body",
   schema: z.object({
-    subject: z.string().optional(),
+    info: z.object({
+      subject: z.string().optional(),
+    }),
     body: z.string(),
     config: z.object({ paragraphSpacing: z.string().optional() }).optional(),
   }),
@@ -96,7 +98,7 @@ const body = defineComponent({
     return (
       <>
         <ReactPdf.View style={styles.container}>
-          <Markdown style={styles.subject}>{spec.subject}</Markdown>
+          <Markdown style={styles.subject}>{spec.info.subject}</Markdown>
           <Markdown
             style={styles.body}
             paragraphSpacing={spec.config?.paragraphSpacing ?? "14pt"}
