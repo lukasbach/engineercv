@@ -7,6 +7,13 @@ import { workSectionComponent } from "./work-section-component.js";
 import { projectsSectionComponent } from "./project-section-component.js";
 import { educationSectionComponent } from "./education-section-component.js";
 import { skillsSectionComponent } from "./skill-section-component.js";
+import { volunteerSectionComponent } from "./volunteer-section-component.js";
+import { awardsSectionComponent } from "./awards-section-component.js";
+import { certificatesSectionComponent } from "./certificates-section-component.js";
+import { publicationsSectionComponent } from "./publications-section-component.js";
+import { languagesSectionComponent } from "./languages-section-component.js";
+import { interestsSectionComponent } from "./interests-section-component.js";
+import { referencesSectionComponent } from "./references-section-component.js";
 import { markdownComponent } from "./markdown-component.js";
 import { documentComponent } from "./document-component.js";
 import { pageComponent } from "./page-component.js";
@@ -27,6 +34,13 @@ export const defaultComponents = {
   [projectsSectionComponent.name]: projectsSectionComponent,
   [educationSectionComponent.name]: educationSectionComponent,
   [skillsSectionComponent.name]: skillsSectionComponent,
+  [volunteerSectionComponent.name]: volunteerSectionComponent,
+  [awardsSectionComponent.name]: awardsSectionComponent,
+  [certificatesSectionComponent.name]: certificatesSectionComponent,
+  [publicationsSectionComponent.name]: publicationsSectionComponent,
+  [languagesSectionComponent.name]: languagesSectionComponent,
+  [interestsSectionComponent.name]: interestsSectionComponent,
+  [referencesSectionComponent.name]: referencesSectionComponent,
   [sectionOrderComponent.name]: sectionOrderComponent,
 } as const;
 

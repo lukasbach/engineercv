@@ -1,0 +1,88 @@
+# yaml-language-server: $schema=../../lib/schema.json
+
+basics:
+  name: Jane Smith
+  email: jane.smith@example.com
+
+output: ../out/test/new-components-test.pdf
+
+title:
+  items:
+    - "[jane.smith@example.com](mailto:jane.smith@example.com)"
+    - "[+1 (555) 123-4567](tel:+15551234567)"
+    - "[linkedin.com/in/janesmith](https://linkedin.com/in/janesmith)"
+  summary: |
+    Full-stack developer with expertise in modern web technologies and a passion for open source contributions.
+
+skills:
+  - name: Programming Languages
+    keywords:
+      - JavaScript
+      - TypeScript
+      - Python
+      - Java
+
+work:
+  - position: Senior Software Engineer
+    name: Tech Innovations Inc.
+    location: San Francisco, CA
+    startDate: 2021/01
+    highlights:
+      - Led development of microservices architecture
+      - Mentored junior developers
+
+volunteer:
+  - organization: Code for Good
+    position: Volunteer Developer
+    url: https://codeforgood.org
+    startDate: 2020/01
+    endDate: 2023/12
+    summary: Contributed to open source projects that help non-profit organizations.
+    highlights:
+      - Developed web applications for local charities
+      - Awarded 'Volunteer of the Month' twice
+
+awards:
+  - title: Best Innovation Award
+    date: 2023/11
+    awarder: Tech Conference 2023
+    summary: Recognized for innovative approach to solving complex problems.
+
+certificates:
+  - name: AWS Certified Solutions Architect
+    date: 2023/06
+    issuer: Amazon Web Services
+    url: https://aws.amazon.com/certification/
+
+publications:
+  - name: "Modern Web Development Practices"
+    publisher: Tech Journal
+    releaseDate: 2023/03
+    url: https://techjournal.com/modern-web-dev
+    summary: An article about current best practices in web development.
+
+languages:
+  - language: English
+    fluency: Native speaker
+  - language: Spanish
+    fluency: Conversational
+  - language: French
+    fluency: Basic
+
+interests:
+  - name: Technology
+    keywords:
+      - Machine Learning
+      - Cloud Computing
+      - Open Source
+  - name: Hobbies
+    keywords:
+      - Photography
+      - Hiking
+      - Cooking
+
+references:
+  - name: John Doe
+    reference: "Jane is an exceptional developer with strong technical skills and excellent communication abilities. She consistently delivers high-quality work and is a valuable team member."
+  - name: Sarah Johnson
+    reference: "I highly recommend Jane for any software engineering position. Her problem-solving skills and attention to detail are outstanding."
