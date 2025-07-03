@@ -34,7 +34,7 @@ export const publicationsSectionComponent = defineComponent({
     const Markdown = getComponent(markdownComponent);
     if (!spec.publications) return null;
     return (
-      <>
+      <View wrap={false}>
         <SectionHeader style={styles.header}>
           {spec.strings?.publications}
         </SectionHeader>
@@ -53,7 +53,7 @@ export const publicationsSectionComponent = defineComponent({
             <Markdown style={styles.summary} children={section.summary ?? ""} />
           </View>
         ))}
-      </>
+      </View>
     );
   },
   defaultStyles: {

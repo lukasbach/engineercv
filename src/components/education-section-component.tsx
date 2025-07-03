@@ -42,7 +42,7 @@ export const educationSectionComponent = defineComponent({
     const DateRange = getComponent(dateRangeComponent);
     if (!spec.education) return null;
     return (
-      <>
+      <View wrap={false}>
         <SectionHeader style={styles.header}>
           {spec.strings?.education}
         </SectionHeader>
@@ -72,7 +72,7 @@ export const educationSectionComponent = defineComponent({
             ))}
           </View>
         ))}
-      </>
+      </View>
     );
   },
   defaultStyles: workSectionComponent.defaultStyles,

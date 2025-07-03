@@ -33,7 +33,7 @@ export const awardsSectionComponent = defineComponent({
     const Markdown = getComponent(markdownComponent);
     if (!spec.awards) return null;
     return (
-      <>
+      <View wrap={false}>
         <SectionHeader style={styles.header}>
           {spec.strings?.awards}
         </SectionHeader>
@@ -50,7 +50,7 @@ export const awardsSectionComponent = defineComponent({
             <Markdown style={styles.summary} children={section.summary ?? ""} />
           </View>
         ))}
-      </>
+      </View>
     );
   },
   defaultStyles: {

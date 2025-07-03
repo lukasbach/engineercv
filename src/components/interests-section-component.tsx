@@ -27,7 +27,7 @@ export const interestsSectionComponent = defineComponent({
     const SectionHeader = getComponent(sectionHeaderComponent);
     if (!spec.interests) return null;
     return (
-      <>
+      <View wrap={false}>
         <SectionHeader style={styles.header}>
           {spec.strings?.interests}
         </SectionHeader>
@@ -47,7 +47,7 @@ export const interestsSectionComponent = defineComponent({
               )}
           </View>
         ))}
-      </>
+      </View>
     );
   },
   defaultStyles: {

@@ -26,7 +26,7 @@ export const languagesSectionComponent = defineComponent({
     const SectionHeader = getComponent(sectionHeaderComponent);
     if (!spec.languages) return null;
     return (
-      <>
+      <View wrap={false}>
         <SectionHeader style={styles.header}>
           {spec.strings?.languages}
         </SectionHeader>
@@ -40,7 +40,7 @@ export const languagesSectionComponent = defineComponent({
             )}
           </View>
         ))}
-      </>
+      </View>
     );
   },
   defaultStyles: {

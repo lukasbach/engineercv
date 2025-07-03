@@ -41,7 +41,7 @@ export const volunteerSectionComponent = defineComponent({
     const Markdown = getComponent(markdownComponent);
     if (!spec.volunteer) return null;
     return (
-      <>
+      <View wrap={false}>
         <SectionHeader style={styles.header}>
           {spec.strings?.volunteer}
         </SectionHeader>
@@ -69,7 +69,7 @@ export const volunteerSectionComponent = defineComponent({
             ))}
           </View>
         ))}
-      </>
+      </View>
     );
   },
   defaultStyles: {

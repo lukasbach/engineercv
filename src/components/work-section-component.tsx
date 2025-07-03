@@ -41,7 +41,7 @@ export const workSectionComponent = defineComponent({
     const Markdown = getComponent(markdownComponent);
     if (!spec.work) return null;
     return (
-      <>
+      <View wrap={false}>
         <SectionHeader style={styles.header}>
           {spec.strings?.work}
         </SectionHeader>
@@ -65,7 +65,7 @@ export const workSectionComponent = defineComponent({
             ))}
           </View>
         ))}
-      </>
+      </View>
     );
   },
   defaultStyles: {

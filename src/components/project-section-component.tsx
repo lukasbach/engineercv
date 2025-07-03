@@ -39,7 +39,7 @@ export const projectsSectionComponent = defineComponent({
     const DateRange = getComponent(dateRangeComponent);
     if (!spec.projects) return null;
     return (
-      <>
+      <View wrap={false}>
         <SectionHeader style={styles.header}>
           {spec.strings?.projects}
         </SectionHeader>
@@ -63,7 +63,7 @@ export const projectsSectionComponent = defineComponent({
             ))}
           </View>
         ))}
-      </>
+      </View>
     );
   },
   defaultStyles: workSectionComponent.defaultStyles,

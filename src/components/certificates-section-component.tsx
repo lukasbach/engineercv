@@ -31,7 +31,7 @@ export const certificatesSectionComponent = defineComponent({
     const DetailsItem = getComponent(detailsItemComponent);
     if (!spec.certificates) return null;
     return (
-      <>
+      <View wrap={false}>
         <SectionHeader style={styles.header}>
           {spec.strings?.certificates}
         </SectionHeader>
@@ -48,7 +48,7 @@ export const certificatesSectionComponent = defineComponent({
             />
           </View>
         ))}
-      </>
+      </View>
     );
   },
   defaultStyles: {

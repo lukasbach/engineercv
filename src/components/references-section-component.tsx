@@ -30,7 +30,7 @@ export const referencesSectionComponent = defineComponent({
     const Markdown = getComponent(markdownComponent);
     if (!spec.references) return null;
     return (
-      <>
+      <View wrap={false}>
         <SectionHeader style={styles.header}>
           {spec.strings?.references}
         </SectionHeader>
@@ -47,7 +47,7 @@ export const referencesSectionComponent = defineComponent({
             />
           </View>
         ))}
-      </>
+      </View>
     );
   },
   defaultStyles: {
