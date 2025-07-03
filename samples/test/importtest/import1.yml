@@ -1,5 +1,8 @@
 imports:
   - "./import2.yml"
 
+basics:
+  name: John Doe
+
 info:
   # name: Import 1x

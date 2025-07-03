@@ -5,6 +5,9 @@ output: ../../out/test/themes/cover-letter.pdf
 imports:
   - ../../../src/themes/coverletter.tsx
 
+basics:
+  name: John Doe
+
 info:
   name: John Doe
   subtitle: Senior Software Engineer

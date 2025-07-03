@@ -4,7 +4,7 @@ import z from "zod";
 import { dateRangeComponent } from "./date-range-component.js";
 import { defineComponent } from "./define-component.js";
 import { detailsItemComponent } from "./details-item-component.js";
-import { experienceSectionComponent } from "./experience-section-component.js";
+import { workSectionComponent } from "./work-section-component.js";
 import { listItemComponent } from "./list-item-component.js";
 import { sectionHeaderComponent } from "./section-header-component.js";
 import { joinComponents } from "./utils.js";
@@ -66,5 +66,5 @@ export const projectsSectionComponent = defineComponent({
       </>
     );
   },
-  defaultStyles: experienceSectionComponent.defaultStyles,
+  defaultStyles: workSectionComponent.defaultStyles,
 });

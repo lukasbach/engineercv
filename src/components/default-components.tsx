@@ -3,7 +3,7 @@ import { listItemComponent } from "./list-item-component.js";
 import { detailsItemComponent } from "./details-item-component.js";
 import { dateRangeComponent } from "./date-range-component.js";
 import { sectionHeaderComponent } from "./section-header-component.js";
-import { experienceSectionComponent } from "./experience-section-component.js";
+import { workSectionComponent } from "./work-section-component.js";
 import { projectsSectionComponent } from "./project-section-component.js";
 import { educationSectionComponent } from "./education-section-component.js";
 import { skillsSectionComponent } from "./skill-section-component.js";
@@ -22,7 +22,7 @@ export const defaultComponents = {
   [sectionHeaderComponent.name]: sectionHeaderComponent,
   [listItemComponent.name]: listItemComponent,
   [detailsItemComponent.name]: detailsItemComponent,
-  [experienceSectionComponent.name]: experienceSectionComponent,
+  [workSectionComponent.name]: workSectionComponent,
   [dateRangeComponent.name]: dateRangeComponent,
   [projectsSectionComponent.name]: projectsSectionComponent,
   [educationSectionComponent.name]: educationSectionComponent,

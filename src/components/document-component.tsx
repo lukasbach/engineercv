@@ -6,10 +6,9 @@ import { defineComponent } from "./define-component.js";
 export const documentComponent = defineComponent({
   name: "document",
   schema: z.object({
-    info: z.object({
+    basics: z.object({
       name: z.string(),
       author: z.string().optional(),
-      subject: z.string().optional(),
       language: z.string().optional(),
     }),
   }),
@@ -17,11 +16,11 @@ export const documentComponent = defineComponent({
   component: ({ children, styles, spec }) => (
     <Document
       style={styles.container}
-      title={spec.info.name}
-      author={spec.info.author}
-      creator={spec.info.author ?? "engineercv"}
-      producer={spec.info.author ?? "engineercv"}
-      language={spec.info.language ?? "en-US"}
+      title={spec.basics.name}
+      author={spec.basics.author ?? spec.basics.name}
+      creator={spec.basics.author ?? spec.basics.name ?? "engineercv"}
+      producer={spec.basics.author ?? "engineercv"}
+      language={spec.basics.language ?? "en-US"}
     >
       {children}
     </Document>

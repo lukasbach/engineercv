@@ -2,6 +2,9 @@
 
 output: ../out/test/{{ source.name }}.pdf
 
+basics:
+  name: John Doe
+
 info:
   name: John Doe
 

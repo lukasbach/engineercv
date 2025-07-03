@@ -3,7 +3,7 @@ export const globalConfig = {
     size: "A4",
   },
   strings: {
-    experience: "Experience",
+    work: "Experience",
     projects: "Projects",
     education: "Education",
     skills: "Skills",

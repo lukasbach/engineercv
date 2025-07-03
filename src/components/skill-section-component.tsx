@@ -17,8 +17,9 @@ export const skillsSectionComponent = defineComponent({
       .array(
         z.object({
           $id: z.string().optional(),
-          title: z.string(),
-          items: z.string().array(),
+          name: z.string(),
+          level: z.string().optional(),
+          keywords: z.string().array(),
         }),
       )
       .optional(),
@@ -34,10 +35,10 @@ export const skillsSectionComponent = defineComponent({
         {spec.skills.map((section, index) => (
           <View key={index} style={styles.section}>
             <Text style={styles.sectionTitle}>
-              {section.title}:{"\u00A0"}
+              {section.name}:{"\u00A0"}
             </Text>
             {joinComponents(
-              section.items.map((item, itemIndex) => (
+              section.keywords.map((item, itemIndex) => (
                 <Text key={itemIndex} style={styles.item}>
                   {item}
                 </Text>

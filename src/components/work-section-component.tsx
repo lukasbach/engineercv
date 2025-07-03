@@ -7,26 +7,28 @@ import { detailsItemComponent } from "./details-item-component.js";
 import { listItemComponent } from "./list-item-component.js";
 import { sectionHeaderComponent } from "./section-header-component.js";
 import { joinComponents } from "./utils.js";
+import { markdownComponent } from "./markdown-component.js";
 
-export const experienceSectionComponent = defineComponent({
-  name: "experience" as const,
+export const workSectionComponent = defineComponent({
+  name: "work" as const,
   schema: z.object({
     strings: z
       .object({
-        experience: z.string().default(""),
+        work: z.string().default(""),
         untilNow: z.string().default(""),
       })
       .default({}),
-    experience: z
+    work: z
       .array(
         z.object({
           $id: z.string().optional(),
-          title: z.string(),
-          company: z.string().optional(),
+          name: z.string().optional(),
+          position: z.string(),
           location: z.string().optional(),
-          start: z.string(),
-          end: z.string().optional(),
-          items: z.string().array().optional(),
+          startDate: z.string(),
+          endDate: z.string().optional(),
+          summary: z.string().optional(),
+          highlights: z.string().array().optional(),
         }),
       )
       .optional(),
@@ -36,23 +38,27 @@ export const experienceSectionComponent = defineComponent({
     const ListItem = getComponent(listItemComponent);
     const DetailsItem = getComponent(detailsItemComponent);
     const DateRange = getComponent(dateRangeComponent);
-    if (!spec.experience) return null;
+    const Markdown = getComponent(markdownComponent);
+    if (!spec.work) return null;
     return (
       <>
         <SectionHeader style={styles.header}>
-          {spec.strings?.experience}
+          {spec.strings?.work}
         </SectionHeader>
-        {spec.experience.map((section, index) => (
+        {spec.work.map((section, index) => (
           <View key={index} style={styles.section}>
             <DetailsItem
               style={styles.details}
-              title={section.title}
-              right={<DateRange start={section.start} end={section.end} />}
-              details={joinComponents([section.company, section.location])}
+              title={section.position}
+              right={
+                <DateRange start={section.startDate} end={section.endDate} />
+              }
+              details={joinComponents([section.name, section.location])}
               separator=", "
-              bottomMargin={!!section.items?.length}
+              bottomMargin={!!section.highlights?.length || !!section.summary}
             />
-            {section.items?.map((item, itemIndex) => (
+            <Markdown style={styles.summary} children={section.summary ?? ""} />
+            {section.highlights?.map((item, itemIndex) => (
               <ListItem key={itemIndex} style={styles.listItem}>
                 {item}
               </ListItem>
@@ -70,5 +76,6 @@ export const experienceSectionComponent = defineComponent({
     },
     details: {},
     listItem: {},
+    summary: {},
   } as const,
 });

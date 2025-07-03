@@ -4,7 +4,7 @@ import z from "zod";
 import { dateRangeComponent } from "./date-range-component.js";
 import { defineComponent } from "./define-component.js";
 import { detailsItemComponent } from "./details-item-component.js";
-import { experienceSectionComponent } from "./experience-section-component.js";
+import { workSectionComponent } from "./work-section-component.js";
 import { listItemComponent } from "./list-item-component.js";
 import { sectionHeaderComponent } from "./section-header-component.js";
 import { joinComponents } from "./utils.js";
@@ -23,13 +23,14 @@ export const educationSectionComponent = defineComponent({
       .array(
         z.object({
           $id: z.string().optional(),
-          title: z.string(),
           institution: z.string().optional(),
-          start: z.string().optional(),
-          end: z.string().optional(),
-          grade: z.string().optional(),
-          details: z.string().optional(),
-          items: z.string().array().optional(),
+          url: z.string().url().optional(),
+          area: z.string().optional(),
+          studyType: z.string().optional(),
+          startDate: z.string().optional(),
+          endDate: z.string().optional(),
+          score: z.string().optional(),
+          courses: z.string().array().optional(),
         }),
       )
       .optional(),
@@ -49,15 +50,22 @@ export const educationSectionComponent = defineComponent({
           <View key={index} style={styles.section}>
             <DetailsItem
               style={styles.details}
-              title={section.institution}
+              title={
+                section.url
+                  ? `[${section.institution}](${section.url})`
+                  : section.institution
+              }
               details={joinComponents([
-                section.details,
-                section.grade && `${spec.strings?.gpa}${section.grade}`,
+                section.area,
+                section.studyType,
+                section.score && `${spec.strings?.gpa}${section.score}`,
               ])}
-              right={<DateRange start={section.start} end={section.end} />}
-              bottomMargin={!!section.items?.length}
+              right={
+                <DateRange start={section.startDate} end={section.endDate} />
+              }
+              bottomMargin={!!section.courses?.length}
             />
-            {section.items?.map((item, itemIndex) => (
+            {section.courses?.map((item, itemIndex) => (
               <ListItem key={itemIndex} style={styles.listItem}>
                 {item}
               </ListItem>
@@ -67,5 +75,5 @@ export const educationSectionComponent = defineComponent({
       </>
     );
   },
-  defaultStyles: experienceSectionComponent.defaultStyles,
+  defaultStyles: workSectionComponent.defaultStyles,
 });
