@@ -4,7 +4,7 @@ import React from "react";
 const header = defineComponent({
   name: "header",
   schema: z.object({
-    info: z.object({ name: z.string(), subtitle: z.string().optional() }),
+    basics: z.object({ name: z.string(), subtitle: z.string().optional() }),
     fromAddress: z.string().array().optional(),
     date: z.string().optional(),
   }),
@@ -13,10 +13,10 @@ const header = defineComponent({
     return (
       <>
         <ReactPdf.View style={styles.container}>
-          <Markdown style={styles.title}>{spec.info.name}</Markdown>
+          <Markdown style={styles.title}>{spec.basics.name}</Markdown>
 
           <ReactPdf.View style={styles.innerContainer}>
-            <Markdown style={styles.subtitle}>{spec.info.subtitle}</Markdown>
+            <Markdown style={styles.subtitle}>{spec.basics.subtitle}</Markdown>
             <Markdown style={styles.address}>
               {spec.fromAddress?.join("\n")}
             </Markdown>
@@ -87,7 +87,7 @@ const toAddress = defineComponent({
 const body = defineComponent({
   name: "body",
   schema: z.object({
-    info: z.object({
+    basics: z.object({
       subject: z.string().optional(),
     }),
     body: z.string(),
@@ -98,7 +98,7 @@ const body = defineComponent({
     return (
       <>
         <ReactPdf.View style={styles.container}>
-          <Markdown style={styles.subject}>{spec.info.subject}</Markdown>
+          <Markdown style={styles.subject}>{spec.basics.subject}</Markdown>
           <Markdown
             style={styles.body}
             paragraphSpacing={spec.config?.paragraphSpacing ?? "14pt"}

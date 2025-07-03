@@ -3,9 +3,6 @@
 basics:
   name: John Doe
 
-info:
-  name: John Doe
-
 output: ../out/test/cv.pdf
 
 title:

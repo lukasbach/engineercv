@@ -6,9 +6,6 @@ imports:
 basics:
   name: John Doe
 
-info:
-  name: John Doe
-
 title:
   items:
     - "[john.doe@outlook.com](mailto:john.doe@outlook.com)"

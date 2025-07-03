@@ -7,7 +7,7 @@ import { markdownComponent } from "./markdown-component.js";
 export const titleSectionComponent = defineComponent({
   name: "title" as const,
   schema: z.object({
-    info: z.object({ name: z.string() }),
+    basics: z.object({ name: z.string() }),
     title: z
       .object({
         items: z.string().array().optional(),
@@ -20,7 +20,7 @@ export const titleSectionComponent = defineComponent({
     return (
       spec.title && (
         <View style={styles.container}>
-          <Markdown style={styles.name}>{spec.info.name}</Markdown>
+          <Markdown style={styles.name}>{spec.basics.name}</Markdown>
           <View style={styles.itemContainer}>
             {spec.title.items?.map((item, index) => (
               <Markdown

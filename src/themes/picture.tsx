@@ -4,7 +4,7 @@ import React from "react";
 const title = defineComponent({
   name: "title",
   schema: z.object({
-    info: z.object({ name: z.string() }),
+    basics: z.object({ name: z.string() }),
     title: z
       .object({
         items: z.string().array().optional(),
@@ -30,7 +30,7 @@ const title = defineComponent({
               />
             </ReactPdf.View>
             <ReactPdf.View style={styles.rightContainer}>
-              <Markdown style={styles.name}>{spec.info.name}</Markdown>
+              <Markdown style={styles.name}>{spec.basics.name}</Markdown>
               <Markdown style={styles.summary}>
                 This is my awesome custom component!
               </Markdown>

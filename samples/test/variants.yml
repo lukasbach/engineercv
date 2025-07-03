@@ -30,9 +30,6 @@ output: ../out/test/variants-{{ facing }}-{{ focus }}.pdf
 basics:
   name: "{{ name }}"
 
-info:
-  name: "{{ name }}"
-
 config:
   size: A4
 

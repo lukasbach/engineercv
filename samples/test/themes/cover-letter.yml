@@ -7,9 +7,6 @@ imports:
 
 basics:
   name: John Doe
-
-info:
-  name: John Doe
   subtitle: Senior Software Engineer
   subject: Application for Software Engineer Position
 

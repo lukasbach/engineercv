@@ -4,13 +4,13 @@ import "../../src/module-globals.js";
 const title = defineComponent({
   name: "title",
   schema: z.object({
-    info: z.object({ name: z.string() }),
+    basics: z.object({ name: z.string() }),
   }),
   component: ({ spec, styles, getComponent }) => {
     const Markdown = getComponent({name: "markdown"});
     return (
       <ReactPdf.View style={styles.container}>
-        <Markdown style={styles.name}>{spec.info.name}</Markdown>
+        <Markdown style={styles.name}>{spec.basics.name}</Markdown>
         <Markdown style={styles.summary}>This is my awesome custom component!</Markdown>
       </ReactPdf.View>
     );

@@ -26,9 +26,6 @@ variants:
 basics:
   name: John Doe
 
-info:
-  name: John Doe
-
 title:
   items:
     - "{{ email 'john.doe@outlook.com' }}"
