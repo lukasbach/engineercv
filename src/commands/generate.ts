@@ -22,5 +22,6 @@ generateCommand.action(async (globPattern) => {
     process.exit(1);
   } else {
     logger.success("Generation completed successfully.");
+    process.exit(0);
   }
 });

@@ -22,12 +22,11 @@ export const projectsSectionComponent = defineComponent({
       .array(
         z.object({
           $id: z.string().optional(),
-          title: z.string(),
-          details: z.string().optional(),
-          link: z.string().optional(),
-          start: z.string().optional(),
-          end: z.string().optional(),
-          items: z.string().array().optional(),
+          name: z.string(),
+          startDate: z.string().optional(),
+          endDate: z.string().optional(),
+          description: z.string().optional(),
+          highlights: z.string().array().optional(),
         }),
       )
       .optional(),
@@ -47,7 +46,7 @@ export const projectsSectionComponent = defineComponent({
           <View key={index} style={styles.section}>
             <DetailsItem
               style={styles.details}
-              title={project.title}
+              title={project.name}
               details={joinComponents([
                 project.details,
                 <DateRange start={project.start} end={project.end} />,

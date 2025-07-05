@@ -21,15 +21,38 @@ skills:
       - TypeScript
       - Python
       - Java
+  - name: Frameworks & Libraries
+    keywords:
+      - React
+      - Node.js
+      - Express
+      - Django
+  - name: Tools & Technologies
+    keywords:
+      - Git
+      - Docker
+      - AWS
+      - Kubernetes
 
 work:
   - position: Senior Software Engineer
     name: Tech Innovations Inc.
     location: San Francisco, CA
     startDate: 2021/01
+    summary: Leading a team of developers to build scalable web applications and microservices.
     highlights:
       - Led development of microservices architecture
       - Mentored junior developers
+  - position: Software Engineer
+    name: Web Solutions Ltd.
+    location: New York, NY
+    startDate: 2018/06
+    endDate: 2020/12
+    summary: |
+      Developed scalable web applications using React and Node.js, focusing on performance optimization and user experience.
+    highlights:
+      - Developed scalable web applications using React and Node.js
+      - Improved application performance by optimizing database queries
 
 volunteer:
   - organization: Code for Good
@@ -47,12 +70,20 @@ awards:
     date: 2023/11
     awarder: Tech Conference 2023
     summary: Recognized for innovative approach to solving complex problems.
+  - title: Outstanding Contribution to Open Source
+    date: 2022/05
+    awarder: Open Source Initiative
+    summary: Acknowledged for significant contributions to various open source projects.
 
 certificates:
   - name: AWS Certified Solutions Architect
     date: 2023/06
     issuer: Amazon Web Services
     url: https://aws.amazon.com/certification/
+  - name: Certified Kubernetes Administrator
+    date: 2022/09
+    issuer: Cloud Native Computing Foundation
+    url: https://www.cncf.io/certification/cka/
 
 publications:
   - name: "Modern Web Development Practices"
@@ -83,6 +114,29 @@ interests:
 
 references:
   - name: John Doe
+    date: 2023/10
     reference: "Jane is an exceptional developer with strong technical skills and excellent communication abilities. She consistently delivers high-quality work and is a valuable team member."
   - name: Sarah Johnson
+    date: 2023/10
     reference: "I highly recommend Jane for any software engineering position. Her problem-solving skills and attention to detail are outstanding."
+
+projects:
+  - name: Kanban Board Application
+    startDate: 2023/01
+    endDate: 2023/06
+    description: |
+      Developed a Kanban board application using React and Node.js, implementing drag-and-drop functionality for task management.
+    highlights:
+      - Implemented real-time updates using WebSockets
+      - Integrated with a RESTful API for task management
+    url: "[github.com/janesmith/kanban-board](https://github.com/janesmith/kanban-board)"
+  - name: E-commerce Website
+    startDate: 2021/03
+    endDate: 2021/12
+    description: |
+      Built a full-featured e-commerce website using Django and React, focusing on user experience and
+      performance optimization.
+    highlights:
+      - Implemented user authentication and payment processing
+      - Optimized database queries for faster load times
+    url: "[github.com/janesmith/e-commerce-website](https://github.com/janesmith/e-commerce-website)"

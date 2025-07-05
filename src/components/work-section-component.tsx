@@ -24,6 +24,7 @@ export const workSectionComponent = defineComponent({
           $id: z.string().optional(),
           name: z.string().optional(),
           position: z.string(),
+          url: z.string().url().optional(),
           location: z.string().optional(),
           startDate: z.string(),
           endDate: z.string().optional(),

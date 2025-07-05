@@ -50,13 +50,13 @@ work:
       - Gained experience in Agile methodologies and version control systems.
 
 projects: 
-  - title: Kanban Board Application
+  - name: Kanban Board Application
     link: "[github.com/johndoe/kanban-board](https://github.com/johndoe/kanban-board)"
     items:
       - Developed a Kanban board application using React and Node.js.
       - Implemented drag-and-drop functionality for task management.
       - Integrated with a RESTful API for data persistence.
-  - title: E-commerce Website
+  - name: E-commerce Website
     start: 2021/03
     end: 2021/12
     details: Details

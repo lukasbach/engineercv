@@ -3,6 +3,8 @@
 imports:
   - "./import1.yml"
 
+output: "../../out/test/importtest.pdf"
+
 basics:
   name: John Doe
 
@@ -51,13 +53,13 @@ work:
       - Gained experience in Agile methodologies and version control systems.
 
 projects: 
-  - title: Kanban Board Application
+  - name: Kanban Board Application
     link: "[github.com/johndoe/kanban-board](https://github.com/johndoe/kanban-board)"
     items:
       - Developed a Kanban board application using React and Node.js.
       - Implemented drag-and-drop functionality for task management.
       - Integrated with a RESTful API for data persistence.
-  - title: E-commerce Website
+  - name: E-commerce Website
     start: 2021/03
     end: 2021/12
     details: Details
@@ -74,4 +76,4 @@ education:
   - studyType: Bachelor of Science in Computer Science
     institution: University of Technology
     endDate: 2015/06
-    score: 3.8/4.0
+    score: 3.8/4.0 
