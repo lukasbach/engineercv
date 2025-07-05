@@ -27,6 +27,7 @@ export const projectsSectionComponent = defineComponent({
           endDate: z.string().optional(),
           description: z.string().optional(),
           highlights: z.string().array().optional(),
+          url: z.string().url().optional(),
         }),
       )
       .optional(),
@@ -48,14 +49,13 @@ export const projectsSectionComponent = defineComponent({
               style={styles.details}
               title={project.name}
               details={joinComponents([
-                project.details,
-                <DateRange start={project.start} end={project.end} />,
+                <DateRange start={project.startDate} end={project.endDate} />,
               ])}
-              right={project.link}
+              right={project.url}
               separator=", "
-              bottomMargin={!!project.items?.length}
+              bottomMargin={!!project.highlights?.length}
             />
-            {project.items?.map((item, itemIndex) => (
+            {project.highlights?.map((item, itemIndex) => (
               <ListItem key={itemIndex} style={styles.listItem}>
                 {item}
               </ListItem>

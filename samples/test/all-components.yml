@@ -129,7 +129,7 @@ projects:
     highlights:
       - Implemented real-time updates using WebSockets
       - Integrated with a RESTful API for task management
-    url: "[github.com/janesmith/kanban-board](https://github.com/janesmith/kanban-board)"
+    url: https://github.com/janesmith/kanban-board
   - name: E-commerce Website
     startDate: 2021/03
     endDate: 2021/12
@@ -139,4 +139,4 @@ projects:
     highlights:
       - Implemented user authentication and payment processing
       - Optimized database queries for faster load times
-    url: "[github.com/janesmith/e-commerce-website](https://github.com/janesmith/e-commerce-website)"
+    url: https://github.com/janesmith/e-commerce-website

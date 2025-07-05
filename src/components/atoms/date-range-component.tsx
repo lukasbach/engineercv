@@ -2,6 +2,7 @@ import { Text } from "@react-pdf/renderer";
 import React from "react";
 import z from "zod";
 import { defineComponent } from "../define-component.js";
+import { dateComponent } from "./date-component.js";
 
 export const dateRangeComponent = defineComponent({
   name: "dateRange",
@@ -15,14 +16,19 @@ export const dateRangeComponent = defineComponent({
   additionalProps: z.object({
     start: z.string().optional(),
     end: z.string().optional(),
+    format: z.string().optional(),
     style: z.any(),
   }),
-  component: ({ spec, start, end, styles, style }) => (
-    <Text style={[styles.container, style]}>
-      {start && `${start} – `}
-      {end ?? spec.strings?.untilNow}
-    </Text>
-  ),
+  component: ({ start, end, format, styles, style, getComponent }) => {
+    const DateComponent = getComponent(dateComponent);
+    return (
+      <Text style={[styles.container, style]}>
+        {start && <DateComponent date={start} format={format} />}
+        {start && ` – `}
+        {end && <DateComponent date={end} format={format} />}
+      </Text>
+    );
+  },
   defaultStyles: {
     container: {},
   },

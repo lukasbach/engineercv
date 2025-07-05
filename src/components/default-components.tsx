@@ -20,6 +20,8 @@ import { pageComponent } from "./page-component.js";
 import { titleSectionComponent } from "./sections/title-section-component.js";
 import { baseSpecSchema } from "../domain/generate/base-spec-schema.js";
 import { sectionOrderComponent } from "./section-order-component.js";
+import { urlComponent } from "./atoms/url.js";
+import { dateComponent } from "./atoms/date-component.js";
 
 export const defaultComponents = {
   [markdownComponent.name]: markdownComponent,
@@ -42,6 +44,8 @@ export const defaultComponents = {
   [interestsSectionComponent.name]: interestsSectionComponent,
   [referencesSectionComponent.name]: referencesSectionComponent,
   [sectionOrderComponent.name]: sectionOrderComponent,
+  [urlComponent.name]: urlComponent,
+  [dateComponent.name]: dateComponent,
 } as const;
 
 export const buildComponentRegistry = (
