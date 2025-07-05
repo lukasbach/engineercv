@@ -19,13 +19,17 @@ export const dateRangeComponent = defineComponent({
     format: z.string().optional(),
     style: z.any(),
   }),
-  component: ({ start, end, format, styles, style, getComponent }) => {
+  component: ({ start, end, format, styles, style, getComponent, spec }) => {
     const DateComponent = getComponent(dateComponent);
     return (
       <Text style={[styles.container, style]}>
         {start && <DateComponent date={start} format={format} />}
         {start && ` – `}
-        {end && <DateComponent date={end} format={format} />}
+        {end ? (
+          <DateComponent date={end} format={format} />
+        ) : (
+          spec.strings?.untilNow
+        )}
       </Text>
     );
   },

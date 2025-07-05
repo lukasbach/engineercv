@@ -4,7 +4,6 @@ import z from "zod";
 import { defineComponent } from "../define-component.js";
 import { detailsItemComponent } from "../atoms/details-item-component.js";
 import { sectionHeaderComponent } from "../atoms/section-header-component.js";
-import { joinComponents } from "../utils.js";
 import { workSectionComponent } from "./work-section-component.js";
 
 export const awardsSectionComponent = defineComponent({
@@ -42,7 +41,7 @@ export const awardsSectionComponent = defineComponent({
               style={styles.details}
               title={section.title}
               right={section.date}
-              details={joinComponents([section.awarder])}
+              details={section.awarder}
               separator=", "
               summary={section.summary}
             />

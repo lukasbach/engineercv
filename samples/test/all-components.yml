@@ -65,6 +65,26 @@ volunteer:
       - Developed web applications for local charities
       - Awarded 'Volunteer of the Month' twice
 
+education:
+  - institution: University of Technology
+    url: https://universityoftechnology.edu
+    area: Computer Science
+    studyType: Bachelor's Degree
+    startDate: 2014/09
+    endDate: 2018/05
+    score: 3.8/4.0
+    courses:
+      - Data Structures and Algorithms
+      - Web Development
+      - Database Management Systems
+  - institution: Advanced Coding Academy
+    url: https://advancedcodingacademy.com
+    area: Full Stack Development
+    studyType: Certificate
+    startDate: 2019/01
+    endDate: 2019/12
+    score: 4.0/4.0
+
 awards:
   - title: Best Innovation Award
     date: 2023/11

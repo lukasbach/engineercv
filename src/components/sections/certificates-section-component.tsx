@@ -4,7 +4,6 @@ import z from "zod";
 import { defineComponent } from "../define-component.js";
 import { detailsItemComponent } from "../atoms/details-item-component.js";
 import { sectionHeaderComponent } from "../atoms/section-header-component.js";
-import { joinComponents } from "../utils.js";
 import { workSectionComponent } from "./work-section-component.js";
 
 export const certificatesSectionComponent = defineComponent({
@@ -44,7 +43,7 @@ export const certificatesSectionComponent = defineComponent({
                 section.url ? `[${section.name}](${section.url})` : section.name
               }
               right={section.date}
-              details={joinComponents([section.issuer])}
+              details={section.issuer}
               separator=", "
             />
           </View>
