@@ -4,7 +4,7 @@ basics:
   name: Jane Smith
   email: jane.smith@example.com
 
-output: ../out/test/new-components-test.pdf
+output: ../out/test/all-components.pdf
 
 title:
   items:
