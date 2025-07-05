@@ -3,6 +3,7 @@ import React from "react";
 import z from "zod";
 import { defineComponent } from "../define-component.js";
 import { sectionHeaderComponent } from "../atoms/section-header-component.js";
+import { skillsSectionComponent } from "./skill-section-component.js";
 
 export const languagesSectionComponent = defineComponent({
   name: "languages" as const,
@@ -26,7 +27,7 @@ export const languagesSectionComponent = defineComponent({
     const SectionHeader = getComponent(sectionHeaderComponent);
     if (!spec.languages) return null;
     return (
-      <View wrap={false}>
+      <View wrap={false} style={styles.container}>
         <SectionHeader style={styles.header}>
           {spec.strings?.languages}
         </SectionHeader>
@@ -43,16 +44,5 @@ export const languagesSectionComponent = defineComponent({
       </View>
     );
   },
-  defaultStyles: {
-    header: {},
-    section: {
-      display: "flex",
-      flexDirection: "row",
-      marginBottom: "4pt",
-    },
-    sectionTitle: {
-      fontWeight: "bold",
-    },
-    item: {},
-  } as const,
+  defaultStyles: skillsSectionComponent.defaultStyles,
 });

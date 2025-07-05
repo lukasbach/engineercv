@@ -5,7 +5,7 @@ import { defineComponent } from "../define-component.js";
 import { detailsItemComponent } from "../atoms/details-item-component.js";
 import { sectionHeaderComponent } from "../atoms/section-header-component.js";
 import { joinComponents } from "../utils.js";
-import { markdownComponent } from "../atoms/markdown-component.js";
+import { workSectionComponent } from "./work-section-component.js";
 
 export const publicationsSectionComponent = defineComponent({
   name: "publications" as const,
@@ -31,15 +31,14 @@ export const publicationsSectionComponent = defineComponent({
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);
     const DetailsItem = getComponent(detailsItemComponent);
-    const Markdown = getComponent(markdownComponent);
     if (!spec.publications) return null;
     return (
-      <View wrap={false}>
+      <View wrap={false} style={styles.container}>
         <SectionHeader style={styles.header}>
           {spec.strings?.publications}
         </SectionHeader>
         {spec.publications.map((section, index) => (
-          <View key={index} style={styles.section}>
+          <View key={index} style={styles.item}>
             <DetailsItem
               style={styles.details}
               title={
@@ -48,21 +47,12 @@ export const publicationsSectionComponent = defineComponent({
               right={section.releaseDate}
               details={joinComponents([section.publisher])}
               separator=", "
-              bottomMargin={!!section.summary}
+              summary={section.summary}
             />
-            <Markdown style={styles.summary} children={section.summary ?? ""} />
           </View>
         ))}
       </View>
     );
   },
-  defaultStyles: {
-    container: {},
-    header: {},
-    section: {
-      marginBottom: "8pt",
-    },
-    details: {},
-    summary: {},
-  } as const,
+  defaultStyles: workSectionComponent.defaultStyles,
 });

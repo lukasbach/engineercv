@@ -4,10 +4,8 @@ import z from "zod";
 import { dateRangeComponent } from "../atoms/date-range-component.js";
 import { defineComponent } from "../define-component.js";
 import { detailsItemComponent } from "../atoms/details-item-component.js";
-import { listItemComponent } from "../atoms/list-item-component.js";
 import { sectionHeaderComponent } from "../atoms/section-header-component.js";
 import { joinComponents } from "../utils.js";
-import { markdownComponent } from "../atoms/markdown-component.js";
 
 export const workSectionComponent = defineComponent({
   name: "work" as const,
@@ -35,19 +33,17 @@ export const workSectionComponent = defineComponent({
       .optional(),
   }),
   component: ({ spec, styles, getComponent }) => {
+    if (!spec.work) return null;
     const SectionHeader = getComponent(sectionHeaderComponent);
-    const ListItem = getComponent(listItemComponent);
     const DetailsItem = getComponent(detailsItemComponent);
     const DateRange = getComponent(dateRangeComponent);
-    const Markdown = getComponent(markdownComponent);
-    if (!spec.work) return null;
     return (
-      <View wrap={false}>
+      <View wrap={false} style={styles.container}>
         <SectionHeader style={styles.header}>
           {spec.strings?.work}
         </SectionHeader>
         {spec.work.map((section, index) => (
-          <View key={index} style={styles.section}>
+          <View key={index} style={styles.item}>
             <DetailsItem
               style={styles.details}
               title={section.position}
@@ -56,14 +52,9 @@ export const workSectionComponent = defineComponent({
               }
               details={joinComponents([section.name, section.location])}
               separator=", "
-              bottomMargin={!!section.highlights?.length || !!section.summary}
+              summary={section.summary}
+              list={section.highlights}
             />
-            <Markdown style={styles.summary} children={section.summary ?? ""} />
-            {section.highlights?.map((item, itemIndex) => (
-              <ListItem key={itemIndex} style={styles.listItem}>
-                {item}
-              </ListItem>
-            ))}
           </View>
         ))}
       </View>
@@ -72,11 +63,9 @@ export const workSectionComponent = defineComponent({
   defaultStyles: {
     container: {},
     header: {},
-    section: {
+    item: {
       marginBottom: "8pt",
     },
     details: {},
-    listItem: {},
-    summary: {},
   } as const,
 });

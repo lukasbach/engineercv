@@ -28,7 +28,7 @@ export const skillsSectionComponent = defineComponent({
     const SectionHeader = getComponent(sectionHeaderComponent);
     if (!spec.skills) return null;
     return (
-      <View wrap={false}>
+      <View wrap={false} style={styles.container}>
         <SectionHeader style={styles.header}>
           {spec.strings?.skills}
         </SectionHeader>
@@ -51,6 +51,7 @@ export const skillsSectionComponent = defineComponent({
     );
   },
   defaultStyles: {
+    container: {},
     header: {},
     section: {
       display: "flex",

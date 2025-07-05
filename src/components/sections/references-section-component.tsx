@@ -4,7 +4,7 @@ import z from "zod";
 import { defineComponent } from "../define-component.js";
 import { detailsItemComponent } from "../atoms/details-item-component.js";
 import { sectionHeaderComponent } from "../atoms/section-header-component.js";
-import { markdownComponent } from "../atoms/markdown-component.js";
+import { workSectionComponent } from "./work-section-component.js";
 
 export const referencesSectionComponent = defineComponent({
   name: "references" as const,
@@ -27,36 +27,23 @@ export const referencesSectionComponent = defineComponent({
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);
     const DetailsItem = getComponent(detailsItemComponent);
-    const Markdown = getComponent(markdownComponent);
     if (!spec.references) return null;
     return (
-      <View wrap={false}>
+      <View wrap={false} style={styles.container}>
         <SectionHeader style={styles.header}>
           {spec.strings?.references}
         </SectionHeader>
         {spec.references.map((section, index) => (
-          <View key={index} style={styles.section}>
+          <View key={index} style={styles.item}>
             <DetailsItem
               style={styles.details}
               title={section.name}
-              bottomMargin={!!section.reference}
-            />
-            <Markdown
-              style={styles.summary}
-              children={section.reference ?? ""}
+              summary={section.reference}
             />
           </View>
         ))}
       </View>
     );
   },
-  defaultStyles: {
-    container: {},
-    header: {},
-    section: {
-      marginBottom: "8pt",
-    },
-    details: {},
-    summary: {},
-  } as const,
+  defaultStyles: workSectionComponent.defaultStyles,
 });

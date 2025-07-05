@@ -4,6 +4,7 @@ import z from "zod";
 import { defineComponent } from "../define-component.js";
 import { sectionHeaderComponent } from "../atoms/section-header-component.js";
 import { joinComponents } from "../utils.js";
+import { skillsSectionComponent } from "./skill-section-component.js";
 
 export const interestsSectionComponent = defineComponent({
   name: "interests" as const,
@@ -27,7 +28,7 @@ export const interestsSectionComponent = defineComponent({
     const SectionHeader = getComponent(sectionHeaderComponent);
     if (!spec.interests) return null;
     return (
-      <View wrap={false}>
+      <View wrap={false} style={styles.container}>
         <SectionHeader style={styles.header}>
           {spec.strings?.interests}
         </SectionHeader>
@@ -50,16 +51,5 @@ export const interestsSectionComponent = defineComponent({
       </View>
     );
   },
-  defaultStyles: {
-    header: {},
-    section: {
-      display: "flex",
-      flexDirection: "row",
-      marginBottom: "4pt",
-    },
-    sectionTitle: {
-      fontWeight: "bold",
-    },
-    item: {},
-  } as const,
+  defaultStyles: skillsSectionComponent.defaultStyles,
 });

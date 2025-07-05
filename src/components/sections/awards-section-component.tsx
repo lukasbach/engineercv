@@ -5,7 +5,7 @@ import { defineComponent } from "../define-component.js";
 import { detailsItemComponent } from "../atoms/details-item-component.js";
 import { sectionHeaderComponent } from "../atoms/section-header-component.js";
 import { joinComponents } from "../utils.js";
-import { markdownComponent } from "../atoms/markdown-component.js";
+import { workSectionComponent } from "./work-section-component.js";
 
 export const awardsSectionComponent = defineComponent({
   name: "awards" as const,
@@ -30,36 +30,26 @@ export const awardsSectionComponent = defineComponent({
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);
     const DetailsItem = getComponent(detailsItemComponent);
-    const Markdown = getComponent(markdownComponent);
     if (!spec.awards) return null;
     return (
-      <View wrap={false}>
+      <View wrap={false} style={styles.container}>
         <SectionHeader style={styles.header}>
           {spec.strings?.awards}
         </SectionHeader>
         {spec.awards.map((section, index) => (
-          <View key={index} style={styles.section}>
+          <View key={index} style={styles.item}>
             <DetailsItem
               style={styles.details}
               title={section.title}
               right={section.date}
               details={joinComponents([section.awarder])}
               separator=", "
-              bottomMargin={!!section.summary}
+              summary={section.summary}
             />
-            <Markdown style={styles.summary} children={section.summary ?? ""} />
           </View>
         ))}
       </View>
     );
   },
-  defaultStyles: {
-    container: {},
-    header: {},
-    section: {
-      marginBottom: "8pt",
-    },
-    details: {},
-    summary: {},
-  } as const,
+  defaultStyles: workSectionComponent.defaultStyles,
 });

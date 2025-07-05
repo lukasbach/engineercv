@@ -5,7 +5,6 @@ import { dateRangeComponent } from "../atoms/date-range-component.js";
 import { defineComponent } from "../define-component.js";
 import { detailsItemComponent } from "../atoms/details-item-component.js";
 import { workSectionComponent } from "./work-section-component.js";
-import { listItemComponent } from "../atoms/list-item-component.js";
 import { sectionHeaderComponent } from "../atoms/section-header-component.js";
 import { joinComponents } from "../utils.js";
 
@@ -31,23 +30,23 @@ export const educationSectionComponent = defineComponent({
           endDate: z.string().optional(),
           score: z.string().optional(),
           courses: z.string().array().optional(),
+          summary: z.string().optional(),
         }),
       )
       .optional(),
   }),
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);
-    const ListItem = getComponent(listItemComponent);
     const DetailsItem = getComponent(detailsItemComponent);
     const DateRange = getComponent(dateRangeComponent);
     if (!spec.education) return null;
     return (
-      <View wrap={false}>
+      <View wrap={false} style={styles.container}>
         <SectionHeader style={styles.header}>
           {spec.strings?.education}
         </SectionHeader>
         {spec.education.map((section, index) => (
-          <View key={index} style={styles.section}>
+          <View key={index} style={styles.item}>
             <DetailsItem
               style={styles.details}
               title={
@@ -63,13 +62,9 @@ export const educationSectionComponent = defineComponent({
               right={
                 <DateRange start={section.startDate} end={section.endDate} />
               }
-              bottomMargin={!!section.courses?.length}
+              list={section.courses}
+              summary={section.summary}
             />
-            {section.courses?.map((item, itemIndex) => (
-              <ListItem key={itemIndex} style={styles.listItem}>
-                {item}
-              </ListItem>
-            ))}
           </View>
         ))}
       </View>
