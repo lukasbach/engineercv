@@ -6,6 +6,7 @@ import { defineComponent } from "../define-component.js";
 import { detailsItemComponent } from "../atoms/details-item-component.js";
 import { sectionHeaderComponent } from "../atoms/section-header-component.js";
 import { joinComponents } from "../utils.js";
+import { detailsListComponent } from "../atoms/details-list-component.js";
 
 export const workSectionComponent = defineComponent({
   name: "work" as const,
@@ -36,16 +37,18 @@ export const workSectionComponent = defineComponent({
     if (!spec.work) return null;
     const SectionHeader = getComponent(sectionHeaderComponent);
     const DetailsItem = getComponent(detailsItemComponent);
+    const DetailsList = getComponent(detailsListComponent);
     const DateRange = getComponent(dateRangeComponent);
     return (
       <View wrap={false} style={styles.container}>
         <SectionHeader style={styles.header}>
           {spec.strings?.work}
         </SectionHeader>
-        {spec.work.map((section, index) => (
-          <View key={index} style={styles.item}>
+        <DetailsList>
+          {spec.work.map((section, index) => (
             <DetailsItem
-              style={styles.details}
+              key={index}
+              style={styles.item}
               title={section.position}
               right={
                 <DateRange start={section.startDate} end={section.endDate} />
@@ -55,17 +58,14 @@ export const workSectionComponent = defineComponent({
               summary={section.summary}
               list={section.highlights}
             />
-          </View>
-        ))}
+          ))}
+        </DetailsList>
       </View>
     );
   },
   defaultStyles: {
     container: {},
     header: {},
-    item: {
-      marginBottom: "8pt",
-    },
-    details: {},
+    item: {},
   } as const,
 });

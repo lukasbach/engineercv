@@ -13,7 +13,7 @@ export const sectionHeaderComponent = defineComponent({
   defaultStyles: {
     container: {
       borderBottom: "1pt solid black",
-      marginTop: "8pt",
+      marginTop: "12pt",
       marginBottom: "6pt",
       paddingBottom: "2pt",
       fontSize: "14pt",

@@ -8,6 +8,7 @@ import { sectionHeaderComponent } from "../atoms/section-header-component.js";
 import { joinComponents } from "../utils.js";
 import { workSectionComponent } from "./work-section-component.js";
 import { urlComponent } from "../atoms/url.js";
+import { detailsListComponent } from "../atoms/details-list-component.js";
 
 export const volunteerSectionComponent = defineComponent({
   name: "volunteer" as const,
@@ -35,6 +36,7 @@ export const volunteerSectionComponent = defineComponent({
   }),
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);
+    const DetailsList = getComponent(detailsListComponent);
     const DetailsItem = getComponent(detailsItemComponent);
     const DateRange = getComponent(dateRangeComponent);
     const Url = getComponent(urlComponent);
@@ -44,10 +46,11 @@ export const volunteerSectionComponent = defineComponent({
         <SectionHeader style={styles.header}>
           {spec.strings?.volunteer}
         </SectionHeader>
-        {spec.volunteer.map((section, index) => (
-          <View key={index} style={styles.item}>
+        <DetailsList>
+          {spec.volunteer.map((section, index) => (
             <DetailsItem
-              style={styles.details}
+              key={index}
+              style={styles.item}
               title={section.position}
               right={
                 <DateRange start={section.startDate} end={section.endDate} />
@@ -59,8 +62,8 @@ export const volunteerSectionComponent = defineComponent({
               summary={section.summary}
               list={section.highlights}
             />
-          </View>
-        ))}
+          ))}
+        </DetailsList>
       </View>
     );
   },

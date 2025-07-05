@@ -8,6 +8,7 @@ import { workSectionComponent } from "./work-section-component.js";
 import { sectionHeaderComponent } from "../atoms/section-header-component.js";
 import { joinComponents } from "../utils.js";
 import { urlComponent } from "../atoms/url.js";
+import { detailsListComponent } from "../atoms/details-list-component.js";
 
 export const projectsSectionComponent = defineComponent({
   name: "projects" as const,
@@ -35,6 +36,7 @@ export const projectsSectionComponent = defineComponent({
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);
     const DetailsItem = getComponent(detailsItemComponent);
+    const DetailsList = getComponent(detailsListComponent);
     const DateRange = getComponent(dateRangeComponent);
     const Url = getComponent(urlComponent);
     if (!spec.projects) return null;
@@ -43,10 +45,11 @@ export const projectsSectionComponent = defineComponent({
         <SectionHeader style={styles.header}>
           {spec.strings?.projects}
         </SectionHeader>
-        {spec.projects.map((project, index) => (
-          <View key={index} style={styles.item}>
+        <DetailsList>
+          {spec.projects.map((project, index) => (
             <DetailsItem
-              style={styles.details}
+              key={index}
+              style={styles.item}
               title={project.name}
               details={joinComponents([
                 <DateRange start={project.startDate} end={project.endDate} />,
@@ -55,8 +58,8 @@ export const projectsSectionComponent = defineComponent({
               separator=", "
               list={project.highlights}
             />
-          </View>
-        ))}
+          ))}
+        </DetailsList>
       </View>
     );
   },

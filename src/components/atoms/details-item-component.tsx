@@ -15,7 +15,6 @@ export const detailsItemComponent = defineComponent({
     details: z.any().optional(),
     right: z.any().optional(),
     separator: z.string().optional(),
-    bottomMargin: z.boolean().optional(),
     summary: z.string().optional(),
     list: z.string().array().optional(),
   }),
@@ -29,15 +28,12 @@ export const detailsItemComponent = defineComponent({
     styles,
     style,
     getComponent,
-    bottomMargin,
   }) => {
     const Markdown = getComponent(markdownComponent);
     const ListItem = getComponent(listItemComponent);
     return (
       <View>
-        <View
-          style={[styles.container, style, bottomMargin && styles.bottomMargin]}
-        >
+        <View style={[styles.container, style]}>
           <View style={styles.leftContent}>
             {joinComponents(
               [
@@ -55,11 +51,13 @@ export const detailsItemComponent = defineComponent({
             </View>
           )}
         </View>
-        {list?.map((item, itemIndex) => (
-          <ListItem key={itemIndex} style={styles.listItem}>
-            {item}
-          </ListItem>
-        ))}
+        <View style={styles.list}>
+          {list?.map((item, itemIndex) => (
+            <ListItem key={itemIndex} style={styles.listItem}>
+              {item}
+            </ListItem>
+          ))}
+        </View>
         <Markdown style={styles.summary} children={summary ?? ""} />
       </View>
     );
@@ -68,9 +66,6 @@ export const detailsItemComponent = defineComponent({
     container: {
       display: "flex",
       flexDirection: "row",
-    },
-    bottomMargin: {
-      marginBottom: "6pt",
     },
     title: {
       fontWeight: "bold",
@@ -85,7 +80,12 @@ export const detailsItemComponent = defineComponent({
       flexGrow: 1,
     },
     rightContent: {},
-    summary: {},
+    summary: {
+      marginTop: "4pt",
+    },
+    list: {
+      marginTop: "4pt",
+    },
     listItem: {},
   } as const,
 });

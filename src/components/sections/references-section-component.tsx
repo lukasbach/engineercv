@@ -5,6 +5,7 @@ import { defineComponent } from "../define-component.js";
 import { detailsItemComponent } from "../atoms/details-item-component.js";
 import { sectionHeaderComponent } from "../atoms/section-header-component.js";
 import { workSectionComponent } from "./work-section-component.js";
+import { detailsListComponent } from "../atoms/details-list-component.js";
 
 export const referencesSectionComponent = defineComponent({
   name: "references" as const,
@@ -26,6 +27,7 @@ export const referencesSectionComponent = defineComponent({
   }),
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);
+    const DetailsList = getComponent(detailsListComponent);
     const DetailsItem = getComponent(detailsItemComponent);
     if (!spec.references) return null;
     return (
@@ -33,15 +35,17 @@ export const referencesSectionComponent = defineComponent({
         <SectionHeader style={styles.header}>
           {spec.strings?.references}
         </SectionHeader>
-        {spec.references.map((section, index) => (
-          <View key={index} style={styles.item}>
-            <DetailsItem
-              style={styles.details}
-              title={section.name}
-              summary={section.reference}
-            />
-          </View>
-        ))}
+        <DetailsList>
+          {spec.references.map((section, index) => (
+            <View key={index} style={styles.item}>
+              <DetailsItem
+                style={styles.item}
+                title={section.name}
+                summary={section.reference}
+              />
+            </View>
+          ))}
+        </DetailsList>
       </View>
     );
   },

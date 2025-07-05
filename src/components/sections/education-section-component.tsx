@@ -7,6 +7,7 @@ import { detailsItemComponent } from "../atoms/details-item-component.js";
 import { workSectionComponent } from "./work-section-component.js";
 import { sectionHeaderComponent } from "../atoms/section-header-component.js";
 import { joinComponents } from "../utils.js";
+import { detailsListComponent } from "../atoms/details-list-component.js";
 
 export const educationSectionComponent = defineComponent({
   name: "education" as const,
@@ -39,16 +40,18 @@ export const educationSectionComponent = defineComponent({
     const SectionHeader = getComponent(sectionHeaderComponent);
     const DetailsItem = getComponent(detailsItemComponent);
     const DateRange = getComponent(dateRangeComponent);
+    const DetailsList = getComponent(detailsListComponent);
     if (!spec.education) return null;
     return (
       <View wrap={false} style={styles.container}>
         <SectionHeader style={styles.header}>
           {spec.strings?.education}
         </SectionHeader>
-        {spec.education.map((section, index) => (
-          <View key={index} style={styles.item}>
+        <DetailsList>
+          {spec.education.map((section, index) => (
             <DetailsItem
-              style={styles.details}
+              key={index}
+              style={styles.item}
               title={
                 section.url
                   ? `[${section.institution}](${section.url})`
@@ -65,8 +68,8 @@ export const educationSectionComponent = defineComponent({
               list={section.courses}
               summary={section.summary}
             />
-          </View>
-        ))}
+          ))}
+        </DetailsList>
       </View>
     );
   },

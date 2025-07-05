@@ -5,6 +5,7 @@ import { defineComponent } from "../define-component.js";
 import { detailsItemComponent } from "../atoms/details-item-component.js";
 import { sectionHeaderComponent } from "../atoms/section-header-component.js";
 import { workSectionComponent } from "./work-section-component.js";
+import { detailsListComponent } from "../atoms/details-list-component.js";
 
 export const certificatesSectionComponent = defineComponent({
   name: "certificates" as const,
@@ -29,16 +30,18 @@ export const certificatesSectionComponent = defineComponent({
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);
     const DetailsItem = getComponent(detailsItemComponent);
+    const DetailsList = getComponent(detailsListComponent);
     if (!spec.certificates) return null;
     return (
       <View wrap={false} style={styles.container}>
         <SectionHeader style={styles.header}>
           {spec.strings?.certificates}
         </SectionHeader>
-        {spec.certificates.map((section, index) => (
-          <View key={index} style={styles.item}>
+        <DetailsList>
+          {spec.certificates.map((section, index) => (
             <DetailsItem
-              style={styles.details}
+              key={index}
+              style={styles.item}
               title={
                 section.url ? `[${section.name}](${section.url})` : section.name
               }
@@ -46,8 +49,8 @@ export const certificatesSectionComponent = defineComponent({
               details={section.issuer}
               separator=", "
             />
-          </View>
-        ))}
+          ))}
+        </DetailsList>
       </View>
     );
   },

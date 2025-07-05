@@ -22,6 +22,7 @@ import { baseSpecSchema } from "../domain/generate/base-spec-schema.js";
 import { sectionOrderComponent } from "./section-order-component.js";
 import { urlComponent } from "./atoms/url.js";
 import { dateComponent } from "./atoms/date-component.js";
+import { detailsListComponent } from "./atoms/details-list-component.js";
 
 export const defaultComponents = {
   [markdownComponent.name]: markdownComponent,
@@ -31,6 +32,7 @@ export const defaultComponents = {
   [sectionHeaderComponent.name]: sectionHeaderComponent,
   [listItemComponent.name]: listItemComponent,
   [detailsItemComponent.name]: detailsItemComponent,
+  [detailsListComponent.name]: detailsListComponent,
   [workSectionComponent.name]: workSectionComponent,
   [dateRangeComponent.name]: dateRangeComponent,
   [projectsSectionComponent.name]: projectsSectionComponent,
