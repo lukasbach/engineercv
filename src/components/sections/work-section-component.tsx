@@ -1,31 +1,32 @@
 import { View } from "@react-pdf/renderer";
 import React from "react";
 import z from "zod";
-import { dateRangeComponent } from "./date-range-component.js";
-import { defineComponent } from "./define-component.js";
-import { detailsItemComponent } from "./details-item-component.js";
-import { listItemComponent } from "./list-item-component.js";
-import { sectionHeaderComponent } from "./section-header-component.js";
-import { joinComponents } from "./utils.js";
-import { markdownComponent } from "./markdown-component.js";
+import { dateRangeComponent } from "../atoms/date-range-component.js";
+import { defineComponent } from "../define-component.js";
+import { detailsItemComponent } from "../atoms/details-item-component.js";
+import { listItemComponent } from "../atoms/list-item-component.js";
+import { sectionHeaderComponent } from "../atoms/section-header-component.js";
+import { joinComponents } from "../utils.js";
+import { markdownComponent } from "../atoms/markdown-component.js";
 
-export const volunteerSectionComponent = defineComponent({
-  name: "volunteer" as const,
+export const workSectionComponent = defineComponent({
+  name: "work" as const,
   schema: z.object({
     strings: z
       .object({
-        volunteer: z.string().default(""),
+        work: z.string().default(""),
         untilNow: z.string().default(""),
       })
       .default({}),
-    volunteer: z
+    work: z
       .array(
         z.object({
           $id: z.string().optional(),
-          organization: z.string(),
+          name: z.string().optional(),
           position: z.string(),
           url: z.string().url().optional(),
-          startDate: z.string().optional(),
+          location: z.string().optional(),
+          startDate: z.string(),
           endDate: z.string().optional(),
           summary: z.string().optional(),
           highlights: z.string().array().optional(),
@@ -39,13 +40,13 @@ export const volunteerSectionComponent = defineComponent({
     const DetailsItem = getComponent(detailsItemComponent);
     const DateRange = getComponent(dateRangeComponent);
     const Markdown = getComponent(markdownComponent);
-    if (!spec.volunteer) return null;
+    if (!spec.work) return null;
     return (
       <View wrap={false}>
         <SectionHeader style={styles.header}>
-          {spec.strings?.volunteer}
+          {spec.strings?.work}
         </SectionHeader>
-        {spec.volunteer.map((section, index) => (
+        {spec.work.map((section, index) => (
           <View key={index} style={styles.section}>
             <DetailsItem
               style={styles.details}
@@ -53,11 +54,7 @@ export const volunteerSectionComponent = defineComponent({
               right={
                 <DateRange start={section.startDate} end={section.endDate} />
               }
-              details={joinComponents([
-                section.url
-                  ? `[${section.organization}](${section.url})`
-                  : section.organization,
-              ])}
+              details={joinComponents([section.name, section.location])}
               separator=", "
               bottomMargin={!!section.highlights?.length || !!section.summary}
             />

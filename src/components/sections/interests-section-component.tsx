@@ -1,9 +1,9 @@
 import { Text, View } from "@react-pdf/renderer";
 import React from "react";
 import z from "zod";
-import { defineComponent } from "./define-component.js";
-import { sectionHeaderComponent } from "./section-header-component.js";
-import { joinComponents } from "./utils.js";
+import { defineComponent } from "../define-component.js";
+import { sectionHeaderComponent } from "../atoms/section-header-component.js";
+import { joinComponents } from "../utils.js";
 
 export const interestsSectionComponent = defineComponent({
   name: "interests" as const,

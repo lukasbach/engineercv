@@ -1,9 +1,9 @@
 import { View } from "@react-pdf/renderer";
 import React from "react";
 import z from "zod";
-import { defineComponent } from "./define-component.js";
+import { defineComponent } from "../define-component.js";
 import { markdownComponent } from "./markdown-component.js";
-import { joinComponents } from "./utils.js";
+import { joinComponents } from "../utils.js";
 
 export const detailsItemComponent = defineComponent({
   name: "detailsItem",

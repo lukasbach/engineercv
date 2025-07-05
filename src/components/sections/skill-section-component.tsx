@@ -1,42 +1,49 @@
 import { Text, View } from "@react-pdf/renderer";
 import React from "react";
 import z from "zod";
-import { defineComponent } from "./define-component.js";
-import { sectionHeaderComponent } from "./section-header-component.js";
+import { defineComponent } from "../define-component.js";
+import { sectionHeaderComponent } from "../atoms/section-header-component.js";
+import { joinComponents } from "../utils.js";
 
-export const languagesSectionComponent = defineComponent({
-  name: "languages" as const,
+export const skillsSectionComponent = defineComponent({
+  name: "skills" as const,
   schema: z.object({
     strings: z
       .object({
-        languages: z.string().default(""),
+        skills: z.string().default(""),
       })
       .default({}),
-    languages: z
+    skills: z
       .array(
         z.object({
           $id: z.string().optional(),
-          language: z.string(),
-          fluency: z.string().optional(),
+          name: z.string(),
+          level: z.string().optional(),
+          keywords: z.string().array(),
         }),
       )
       .optional(),
   }),
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);
-    if (!spec.languages) return null;
+    if (!spec.skills) return null;
     return (
       <View wrap={false}>
         <SectionHeader style={styles.header}>
-          {spec.strings?.languages}
+          {spec.strings?.skills}
         </SectionHeader>
-        {spec.languages.map((section, index) => (
+        {spec.skills.map((section, index) => (
           <View key={index} style={styles.section}>
             <Text style={styles.sectionTitle}>
-              {section.language}:{"\u00A0"}
+              {section.name}:{"\u00A0"}
             </Text>
-            {section.fluency && (
-              <Text style={styles.item}>{section.fluency}</Text>
+            {joinComponents(
+              section.keywords.map((item, itemIndex) => (
+                <Text key={itemIndex} style={styles.item}>
+                  {item}
+                </Text>
+              )),
+              ", ",
             )}
           </View>
         ))}
@@ -48,7 +55,6 @@ export const languagesSectionComponent = defineComponent({
     section: {
       display: "flex",
       flexDirection: "row",
-      marginBottom: "4pt",
     },
     sectionTitle: {
       fontWeight: "bold",

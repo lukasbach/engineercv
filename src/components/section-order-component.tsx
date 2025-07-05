@@ -1,18 +1,18 @@
 import React from "react";
 import z from "zod";
 import { defineComponent } from "./define-component.js";
-import { educationSectionComponent } from "./education-section-component.js";
-import { workSectionComponent } from "./work-section-component.js";
-import { projectsSectionComponent } from "./project-section-component.js";
-import { skillsSectionComponent } from "./skill-section-component.js";
-import { titleSectionComponent } from "./title-section-component.js";
-import { volunteerSectionComponent } from "./volunteer-section-component.js";
-import { awardsSectionComponent } from "./awards-section-component.js";
-import { certificatesSectionComponent } from "./certificates-section-component.js";
-import { publicationsSectionComponent } from "./publications-section-component.js";
-import { languagesSectionComponent } from "./languages-section-component.js";
-import { interestsSectionComponent } from "./interests-section-component.js";
-import { referencesSectionComponent } from "./references-section-component.js";
+import { educationSectionComponent } from "./sections/education-section-component.js";
+import { workSectionComponent } from "./sections/work-section-component.js";
+import { projectsSectionComponent } from "./sections/projects-section-component.js";
+import { skillsSectionComponent } from "./sections/skill-section-component.js";
+import { titleSectionComponent } from "./sections/title-section-component.js";
+import { volunteerSectionComponent } from "./sections/volunteer-section-component.js";
+import { awardsSectionComponent } from "./sections/awards-section-component.js";
+import { certificatesSectionComponent } from "./sections/certificates-section-component.js";
+import { publicationsSectionComponent } from "./sections/publications-section-component.js";
+import { languagesSectionComponent } from "./sections/languages-section-component.js";
+import { interestsSectionComponent } from "./sections/interests-section-component.js";
+import { referencesSectionComponent } from "./sections/references-section-component.js";
 
 const defaultOrder = [
   titleSectionComponent.name,

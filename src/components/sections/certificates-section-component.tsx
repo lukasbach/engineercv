@@ -1,28 +1,27 @@
 import { View } from "@react-pdf/renderer";
 import React from "react";
 import z from "zod";
-import { defineComponent } from "./define-component.js";
-import { detailsItemComponent } from "./details-item-component.js";
-import { sectionHeaderComponent } from "./section-header-component.js";
-import { joinComponents } from "./utils.js";
-import { markdownComponent } from "./markdown-component.js";
+import { defineComponent } from "../define-component.js";
+import { detailsItemComponent } from "../atoms/details-item-component.js";
+import { sectionHeaderComponent } from "../atoms/section-header-component.js";
+import { joinComponents } from "../utils.js";
 
-export const awardsSectionComponent = defineComponent({
-  name: "awards" as const,
+export const certificatesSectionComponent = defineComponent({
+  name: "certificates" as const,
   schema: z.object({
     strings: z
       .object({
-        awards: z.string().default(""),
+        certificates: z.string().default(""),
       })
       .default({}),
-    awards: z
+    certificates: z
       .array(
         z.object({
           $id: z.string().optional(),
-          title: z.string(),
+          name: z.string(),
           date: z.string().optional(),
-          awarder: z.string().optional(),
-          summary: z.string().optional(),
+          issuer: z.string().optional(),
+          url: z.string().url().optional(),
         }),
       )
       .optional(),
@@ -30,24 +29,23 @@ export const awardsSectionComponent = defineComponent({
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);
     const DetailsItem = getComponent(detailsItemComponent);
-    const Markdown = getComponent(markdownComponent);
-    if (!spec.awards) return null;
+    if (!spec.certificates) return null;
     return (
       <View wrap={false}>
         <SectionHeader style={styles.header}>
-          {spec.strings?.awards}
+          {spec.strings?.certificates}
         </SectionHeader>
-        {spec.awards.map((section, index) => (
+        {spec.certificates.map((section, index) => (
           <View key={index} style={styles.section}>
             <DetailsItem
               style={styles.details}
-              title={section.title}
+              title={
+                section.url ? `[${section.name}](${section.url})` : section.name
+              }
               right={section.date}
-              details={joinComponents([section.awarder])}
+              details={joinComponents([section.issuer])}
               separator=", "
-              bottomMargin={!!section.summary}
             />
-            <Markdown style={styles.summary} children={section.summary ?? ""} />
           </View>
         ))}
       </View>
@@ -60,6 +58,5 @@ export const awardsSectionComponent = defineComponent({
       marginBottom: "8pt",
     },
     details: {},
-    summary: {},
   } as const,
 });

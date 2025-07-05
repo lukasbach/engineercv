@@ -1,7 +1,7 @@
 import { Text, View } from "@react-pdf/renderer";
 import React from "react";
 import z from "zod";
-import { defineComponent } from "./define-component.js";
+import { defineComponent } from "../define-component.js";
 import { markdownComponent } from "./markdown-component.js";
 
 export const listItemComponent = defineComponent({

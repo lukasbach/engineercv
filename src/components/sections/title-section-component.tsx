@@ -1,8 +1,8 @@
 import { View } from "@react-pdf/renderer";
 import React from "react";
 import z from "zod";
-import { defineComponent } from "./define-component.js";
-import { markdownComponent } from "./markdown-component.js";
+import { defineComponent } from "../define-component.js";
+import { markdownComponent } from "../atoms/markdown-component.js";
 
 export const titleSectionComponent = defineComponent({
   name: "title" as const,

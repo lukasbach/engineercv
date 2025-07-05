@@ -1,13 +1,13 @@
 import { View } from "@react-pdf/renderer";
 import React from "react";
 import z from "zod";
-import { dateRangeComponent } from "./date-range-component.js";
-import { defineComponent } from "./define-component.js";
-import { detailsItemComponent } from "./details-item-component.js";
+import { dateRangeComponent } from "../atoms/date-range-component.js";
+import { defineComponent } from "../define-component.js";
+import { detailsItemComponent } from "../atoms/details-item-component.js";
 import { workSectionComponent } from "./work-section-component.js";
-import { listItemComponent } from "./list-item-component.js";
-import { sectionHeaderComponent } from "./section-header-component.js";
-import { joinComponents } from "./utils.js";
+import { listItemComponent } from "../atoms/list-item-component.js";
+import { sectionHeaderComponent } from "../atoms/section-header-component.js";
+import { joinComponents } from "../utils.js";
 
 export const educationSectionComponent = defineComponent({
   name: "education" as const,

@@ -1,49 +1,42 @@
 import { Text, View } from "@react-pdf/renderer";
 import React from "react";
 import z from "zod";
-import { defineComponent } from "./define-component.js";
-import { sectionHeaderComponent } from "./section-header-component.js";
-import { joinComponents } from "./utils.js";
+import { defineComponent } from "../define-component.js";
+import { sectionHeaderComponent } from "../atoms/section-header-component.js";
 
-export const skillsSectionComponent = defineComponent({
-  name: "skills" as const,
+export const languagesSectionComponent = defineComponent({
+  name: "languages" as const,
   schema: z.object({
     strings: z
       .object({
-        skills: z.string().default(""),
+        languages: z.string().default(""),
       })
       .default({}),
-    skills: z
+    languages: z
       .array(
         z.object({
           $id: z.string().optional(),
-          name: z.string(),
-          level: z.string().optional(),
-          keywords: z.string().array(),
+          language: z.string(),
+          fluency: z.string().optional(),
         }),
       )
       .optional(),
   }),
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);
-    if (!spec.skills) return null;
+    if (!spec.languages) return null;
     return (
       <View wrap={false}>
         <SectionHeader style={styles.header}>
-          {spec.strings?.skills}
+          {spec.strings?.languages}
         </SectionHeader>
-        {spec.skills.map((section, index) => (
+        {spec.languages.map((section, index) => (
           <View key={index} style={styles.section}>
             <Text style={styles.sectionTitle}>
-              {section.name}:{"\u00A0"}
+              {section.language}:{"\u00A0"}
             </Text>
-            {joinComponents(
-              section.keywords.map((item, itemIndex) => (
-                <Text key={itemIndex} style={styles.item}>
-                  {item}
-                </Text>
-              )),
-              ", ",
+            {section.fluency && (
+              <Text style={styles.item}>{section.fluency}</Text>
             )}
           </View>
         ))}
@@ -55,6 +48,7 @@ export const skillsSectionComponent = defineComponent({
     section: {
       display: "flex",
       flexDirection: "row",
+      marginBottom: "4pt",
     },
     sectionTitle: {
       fontWeight: "bold",

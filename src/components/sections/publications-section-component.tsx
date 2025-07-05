@@ -1,11 +1,11 @@
 import { View } from "@react-pdf/renderer";
 import React from "react";
 import z from "zod";
-import { defineComponent } from "./define-component.js";
-import { detailsItemComponent } from "./details-item-component.js";
-import { sectionHeaderComponent } from "./section-header-component.js";
-import { joinComponents } from "./utils.js";
-import { markdownComponent } from "./markdown-component.js";
+import { defineComponent } from "../define-component.js";
+import { detailsItemComponent } from "../atoms/details-item-component.js";
+import { sectionHeaderComponent } from "../atoms/section-header-component.js";
+import { joinComponents } from "../utils.js";
+import { markdownComponent } from "../atoms/markdown-component.js";
 
 export const publicationsSectionComponent = defineComponent({
   name: "publications" as const,

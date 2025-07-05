@@ -1,7 +1,7 @@
 import { Text } from "@react-pdf/renderer";
 import React from "react";
 import z from "zod";
-import { defineComponent } from "./define-component.js";
+import { defineComponent } from "../define-component.js";
 
 export const dateRangeComponent = defineComponent({
   name: "dateRange",

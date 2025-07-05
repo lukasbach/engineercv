@@ -2,7 +2,7 @@ import { Link, Text, View } from "@react-pdf/renderer";
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import z from "zod";
-import { defineComponent } from "./define-component.js";
+import { defineComponent } from "../define-component.js";
 
 export const markdownComponent = defineComponent({
   name: "markdown",
