@@ -53,7 +53,12 @@ export const workSectionComponent = defineComponent({
               right={
                 <DateRange start={section.startDate} end={section.endDate} />
               }
-              details={joinComponents([section.name, section.location])}
+              details={joinComponents([
+                section.url
+                  ? `[${section.name}](${section.url})`
+                  : section.name,
+                section.location,
+              ])}
               separator=", "
               summary={section.summary}
               list={section.highlights}

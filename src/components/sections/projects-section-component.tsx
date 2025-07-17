@@ -56,6 +56,7 @@ export const projectsSectionComponent = defineComponent({
               ])}
               right={<Url url={project.url} />}
               separator=", "
+              summary={project.description}
               list={project.highlights}
             />
           ))}
