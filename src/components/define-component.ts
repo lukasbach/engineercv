@@ -25,6 +25,6 @@ export type ComponentDefinition<N extends string, T, P, S extends Style> = {
   defaultStyles: S;
 };
 
-export const defineComponent = <N, T, P, S extends Style>(
+export const defineComponent = <N extends string, T, P, S extends Style>(
   definition: ComponentDefinition<N, T, P, S>,
 ): ComponentDefinition<N, T, P, S> => definition;

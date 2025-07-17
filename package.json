@@ -44,6 +44,7 @@
   },
   "devDependencies": {
     "@lukasbach/eslint-config-deps": "^1.0.7",
+    "@types/fontkit": "^2.0.8",
     "@types/fs-extra": "^11",
     "@types/node": "^24.0.4",
     "@types/prompts": "^2",

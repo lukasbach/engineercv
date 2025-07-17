@@ -7,12 +7,14 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "lib": [
-      "es2021"
+      "es2021",
+      "DOM"
     ],
     "outDir": "lib",
     "strict": true,
     "declaration": true,
-    "jsx": "react"
+    "jsx": "react",
+    "skipLibCheck": true
   },
   "include": [
     "src"
