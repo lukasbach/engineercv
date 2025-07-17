@@ -26,7 +26,7 @@ const resolveTemplates = (
   handlebarVars: object = config,
   templateKey?: string,
 ): any => {
-  if (templateKey === "locationFormat") {
+  if (templateKey === "locationFormat" || templateKey === "pageTemplate") {
     return config;
   }
 

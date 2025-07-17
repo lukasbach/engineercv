@@ -23,6 +23,7 @@ import { sectionOrderComponent } from "./section-order-component.js";
 import { urlComponent } from "./atoms/url.js";
 import { dateComponent } from "./atoms/date-component.js";
 import { detailsListComponent } from "./atoms/details-list-component.js";
+import { pageNumbersComponent } from "./atoms/page-numbers.js";
 
 export const defaultComponents = {
   [markdownComponent.name]: markdownComponent,
@@ -48,6 +49,7 @@ export const defaultComponents = {
   [sectionOrderComponent.name]: sectionOrderComponent,
   [urlComponent.name]: urlComponent,
   [dateComponent.name]: dateComponent,
+  [pageNumbersComponent.name]: pageNumbersComponent,
 } as const;
 
 export const buildComponentRegistry = (

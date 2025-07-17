@@ -1,6 +1,7 @@
 export const globalConfig = {
   config: {
     size: "A4",
+    usePageNumbers: undefined,
   },
   strings: {
     work: "Experience",
@@ -17,5 +18,6 @@ export const globalConfig = {
     gpa: "GPA: ",
     untilNow: "Present",
     bullet: "\u2022",
+    pageTemplate: "{{pageNumber}}/{{totalPages}}",
   },
 };
