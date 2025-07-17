@@ -5,12 +5,26 @@ import path from "path";
 import { ZodError } from "zod";
 import { Font, render } from "@react-pdf/renderer";
 import fsExtra from "fs-extra/esm";
+import grayMatter from "gray-matter";
 import { generatePdfDocument } from "./generate-pdf-document.js";
 import { logger } from "../../cli/logging.js";
 import { merge } from "./deepmerge.js";
 import { resolveSpecsFromConfig } from "./resolve-specs-from-config.js";
 import { globalConfig } from "./global-config.js";
 import { importJsSpec } from "./import-js-spec.js";
+
+const isValidExtension = (file: string): boolean =>
+  [
+    ".yml",
+    ".yaml",
+    ".json",
+    ".md",
+    ".js",
+    ".mjs",
+    ".jsx",
+    ".ts",
+    ".tsx",
+  ].includes(path.extname(file));
 
 const readConfigFile = async (filePath: string): Promise<any> => {
   const extension = path.extname(filePath);
@@ -21,6 +35,11 @@ const readConfigFile = async (filePath: string): Promise<any> => {
 
   if (extension === ".json") {
     return JSON.parse(await readFile(filePath, "utf-8"));
+  }
+
+  if (extension === ".md") {
+    const { data, content } = grayMatter(await readFile(filePath, "utf-8"));
+    return { ...data, content };
   }
 
   if ([".js", ".mjs", ".jsx", ".ts", ".tsx"].includes(extension)) {
@@ -122,7 +141,9 @@ const processSpec = async (file: string, spec: any) => {
 };
 
 export const generate = async (pattern: string) => {
-  const files = await glob(pattern.replaceAll("\\", "/"));
+  const files = (await glob(pattern.replaceAll("\\", "/"))).filter(
+    isValidExtension,
+  );
   const trackedFiles = [];
   const errors: Error[] = [];
 

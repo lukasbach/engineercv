@@ -83,6 +83,11 @@ const generateCartesianProduct = (
   return result;
 };
 
+// to resolve templates multiple times, e.g. for nested templates
+const multiResolveTemplates = (config: any) => {
+  return resolveTemplates(resolveTemplates(resolveTemplates(config)));
+};
+
 export const resolveSpecsFromConfig = (config: any, yamlFile: string) => {
   const additionalVars = {
     source: {
@@ -92,7 +97,7 @@ export const resolveSpecsFromConfig = (config: any, yamlFile: string) => {
   };
 
   if (!config.variants) {
-    return [resolveTemplates({ ...config, ...additionalVars })];
+    return [multiResolveTemplates({ ...config, ...additionalVars })];
   }
 
   const { variants, ...baseSpec } = config;
@@ -100,7 +105,7 @@ export const resolveSpecsFromConfig = (config: any, yamlFile: string) => {
 
   const specs = variantCombinations.map((variantConfig) => {
     const mergedConfig = advancedDeepmerge(baseSpec, variantConfig);
-    return resolveTemplates(mergedConfig);
+    return multiResolveTemplates(mergedConfig);
   });
 
   return specs;
