@@ -3,6 +3,8 @@ import z from "zod";
 export const baseSpecSchema = z.object({
   imports: z.string().array().optional(),
   output: z.string(),
+  skip: z.boolean().optional(),
+  isTemplate: z.boolean().optional(),
   config: z
     .object({
       fonts: z

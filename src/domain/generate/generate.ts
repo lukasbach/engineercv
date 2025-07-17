@@ -64,6 +64,12 @@ const resolveConfig = async (
     logger.debug(`No output defined in config for ${filePath}, ignoring file.`);
     return { paths: [], config: null };
   }
+  if (!resolvingImport && config.isTemplate) {
+    logger.debug(
+      `Skipping template file ${filePath} because "isTemplate" is set.`,
+    );
+    return { paths: [], config: null };
+  }
 
   const importedPaths: string[] = (config.imports || []).map(
     (importPath: string) =>
@@ -160,7 +166,11 @@ export const generate = async (pattern: string) => {
     try {
       const specs = resolveSpecsFromConfig(config, file);
       for (const spec of specs) {
-        await processSpec(file, spec);
+        if (spec.skip) {
+          logger.debug(`Skipping file ${file} due to skip flag.`);
+        } else {
+          await processSpec(file, spec);
+        }
       }
     } catch (error) {
       errors.push(...parseError(error, file));
