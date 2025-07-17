@@ -18,6 +18,7 @@
     "lint:fix": "eslint . --fix",
     "release": "publish-fast",
     "start": "tsx src/index.ts",
+    "test": "tsx src/index.ts generate \"./samples/test/**/*\"",
     "dev": "nodemon --watch src --watch samples -e ts,tsx,yml --exec tsx src/index.ts generate \"./samples/test/**/*\"",
     "postbuild": "tsx src/scripts/postbuild.ts"
   },
@@ -73,7 +74,7 @@
     ]
   },
   "publish": {
-    "preScripts": "build,lint:test,test",
+    "preScripts": "build,lint,test",
     "releaseNotesSource": "next-releasenotes.md"
   },
   "volta": {
