@@ -4,9 +4,7 @@ output: ../out/test/{{ source.name }}.pdf
 
 basics:
   name: John Doe
-
-title:
-  items:
+  highlights:
     - "{{ email 'john.doe@outlook.com' }}"
     - "{{ phone '+1 123-(456) 7890' }}"
     - "{{ github 'johndoe' }}"

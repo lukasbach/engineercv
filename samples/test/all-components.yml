@@ -22,7 +22,7 @@ basics:
       username: janesmith
       url: https://github.com/janesmith
 
-output: ../out/test/all-components.pdf
+output: ../out/test/{{ source.name }}.pdf
 
 title:
   items:

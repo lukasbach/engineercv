@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../lib/schema.json
 
-output: ../out/test/advanced-edits.pdf
+output: ../out/test/{{ source.name }}.pdf
 
 variants:
   advanced-edits:

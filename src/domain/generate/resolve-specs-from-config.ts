@@ -3,19 +3,21 @@ import path from "path";
 import moment from "moment";
 import { advancedDeepmerge } from "./advanced-deepmerge.js";
 
-Handlebars.registerHelper(
+const hb = Handlebars.create();
+
+hb.registerHelper(
   "github",
   (handle) => `[github.com/${handle}](https://github.com/${handle})`,
 );
-Handlebars.registerHelper(
+hb.registerHelper(
   "linkedin",
   (handle) => `[linkedin.com/in/${handle}](https://linkedin.com/in/${handle})`,
 );
-Handlebars.registerHelper("phone", (number: string) => {
+hb.registerHelper("phone", (number: string) => {
   return `[${number}](tel:${String(number).replace(/\D/g, "")})`;
 });
-Handlebars.registerHelper("email", (email) => `[${email}](mailto:${email})`);
-Handlebars.registerHelper("date", (format: string, originalDate?: string) =>
+hb.registerHelper("email", (email) => `[${email}](mailto:${email})`);
+hb.registerHelper("date", (format: string, originalDate?: string) =>
   moment(originalDate ?? new Date()).format(format),
 );
 
@@ -29,7 +31,7 @@ const resolveTemplates = (
   }
 
   if (typeof config === "string") {
-    const template = Handlebars.compile(config);
+    const template = hb.compile(config);
     const resolved = template(handlebarVars);
     try {
       return JSON.parse(resolved);
@@ -93,7 +95,11 @@ export const resolveSpecsFromConfig = (config: any, yamlFile: string) => {
     source: {
       path: yamlFile,
       name: path.basename(yamlFile, path.extname(yamlFile)),
+      file: path.basename(yamlFile),
+      dir: path.dirname(yamlFile),
+      extension: path.extname(yamlFile),
     },
+    env: process.env,
   };
 
   if (!config.variants) {
@@ -104,7 +110,11 @@ export const resolveSpecsFromConfig = (config: any, yamlFile: string) => {
   const variantCombinations = generateCartesianProduct(variants);
 
   const specs = variantCombinations.map((variantConfig) => {
-    const mergedConfig = advancedDeepmerge(baseSpec, variantConfig);
+    const mergedConfig = advancedDeepmerge(
+      additionalVars,
+      baseSpec,
+      variantConfig,
+    );
     return multiResolveTemplates(mergedConfig);
   });
 

@@ -3,9 +3,9 @@
 basics:
   name: John Doe
 
-# skip: true # dont generate a pdf for this file
+skip: true # dont generate a pdf for this file
 
-output: ../out/test/skip.pdf
+output: ../out/test/{{ source.name }}.pdf
 
 title:
   items:

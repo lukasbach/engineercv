@@ -3,7 +3,7 @@
 basics:
   name: John Doe
 
-output: ../out/test/custom-order.pdf
+output: ../out/test/{{ source.name }}.pdf
 
 order:
   - basics

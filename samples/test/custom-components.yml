@@ -9,7 +9,7 @@ config:
 imports:
   - ./custom-components.tsx
 
-output: ../out/test/customcomponents.pdf
+output: ../out/test/{{ source.name }}.pdf
 
 basics:
   name: John Doe
