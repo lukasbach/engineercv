@@ -1,8 +1,8 @@
 import "../module-globals.js";
 import React from "react";
 
-const title = defineComponent({
-  name: "title",
+const basics = defineComponent({
+  name: "basics",
   schema: z.object({
     basics: z.object({ name: z.string() }),
     title: z
@@ -102,6 +102,6 @@ const title = defineComponent({
 
 export default {
   config: {
-    components: { title },
+    components: { basics },
   },
 };

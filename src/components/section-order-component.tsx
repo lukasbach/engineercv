@@ -5,7 +5,7 @@ import { educationSectionComponent } from "./sections/education-section-componen
 import { workSectionComponent } from "./sections/work-section-component.js";
 import { projectsSectionComponent } from "./sections/projects-section-component.js";
 import { skillsSectionComponent } from "./sections/skill-section-component.js";
-import { titleSectionComponent } from "./sections/title-section-component.js";
+import { basicsSectionComponent } from "./sections/basics-section-component.js";
 import { volunteerSectionComponent } from "./sections/volunteer-section-component.js";
 import { awardsSectionComponent } from "./sections/awards-section-component.js";
 import { certificatesSectionComponent } from "./sections/certificates-section-component.js";
@@ -15,7 +15,7 @@ import { interestsSectionComponent } from "./sections/interests-section-componen
 import { referencesSectionComponent } from "./sections/references-section-component.js";
 
 const defaultOrder = [
-  titleSectionComponent.name,
+  basicsSectionComponent.name,
   skillsSectionComponent.name,
   workSectionComponent.name,
   volunteerSectionComponent.name,

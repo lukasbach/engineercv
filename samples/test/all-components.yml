@@ -3,6 +3,24 @@
 basics:
   name: Jane Smith
   email: jane.smith@example.com
+  phone: "+1 (555) 123-4567"
+  url: https://jane.smith.dev
+  summary: |
+    Full-stack developer with expertise in modern web technologies and a passion for open source contributions.
+  location:
+    address: 123 Main St
+    postalCode: '94101x'
+    city: San Francisco
+    countryCode: US
+    region: CA
+  # locationFormat: "{{city}}, {{region}}"
+  profiles:
+    - network: LinkedIn
+      username: janesmith
+      url: https://linkedin.com/in/janesmith
+    - network: GitHub
+      username: janesmith
+      url: https://github.com/janesmith
 
 output: ../out/test/all-components.pdf
 

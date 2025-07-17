@@ -6,7 +6,7 @@ basics:
 output: ../out/test/custom-order.pdf
 
 order:
-  - title
+  - basics
   - education
   - work
   - skills

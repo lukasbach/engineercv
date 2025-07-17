@@ -1,8 +1,8 @@
 import "../../src/module-globals.js";
 // Outside this repo, use `import "engineercv/module-globals";`
 
-const title = defineComponent({
-  name: "title",
+const basics = defineComponent({
+  name: "basics",
   schema: z.object({
     basics: z.object({ name: z.string() }),
   }),
@@ -32,6 +32,6 @@ const title = defineComponent({
 
 export default {
   config: { 
-    components: { title }
+    components: { basics }
   },
 };

@@ -19,7 +19,15 @@ Handlebars.registerHelper("date", (format: string, originalDate?: string) =>
   moment(originalDate ?? new Date()).format(format),
 );
 
-const resolveTemplates = (config: any, handlebarVars: object = config): any => {
+const resolveTemplates = (
+  config: any,
+  handlebarVars: object = config,
+  templateKey?: string,
+): any => {
+  if (templateKey === "locationFormat") {
+    return config;
+  }
+
   if (typeof config === "string") {
     const template = Handlebars.compile(config);
     const resolved = template(handlebarVars);
@@ -37,7 +45,7 @@ const resolveTemplates = (config: any, handlebarVars: object = config): any => {
   if (config && typeof config === "object") {
     const result: Record<string, unknown> = {};
     for (const [key, value] of Object.entries(config)) {
-      result[key] = resolveTemplates(value, handlebarVars);
+      result[key] = resolveTemplates(value, handlebarVars, key);
     }
     return result;
   }

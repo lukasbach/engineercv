@@ -19,7 +19,7 @@ export const dateComponent = defineComponent({
     style: z.any(),
   }),
   component: ({ spec, date, format, styles, style }) => {
-    const formattedDate = moment(date ?? new Date()).format(
+    const formattedDate = moment(new Date(date ?? "")).format(
       format ?? spec.config?.dateFormat ?? "YYYY/MM",
     );
     return <Text style={[styles.container, style]}>{formattedDate}</Text>;

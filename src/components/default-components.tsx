@@ -17,7 +17,7 @@ import { referencesSectionComponent } from "./sections/references-section-compon
 import { markdownComponent } from "./atoms/markdown-component.js";
 import { documentComponent } from "./document-component.js";
 import { pageComponent } from "./page-component.js";
-import { titleSectionComponent } from "./sections/title-section-component.js";
+import { basicsSectionComponent } from "./sections/basics-section-component.js";
 import { baseSpecSchema } from "../domain/generate/base-spec-schema.js";
 import { sectionOrderComponent } from "./section-order-component.js";
 import { urlComponent } from "./atoms/url.js";
@@ -28,7 +28,7 @@ export const defaultComponents = {
   [markdownComponent.name]: markdownComponent,
   [documentComponent.name]: documentComponent,
   [pageComponent.name]: pageComponent,
-  [titleSectionComponent.name]: titleSectionComponent,
+  [basicsSectionComponent.name]: basicsSectionComponent,
   [sectionHeaderComponent.name]: sectionHeaderComponent,
   [listItemComponent.name]: listItemComponent,
   [detailsItemComponent.name]: detailsItemComponent,
