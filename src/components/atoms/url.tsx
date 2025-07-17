@@ -13,7 +13,7 @@ export const urlComponent = defineComponent({
   }),
   component: ({ url, text, styles, style }) => {
     if (!url) return <Text>{text ?? url}</Text>;
-    // eslint-disable-next-line @typescript-eslint/naming-convention
+    // eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/no-unused-vars
     const [_, domain] = /^[^:]+:\/\/(?:www.)?([^?#]+)/.exec(url) || [];
     return (
       <Link src={url} style={[styles.container, style]}>
