@@ -6,6 +6,15 @@ import { defineComponent } from "../define-component.js";
 import { markdownComponent } from "../atoms/markdown-component.js";
 import { urlComponent } from "../atoms/url.js";
 
+const defaultOrder = [
+  "email",
+  "phone",
+  "url",
+  "profiles",
+  "location",
+  "highlights",
+];
+
 export const basicsSectionComponent = defineComponent({
   name: "basics" as const,
   schema: z.object({
@@ -37,6 +46,7 @@ export const basicsSectionComponent = defineComponent({
         )
         .optional(),
       highlights: z.string().array().optional(),
+      order: z.string().array().optional(),
     }),
   }),
   component: ({ spec, styles, getComponent }) => {
@@ -47,30 +57,40 @@ export const basicsSectionComponent = defineComponent({
           spec.basics.location,
         )
       : null;
+
+    const items = {
+      email: spec.basics.email
+        ? [`[${spec.basics.email}](mailto:${spec.basics.email})`]
+        : [],
+      phone: spec.basics.phone
+        ? [
+            `[${spec.basics.phone}](tel:${spec.basics.phone.replaceAll(/[^\d]/g, "")})`,
+          ]
+        : [],
+      url: spec.basics.url ? [<Url url={spec.basics.url} />] : [],
+      profiles:
+        spec.basics.profiles?.map((profile) => (
+          <Url key={profile.network} url={profile.url} />
+        )) ?? [],
+      location: location ? [location] : [],
+      highlights: spec.basics.highlights ?? [],
+    };
+
+    const orderedItems = (spec.basics.order ?? defaultOrder)
+      .map((key) => (key in items ? items[key as keyof typeof items] : []))
+      .flat();
+
     return (
       <View style={styles.container}>
         <Markdown style={styles.name}>{spec.basics.name}</Markdown>
         <View style={styles.itemContainer}>
-          {[
-            spec.basics.email &&
-              `[${spec.basics.email}](mailto:${spec.basics.email})`,
-            spec.basics.phone &&
-              `[${spec.basics.phone}](tel:${spec.basics.phone.replaceAll(/[^\d]/g, "")})`,
-            spec.basics.url && <Url url={spec.basics.url} />,
-            ...(spec.basics.profiles?.map((profile) => (
-              <Url key={profile.network} url={profile.url} />
-            )) ?? []),
-            location,
-            ...(spec.basics.highlights ?? []),
-          ]
-            .filter(Boolean)
-            .map((item, index) => {
-              return (
-                <View style={styles.item} key={index}>
-                  <Markdown>{item}</Markdown>
-                </View>
-              );
-            })}
+          {orderedItems.filter(Boolean).map((item, index) => {
+            return (
+              <View style={styles.item} key={index}>
+                <Markdown>{item}</Markdown>
+              </View>
+            );
+          })}
         </View>
         {spec.basics.summary && (
           <Markdown style={styles.summary}>{spec.basics.summary}</Markdown>
