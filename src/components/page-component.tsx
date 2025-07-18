@@ -20,8 +20,8 @@ export const pageComponent = defineComponent({
   ),
   defaultStyles: {
     container: {
-      paddingHorizontal: 20,
-      paddingVertical: 35,
+      paddingHorizontal: "34pt",
+      paddingVertical: "30pt",
       fontSize: 12,
     },
   },

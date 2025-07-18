@@ -17,6 +17,7 @@ export const detailsItemComponent = defineComponent({
     separator: z.string().optional(),
     summary: z.string().optional(),
     list: z.string().array().optional(),
+    detailsInExtraLine: z.boolean().optional(),
   }),
   component: ({
     title,
@@ -28,6 +29,7 @@ export const detailsItemComponent = defineComponent({
     styles,
     style,
     getComponent,
+    detailsInExtraLine,
   }) => {
     const Markdown = getComponent(markdownComponent);
     const ListItem = getComponent(listItemComponent);
@@ -38,7 +40,7 @@ export const detailsItemComponent = defineComponent({
             {joinComponents(
               [
                 title && <Markdown style={styles.title}>{title}</Markdown>,
-                details && (
+                details && !detailsInExtraLine && (
                   <Markdown style={styles.details}>{details}</Markdown>
                 ),
               ],
@@ -51,6 +53,11 @@ export const detailsItemComponent = defineComponent({
             </View>
           )}
         </View>
+        {detailsInExtraLine && details && (
+          <View style={styles.extraLineDetails}>
+            <Markdown>{details}</Markdown>
+          </View>
+        )}
         <View style={styles.list}>
           {list?.map((item, itemIndex) => (
             <ListItem key={itemIndex} style={styles.listItem}>
@@ -87,5 +94,11 @@ export const detailsItemComponent = defineComponent({
       marginTop: "4pt",
     },
     listItem: {},
+    extraLineDetails: {
+      fontStyle: "italic",
+      display: "flex",
+      flexDirection: "row",
+      marginTop: "4pt",
+    },
   } as const,
 });

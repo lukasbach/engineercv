@@ -42,6 +42,7 @@ export const educationSectionComponent = defineComponent({
     const DateRange = getComponent(dateRangeComponent);
     const DetailsList = getComponent(detailsListComponent);
     if (!spec.education) return null;
+
     return (
       <View wrap={false} style={styles.container}>
         <SectionHeader style={styles.header}>
@@ -62,6 +63,9 @@ export const educationSectionComponent = defineComponent({
                 section.studyType,
                 section.score && `${spec.strings?.gpa}${section.score}`,
               ])}
+              detailsInExtraLine={Boolean(
+                section.area && section.studyType && section.score,
+              )}
               right={
                 <DateRange start={section.startDate} end={section.endDate} />
               }

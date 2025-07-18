@@ -56,6 +56,9 @@ export const skillsSectionComponent = defineComponent({
     section: {
       display: "flex",
       flexDirection: "row",
+      flexWrap: "wrap",
+      marginBottom: "6pt",
+      lineHeight: 0.9,
     },
     sectionTitle: {
       fontWeight: "bold",
