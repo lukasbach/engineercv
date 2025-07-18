@@ -5,6 +5,11 @@ import { advancedDeepmerge } from "./advanced-deepmerge.js";
 
 const hb = Handlebars.create();
 
+let parsedAsNumber = false;
+hb.registerHelper("number", (value: string) => {
+  parsedAsNumber = true;
+  return value;
+});
 hb.registerHelper(
   "github",
   (handle) => `[github.com/${handle}](https://github.com/${handle})`,
@@ -20,6 +25,11 @@ hb.registerHelper("email", (email) => `[${email}](mailto:${email})`);
 hb.registerHelper("date", (format: string, originalDate?: string) =>
   moment(originalDate ?? new Date()).format(format),
 );
+hb.registerHelper(
+  "pathjoin",
+  (arg1: string, arg2: string, arg3: string, arg4: string, arg5: string) =>
+    path.join(...[arg1, arg2, arg3, arg4, arg5].filter(Boolean)),
+);
 
 const resolveTemplates = (
   config: any,
@@ -31,10 +41,14 @@ const resolveTemplates = (
   }
 
   if (typeof config === "string") {
+    parsedAsNumber = false;
     const template = hb.compile(config);
     const resolved = template(handlebarVars);
     try {
-      return JSON.parse(resolved);
+      const parsed = JSON.parse(resolved);
+      return typeof parsed === "number" && !parsedAsNumber
+        ? `${parsed}`
+        : parsed;
     } catch {
       return resolved;
     }
@@ -99,6 +113,7 @@ export const resolveSpecsFromConfig = (config: any, yamlFile: string) => {
       dir: path.dirname(yamlFile),
       extension: path.extname(yamlFile),
     },
+    cwd: process.cwd(),
     env: process.env,
   };
 

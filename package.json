@@ -8,7 +8,9 @@
   "description": "Tool for creating best-practice engineering resumes from YAML files",
   "author": "Lukas Bach <contact@lukasbach.com>",
   "license": "MIT",
-  "bin": "./lib/index.js",
+  "bin": {
+    "engineercv": "lib/index.js"
+  },
   "exports": "./lib/index.js",
   "typings": "lib/index.d.ts",
   "scripts": {

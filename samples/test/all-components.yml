@@ -24,14 +24,6 @@ basics:
 
 output: ../out/test/{{ source.name }}.pdf
 
-title:
-  items:
-    - "[jane.smith@example.com](mailto:jane.smith@example.com)"
-    - "[+1 (555) 123-4567](tel:+15551234567)"
-    - "[linkedin.com/in/janesmith](https://linkedin.com/in/janesmith)"
-  summary: |
-    Full-stack developer with expertise in modern web technologies and a passion for open source contributions.
-
 skills:
   - name: Programming Languages
     keywords:
