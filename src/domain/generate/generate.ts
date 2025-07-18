@@ -60,10 +60,6 @@ const resolveConfig = async (
   logger.debug(`Resolving config for ${filePath}`);
   const config = await readConfigFile(filePath);
 
-  if (!resolvingImport && !isDefiningOutput(config)) {
-    logger.debug(`No output defined in config for ${filePath}, ignoring file.`);
-    return { paths: [], config: null };
-  }
   if (!resolvingImport && config.isTemplate) {
     logger.debug(
       `Skipping template file ${filePath} because "isTemplate" is set.`,
@@ -96,6 +92,11 @@ const resolveConfig = async (
     },
     { paths: [filePath], config },
   );
+
+  if (!resolvingImport && !isDefiningOutput(result.config)) {
+    logger.debug(`No output defined in config for ${filePath}, ignoring file.`);
+    return { paths: [], config: null };
+  }
 
   return result;
 };
