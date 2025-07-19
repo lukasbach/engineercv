@@ -1,19 +1,9 @@
-import { View } from "@react-pdf/renderer";
 import React from "react";
 import z from "zod";
-import Handlebars from "handlebars";
+import { View } from "@react-pdf/renderer";
 import { defineComponent } from "../define-component.js";
 import { markdownComponent } from "../atoms/markdown-component.js";
-import { urlComponent } from "../atoms/url.js";
-
-const defaultOrder = [
-  "email",
-  "phone",
-  "url",
-  "profiles",
-  "location",
-  "highlights",
-];
+import { basicsItemsComponent } from "../atoms/basics-items-component.js";
 
 export const basicsSectionComponent = defineComponent({
   name: "basics" as const,
@@ -51,46 +41,21 @@ export const basicsSectionComponent = defineComponent({
   }),
   component: ({ spec, styles, getComponent }) => {
     const Markdown = getComponent(markdownComponent);
-    const Url = getComponent(urlComponent);
-    const location = spec.basics.location
-      ? Handlebars.create().compile(spec.basics.locationFormat ?? "{{city}}")(
-          spec.basics.location,
-        )
-      : null;
-
-    const items = {
-      email: spec.basics.email
-        ? [`[${spec.basics.email}](mailto:${spec.basics.email})`]
-        : [],
-      phone: spec.basics.phone
-        ? [
-            `[${spec.basics.phone}](tel:${spec.basics.phone.replaceAll(/[^\d]/g, "")})`,
-          ]
-        : [],
-      url: spec.basics.url ? [<Url url={spec.basics.url} />] : [],
-      profiles:
-        spec.basics.profiles?.map((profile) => (
-          <Url key={profile.network} url={profile.url} />
-        )) ?? [],
-      location: location ? [location] : [],
-      highlights: spec.basics.highlights ?? [],
-    };
-
-    const orderedItems = (spec.basics.order ?? defaultOrder)
-      .map((key) => (key in items ? items[key as keyof typeof items] : []))
-      .flat();
+    const BasicsItems = getComponent({
+      name: "basicsItems",
+    } as typeof basicsItemsComponent);
 
     return (
       <View style={styles.container}>
         <Markdown style={styles.name}>{spec.basics.name}</Markdown>
         <View style={styles.itemContainer}>
-          {orderedItems.filter(Boolean).map((item, index) => {
-            return (
-              <View style={styles.item} key={index}>
+          <BasicsItems
+            renderItem={(item, key) => (
+              <View style={styles.item} key={key}>
                 <Markdown>{item}</Markdown>
               </View>
-            );
-          })}
+            )}
+          />
         </View>
         {spec.basics.summary && (
           <Markdown style={styles.summary}>{spec.basics.summary}</Markdown>

@@ -24,6 +24,7 @@ import { urlComponent } from "./atoms/url.js";
 import { dateComponent } from "./atoms/date-component.js";
 import { detailsListComponent } from "./atoms/details-list-component.js";
 import { pageNumbersComponent } from "./atoms/page-numbers.js";
+import { basicsItemsComponent } from "./atoms/basics-items-component.js";
 
 export const defaultComponents = {
   [markdownComponent.name]: markdownComponent,
@@ -50,6 +51,7 @@ export const defaultComponents = {
   [urlComponent.name]: urlComponent,
   [dateComponent.name]: dateComponent,
   [pageNumbersComponent.name]: pageNumbersComponent,
+  [basicsItemsComponent.name]: basicsItemsComponent,
 } as const;
 
 export const buildComponentRegistry = (
