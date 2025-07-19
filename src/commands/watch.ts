@@ -11,16 +11,32 @@ watchCommand.addOption(
   new Option("--number <number>").argParser((v) => parseInt(v, 10)),
 );
 
+const watch = (
+  files: string[],
+  onChange: (changedFiles: string[]) => Promise<void>,
+): (() => void) => {
+  const watchers = files.map((file) => {
+    const fn = async () => {
+      await onChange([file]);
+    };
+    fs.watchFile(file, { interval: 1000 }, fn);
+    return () => fs.unwatchFile(file, fn);
+  });
+  return () => {
+    watchers.forEach((fn) => fn());
+  };
+};
+
 watchCommand.action(async (globPattern) => {
   let trackedFiles: string[] = [];
-  const onChange = async () => {
+  let unwatch: (() => void) | null = null;
+  const onChange = async (changedFiles: string[]) => {
     logger.info("Generating...");
-    trackedFiles.forEach((file) => fs.unwatchFile(file, onChange));
+    logger.debug("Changed files:", changedFiles);
+    unwatch?.();
     const output = await generate(globPattern);
     trackedFiles = output.trackedFiles;
-    trackedFiles.forEach((file) =>
-      fs.watchFile(file, { interval: 1000 }, onChange),
-    );
+    unwatch = watch(trackedFiles, onChange);
     if (output.errors.length > 0) {
       logger.error("Errors occurred during generation:");
       output.errors.forEach((error) => {
@@ -33,5 +49,5 @@ watchCommand.action(async (globPattern) => {
       );
     }
   };
-  onChange();
+  onChange([]);
 });

@@ -1,11 +1,13 @@
 import { glob } from "glob";
 import { readFile } from "fs/promises";
+import { existsSync } from "node:fs";
 import * as yaml from "yaml";
-import path from "path";
+import path from "node:path";
 import { ZodError } from "zod";
 import { Font, render } from "@react-pdf/renderer";
 import fsExtra from "fs-extra/esm";
 import grayMatter from "gray-matter";
+import { fileURLToPath } from "node:url";
 import { generatePdfDocument } from "./generate-pdf-document.js";
 import { logger } from "../cli/logging.js";
 import { merge } from "./deepmerge.js";
@@ -13,18 +15,77 @@ import { resolveSpecsFromConfig } from "./resolve-specs-from-config.js";
 import { globalConfig } from "./global-config.js";
 import { importJsSpec } from "./import-js-spec.js";
 
+const dirname = path.dirname(fileURLToPath(import.meta.url));
+const nodeModulesPath = path.join(dirname, "..", "..", "..");
+
+const validExtensions = [
+  ".yml",
+  ".yaml",
+  ".json",
+  ".md",
+  ".js",
+  ".mjs",
+  ".jsx",
+  ".ts",
+  ".tsx",
+];
+
 const isValidExtension = (file: string): boolean =>
-  [
-    ".yml",
-    ".yaml",
-    ".json",
-    ".md",
-    ".js",
-    ".mjs",
-    ".jsx",
-    ".ts",
-    ".tsx",
-  ].includes(path.extname(file));
+  validExtensions.includes(path.extname(file));
+
+const existsWithValidExtension = async (
+  file: string,
+): Promise<string | null | undefined> =>
+  (
+    await Promise.all(
+      validExtensions.map(async (ext) => {
+        if (await fsExtra.pathExists(file + ext)) {
+          return file + ext;
+        }
+        return null;
+      }),
+    )
+  ).find(Boolean);
+
+const resolveFileName = async (
+  filePath: string,
+  relativeImportPath: string,
+): Promise<string> => {
+  if (filePath.startsWith(".")) {
+    const absolute = path.resolve(
+      path.join(path.dirname(relativeImportPath), filePath),
+    );
+    logger.debug(`Resolving relative file from ${filePath} to ${absolute}`);
+    return resolveFileName(absolute, relativeImportPath);
+  }
+
+  const extension = path.extname(filePath);
+
+  if (!extension) {
+    logger.debug(
+      `No extension in imported file ${filePath}, attempting to resolve library themes.`,
+    );
+    const libraryPaths = [
+      path.join(nodeModulesPath, "engineercv/src/themes", filePath),
+      path.join(nodeModulesPath, filePath),
+      path.join(nodeModulesPath, filePath, "theme"),
+    ];
+    for (const libraryPath of libraryPaths) {
+      logger.debug(`Checking for theme file: ${libraryPath}`);
+      const foundFile = await existsWithValidExtension(libraryPath);
+      if (foundFile) {
+        logger.debug(`Resolved theme ${filePath} from library: ${foundFile}`);
+        return resolveFileName(foundFile, relativeImportPath);
+      }
+    }
+  }
+
+  if (!existsSync(filePath)) {
+    throw new Error(`File not found: ${filePath}`);
+  }
+
+  return filePath;
+};
 
 const readConfigFile = async (filePath: string): Promise<any> => {
   const extension = path.extname(filePath);
@@ -67,11 +128,10 @@ const resolveConfig = async (
     return { paths: [], config: null };
   }
 
-  const importedPaths: string[] = (config.imports || []).map(
-    (importPath: string) =>
-      path.isAbsolute(importPath)
-        ? importPath
-        : path.join(path.dirname(filePath), importPath),
+  const importedPaths: string[] = await Promise.all(
+    (config.imports || []).map((importPath: string) =>
+      resolveFileName(importPath, filePath),
+    ),
   );
   const result = (
     await Promise.all(
@@ -178,7 +238,9 @@ export const generate = async (pattern: string) => {
     }
   }
 
-  logger.debug("Tracked files:", trackedFiles);
+  const uniqueTrackedFiles = Array.from(new Set(trackedFiles));
 
-  return { trackedFiles, files, errors };
+  logger.debug("Tracked files:", uniqueTrackedFiles);
+
+  return { trackedFiles: uniqueTrackedFiles, files, errors };
 };

@@ -6,12 +6,14 @@ import esbuild from "esbuild";
 import os from "os";
 import { defineComponent } from "../components/define-component.js";
 import { defaultComponents } from "../components/default-components.js";
+import { logger } from "../cli/logging.js";
 
 export const importJsSpec = async (filePath: string) => {
   const extension = path.extname(filePath);
   const baseName = path.basename(filePath, extension);
 
   const tempFile = path.join(os.tmpdir(), `engineercv-${baseName}.js`);
+  logger.debug(`Built JS file to ${tempFile}.`);
   const context = await esbuild.context({
     entryPoints: [filePath],
     bundle: true,
@@ -30,5 +32,7 @@ export const importJsSpec = async (filePath: string) => {
   (global as any).defaultComponents = defaultComponents;
 
   const moduleContent = await import(`file://${tempFile}`);
-  return moduleContent.default || moduleContent;
+  return (
+    moduleContent.default.default || moduleContent.default || moduleContent
+  );
 };
