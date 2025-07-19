@@ -9,10 +9,22 @@ import * as ai from "react-icons/ai";
 import * as hi from "react-icons/hi";
 import * as ci from "react-icons/ci";
 import * as sl from "react-icons/sl";
+import * as lu from "react-icons/lu";
 import { Circle, Path, Svg, View } from "@react-pdf/renderer";
 import { defineComponent } from "../define-component.js";
 
-const library: Record<string, any> = { fa, io5, bs, md, fi, ai, hi, ci, sl };
+const library: Record<string, any> = {
+  fa,
+  io5,
+  bs,
+  md,
+  fi,
+  ai,
+  hi,
+  ci,
+  sl,
+  lu,
+};
 
 export const iconComponent = defineComponent({
   name: "icon",

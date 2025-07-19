@@ -15,19 +15,21 @@ const basics = defineComponent({
         .optional(),
     }),
   ),
-  component: ({ spec, styles, getComponent, resolvePath }) => {
+  component: ({ spec, styles, getComponent }) => {
     const Markdown = getComponent({ name: "markdown" });
+    const Image = getComponent(defaultComponents.image);
     const TextWithIcon = getComponent(defaultComponents.textWithIcon);
     const BasicsItems = getComponent({
       name: "basicsItems",
     } as typeof basicsItemsComponent);
+
     return (
       spec.basics && (
         <>
           <ReactPdf.View style={styles.container}>
             <ReactPdf.View style={styles.leftContainer}>
-              <ReactPdf.Image
-                src={resolvePath(spec.basics.image)}
+              <Image
+                src={spec.basics.image}
                 style={[
                   styles.picture,
                   spec.basics.roundedImage ? { borderRadius: "9999pt" } : {},

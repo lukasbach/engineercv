@@ -29,7 +29,7 @@ const defaultIcons = {
   },
   location: {
     suite: "md",
-    icon: "MdOutlinePinDrop",
+    icon: "MdOutlinePersonPinCircle",
   },
   github: {
     suite: "fa",

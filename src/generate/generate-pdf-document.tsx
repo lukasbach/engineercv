@@ -4,6 +4,7 @@ import { merge } from "ts-deepmerge";
 import path from "path";
 import { buildComponentRegistry } from "../components/default-components.js";
 import { baseSpecSchema } from "./base-spec-schema.js";
+import { logger } from "../cli/logging.js";
 
 export const generatePdfDocument = async (spec: any, file: string) => {
   const components = buildComponentRegistry(spec.config?.components || {});
@@ -13,12 +14,19 @@ export const generatePdfDocument = async (spec: any, file: string) => {
     const { component: Comp, defaultStyles } = components.getComponent(name);
     const styles = merge(defaultStyles, spec.styles?.[name] || {});
     const stylesheet = StyleSheet.create(styles);
-    const resolvePath = (filePath: string) =>
-      filePath.startsWith("http://") ||
-      filePath.startsWith("https://") ||
-      path.isAbsolute(filePath)
-        ? filePath
-        : path.resolve(path.join(path.dirname(file), filePath));
+    const resolvePath = (filePath: string) => {
+      if (
+        filePath.startsWith("http://") ||
+        filePath.startsWith("https://") ||
+        path.isAbsolute(filePath)
+      ) {
+        return filePath;
+      }
+      const resolved = `${path.resolve(path.join(path.dirname(file), filePath))}`;
+      logger.debug(`File reference [${filePath}] resolved to [${resolved}]`);
+
+      return resolved;
+    };
     return (props: any) => (
       <Comp
         {...props}

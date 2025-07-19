@@ -27,6 +27,7 @@ import { pageNumbersComponent } from "./atoms/page-numbers.js";
 import { basicsItemsComponent } from "./atoms/basics-items-component.js";
 import { iconComponent } from "./atoms/icon.js";
 import { textWithIconComponent } from "./atoms/text-with-icon.js";
+import { imageComponent } from "./atoms/image.js";
 
 export const defaultComponents = {
   [markdownComponent.name]: markdownComponent,
@@ -56,6 +57,7 @@ export const defaultComponents = {
   [basicsItemsComponent.name]: basicsItemsComponent,
   [iconComponent.name]: iconComponent,
   [textWithIconComponent.name]: textWithIconComponent,
+  [imageComponent.name]: imageComponent,
 } as const;
 
 export const buildComponentRegistry = (
