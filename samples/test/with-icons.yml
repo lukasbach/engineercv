@@ -1,7 +1,4 @@
-# yaml-language-server: $schema=../../../lib/schema.json
-
-imports:
-  - ../../../src/themes/sidelinks.tsx
+# yaml-language-server: $schema=../../lib/schema.json
 
 config:
   useIcons: true
@@ -21,7 +18,7 @@ basics:
   summary: |
     Experienced software engineer with a passion for building scalable web applications. Proficient in JavaScript, React, and Node.js. Strong problem-solving skills and a commitment to delivering high-quality code.
 
-output: ../../out/test/{{ source.name }}.pdf
+output: ../out/test/{{ source.name }}.pdf
 
 skills:
   - name: Languages

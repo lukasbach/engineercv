@@ -1873,6 +1873,7 @@ __metadata:
     prompts: "npm:^2.4.2"
     publish-fast: "npm:^0.0.20"
     react: "npm:^19.1.0"
+    react-icons: "npm:^5.5.0"
     react-markdown: "npm:^10.1.0"
     ts-deepmerge: "npm:^7.0.3"
     tsx: "npm:^4.20.3"
@@ -1883,7 +1884,7 @@ __metadata:
     zod-deep-partial: "npm:^1.0.0"
     zod-to-json-schema: "npm:^3.24.6"
   bin:
-    engineercv: ./lib/index.js
+    engineercv: lib/index.js
   languageName: unknown
   linkType: soft
 
@@ -4933,6 +4934,15 @@ __metadata:
   dependencies:
     inherits: "npm:~2.0.3"
   checksum: 10c0/cf987476cc72e7d3aaabe23ccefaab1cd757a2b5e0c8d80b67c9575a6b5e1198807ffd4f0948a3f118b149d1111d810ee773473530b77a5c606673cac2c9c996
+  languageName: node
+  linkType: hard
+
+"react-icons@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "react-icons@npm:5.5.0"
+  peerDependencies:
+    react: "*"
+  checksum: 10c0/a24309bfc993c19cbcbfc928157e53a137851822779977b9588f6dd41ffc4d11ebc98b447f4039b0d309a858f0a42980f6bfb4477fb19f9f2d1bc2e190fcf79c
   languageName: node
   linkType: hard
 

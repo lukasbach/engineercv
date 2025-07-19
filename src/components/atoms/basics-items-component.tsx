@@ -14,10 +14,40 @@ const defaultOrder = [
   "highlights",
 ];
 
+const defaultIcons = {
+  mail: {
+    suite: "md",
+    icon: "MdOutlineEmail",
+  },
+  phone: {
+    suite: "bs",
+    icon: "BsTelephone",
+  },
+  url: {
+    suite: "sl",
+    icon: "SlGlobe",
+  },
+  location: {
+    suite: "md",
+    icon: "MdOutlinePinDrop",
+  },
+  github: {
+    suite: "fa",
+    icon: "FaGithub",
+  },
+  linkedin: {
+    suite: "ai",
+    icon: "AiOutlineLinkedin",
+  },
+};
+
 export const basicsItemsComponent = defineComponent({
   name: "basicsItems" as const,
   additionalProps: z.object({
-    renderItem: z.function().args(z.any(), z.number()).returns(z.any()),
+    renderItem: z
+      .function()
+      .args(z.any(), z.any(), z.number())
+      .returns(z.any()),
   }),
   schema: basicsSectionComponent.schema,
   component: ({ spec, getComponent, renderItem }) => {
@@ -30,27 +60,47 @@ export const basicsItemsComponent = defineComponent({
 
     const items = {
       email: spec.basics.email
-        ? [`[${spec.basics.email}](mailto:${spec.basics.email})`]
+        ? [
+            {
+              text: `[${spec.basics.email}](mailto:${spec.basics.email})`,
+              icon: "mail",
+            },
+          ]
         : [],
       phone: spec.basics.phone
         ? [
-            `[${spec.basics.phone}](tel:${spec.basics.phone.replaceAll(/[^\d]/g, "")})`,
+            {
+              text: `[${spec.basics.phone}](tel:${spec.basics.phone.replaceAll(/[^\d]/g, "")})`,
+              icon: "phone",
+            },
           ]
         : [],
-      url: spec.basics.url ? [<Url url={spec.basics.url} />] : [],
+      url: spec.basics.url
+        ? [{ text: <Url url={spec.basics.url} />, icon: "url" }]
+        : [],
       profiles:
-        spec.basics.profiles?.map((profile) => (
-          <Url key={profile.network} url={profile.url} />
-        )) ?? [],
-      location: location ? [location] : [],
-      highlights: spec.basics.highlights ?? [],
+        spec.basics.profiles?.map((profile) => ({
+          text: <Url url={profile.url} />,
+          icon: profile.network,
+        })) ?? [],
+      location: location ? [{ text: location, icon: "location" }] : [],
+      highlights: spec.basics.highlights?.map((text) => ({ text })) ?? [],
+    };
+
+    const iconMap = {
+      ...defaultIcons,
+      ...(spec.basics.icons ?? {}),
     };
 
     const orderedItems = (spec.basics.order ?? defaultOrder)
       .map((key) => (key in items ? items[key as keyof typeof items] : []))
       .flat();
 
-    return orderedItems.filter(Boolean).map(renderItem);
+    return orderedItems
+      .filter(Boolean)
+      .map(({ text, icon }: any, index) =>
+        renderItem(text, (iconMap as any)[icon?.toLowerCase()], index),
+      );
   },
   defaultStyles: {} as const,
 });

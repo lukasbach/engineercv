@@ -25,6 +25,8 @@ import { dateComponent } from "./atoms/date-component.js";
 import { detailsListComponent } from "./atoms/details-list-component.js";
 import { pageNumbersComponent } from "./atoms/page-numbers.js";
 import { basicsItemsComponent } from "./atoms/basics-items-component.js";
+import { iconComponent } from "./atoms/icon.js";
+import { textWithIconComponent } from "./atoms/text-with-icon.js";
 
 export const defaultComponents = {
   [markdownComponent.name]: markdownComponent,
@@ -52,6 +54,8 @@ export const defaultComponents = {
   [dateComponent.name]: dateComponent,
   [pageNumbersComponent.name]: pageNumbersComponent,
   [basicsItemsComponent.name]: basicsItemsComponent,
+  [iconComponent.name]: iconComponent,
+  [textWithIconComponent.name]: textWithIconComponent,
 } as const;
 
 export const buildComponentRegistry = (

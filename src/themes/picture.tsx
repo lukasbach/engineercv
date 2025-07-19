@@ -17,6 +17,7 @@ const basics = defineComponent({
   ),
   component: ({ spec, styles, getComponent, resolvePath }) => {
     const Markdown = getComponent({ name: "markdown" });
+    const TextWithIcon = getComponent(defaultComponents.textWithIcon);
     const BasicsItems = getComponent({
       name: "basicsItems",
     } as typeof basicsItemsComponent);
@@ -37,15 +38,20 @@ const basics = defineComponent({
               <Markdown style={styles.name}>{spec.basics.name}</Markdown>
               <ReactPdf.View style={styles.itemContainer}>
                 <BasicsItems
-                  renderItem={(item, key) => (
-                    <ReactPdf.View style={styles.item} key={key}>
-                      <Markdown>{item}</Markdown>
-                    </ReactPdf.View>
+                  renderItem={(item, icon, key) => (
+                    <TextWithIcon
+                      suite={icon?.suite}
+                      icon={icon?.icon}
+                      key={key}
+                    >
+                      <Markdown style={styles.item}>{item}</Markdown>
+                    </TextWithIcon>
                   )}
                 />
               </ReactPdf.View>
             </ReactPdf.View>
           </ReactPdf.View>
+
           {spec.basics.summary && (
             <Markdown style={styles.summary}>{spec.basics.summary}</Markdown>
           )}

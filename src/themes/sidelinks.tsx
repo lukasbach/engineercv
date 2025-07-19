@@ -6,6 +6,7 @@ export const basics = defineComponent({
   schema: defaultComponents.basics.schema,
   component: ({ spec, styles, getComponent }) => {
     const Markdown = getComponent(defaultComponents.markdown);
+    const TextWithIcon = getComponent(defaultComponents.textWithIcon);
     const BasicsItems = getComponent(defaultComponents.basicsItems);
 
     return (
@@ -21,9 +22,11 @@ export const basics = defineComponent({
         <ReactPdf.View style={styles.rightContainer}>
           <ReactPdf.View style={styles.itemContainer}>
             <BasicsItems
-              renderItem={(item, key) => (
+              renderItem={(item, icon, key) => (
                 <ReactPdf.View style={styles.item} key={key}>
-                  <Markdown>{item}</Markdown>
+                  <TextWithIcon suite={icon?.suite} icon={icon?.icon} right>
+                    <Markdown style={styles.item}>{item}</Markdown>
+                  </TextWithIcon>
                 </ReactPdf.View>
               )}
             />

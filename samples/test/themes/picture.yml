@@ -5,6 +5,10 @@ output: ../../out/test/themes/picture.pdf
 imports:
   - ../../../src/themes/picture.tsx
 
+
+config:
+  useIcons: true
+
 basics:
   image: https://lukasbach.com/profile.jpg
   roundedImage: true

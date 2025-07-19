@@ -4,6 +4,12 @@ import { View } from "@react-pdf/renderer";
 import { defineComponent } from "../define-component.js";
 import { markdownComponent } from "../atoms/markdown-component.js";
 import { basicsItemsComponent } from "../atoms/basics-items-component.js";
+import { textWithIconComponent } from "../atoms/text-with-icon.js";
+
+export const iconConfig = z.object({
+  suite: z.string().optional(),
+  icon: z.string(),
+});
 
 export const basicsSectionComponent = defineComponent({
   name: "basics" as const,
@@ -37,9 +43,11 @@ export const basicsSectionComponent = defineComponent({
         .optional(),
       highlights: z.string().array().optional(),
       order: z.string().array().optional(),
+      icons: z.record(z.string(), iconConfig).optional(),
     }),
   }),
   component: ({ spec, styles, getComponent }) => {
+    const TextWithIcon = getComponent(textWithIconComponent);
     const Markdown = getComponent(markdownComponent);
     const BasicsItems = getComponent({
       name: "basicsItems",
@@ -50,10 +58,10 @@ export const basicsSectionComponent = defineComponent({
         <Markdown style={styles.name}>{spec.basics.name}</Markdown>
         <View style={styles.itemContainer}>
           <BasicsItems
-            renderItem={(item, key) => (
-              <View style={styles.item} key={key}>
-                <Markdown>{item}</Markdown>
-              </View>
+            renderItem={(item, icon, key) => (
+              <TextWithIcon suite={icon?.suite} icon={icon?.icon} key={key}>
+                <Markdown style={styles.item}>{item}</Markdown>
+              </TextWithIcon>
             )}
           />
         </View>
