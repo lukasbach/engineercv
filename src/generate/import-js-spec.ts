@@ -4,8 +4,8 @@ import React from "react";
 import z from "zod";
 import esbuild from "esbuild";
 import os from "os";
-import { defineComponent } from "../../components/define-component.js";
-import { defaultComponents } from "../../components/default-components.js";
+import { defineComponent } from "../components/define-component.js";
+import { defaultComponents } from "../components/default-components.js";
 
 export const importJsSpec = async (filePath: string) => {
   const extension = path.extname(filePath);

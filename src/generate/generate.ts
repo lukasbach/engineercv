@@ -7,7 +7,7 @@ import { Font, render } from "@react-pdf/renderer";
 import fsExtra from "fs-extra/esm";
 import grayMatter from "gray-matter";
 import { generatePdfDocument } from "./generate-pdf-document.js";
-import { logger } from "../../cli/logging.js";
+import { logger } from "../cli/logging.js";
 import { merge } from "./deepmerge.js";
 import { resolveSpecsFromConfig } from "./resolve-specs-from-config.js";
 import { globalConfig } from "./global-config.js";

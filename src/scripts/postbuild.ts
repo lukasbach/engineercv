@@ -2,7 +2,7 @@ import { zodToJsonSchema } from "zod-to-json-schema";
 import * as fs from "fs";
 import { z } from "zod";
 import { defaultComponents } from "../components/default-components.js";
-import { baseSpecSchema } from "../domain/generate/base-spec-schema.js";
+import { baseSpecSchema } from "../generate/base-spec-schema.js";
 
 await fs.promises.mkdir("lib", { recursive: true });
 

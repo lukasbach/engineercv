@@ -18,7 +18,7 @@ import { markdownComponent } from "./atoms/markdown-component.js";
 import { documentComponent } from "./document-component.js";
 import { pageComponent } from "./page-component.js";
 import { basicsSectionComponent } from "./sections/basics-section-component.js";
-import { baseSpecSchema } from "../domain/generate/base-spec-schema.js";
+import { baseSpecSchema } from "../generate/base-spec-schema.js";
 import { sectionOrderComponent } from "./section-order-component.js";
 import { urlComponent } from "./atoms/url.js";
 import { dateComponent } from "./atoms/date-component.js";

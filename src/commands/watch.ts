@@ -1,6 +1,6 @@
 import { Command, Option } from "commander";
 import * as fs from "fs";
-import { generate } from "../domain/generate/generate.js";
+import { generate } from "../generate/generate.js";
 import { logger } from "../cli/logging.js";
 
 export const watchCommand = new Command("watch");

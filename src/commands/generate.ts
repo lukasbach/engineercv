@@ -1,5 +1,5 @@
 import { Command, Option } from "commander";
-import { generate } from "../domain/generate/generate.js";
+import { generate } from "../generate/generate.js";
 import { logger } from "../cli/logging.js";
 
 export const generateCommand = new Command("generate");
