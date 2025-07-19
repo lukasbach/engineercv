@@ -31,9 +31,6 @@ const basics = defineComponent({
             </ReactPdf.View>
             <ReactPdf.View style={styles.rightContainer}>
               <Markdown style={styles.name}>{spec.basics.name}</Markdown>
-              <Markdown style={styles.summary}>
-                This is my awesome custom component!
-              </Markdown>
               <ReactPdf.View style={styles.itemContainer}>
                 {spec.title.items?.map((item, index) => (
                   <Markdown
