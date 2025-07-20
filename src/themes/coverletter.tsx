@@ -16,7 +16,9 @@ const header = defineComponent({
           <Markdown style={styles.title}>{spec.basics.name}</Markdown>
 
           <ReactPdf.View style={styles.innerContainer}>
-            <Markdown style={styles.subtitle}>{spec.basics.subtitle}</Markdown>
+            <ReactPdf.View style={styles.subtitle}>
+              <Markdown>{spec.basics.subtitle}</Markdown>
+            </ReactPdf.View>
             <Markdown style={styles.address}>
               {spec.fromAddress?.join("\n")}
             </Markdown>
