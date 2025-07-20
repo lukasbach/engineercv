@@ -12,7 +12,7 @@ export const imageComponent = defineComponent({
     style: z.any(),
   }),
   component: ({ src, styles, style, resolvePath }) => {
-    const resolvedSrc = fs.readFileSync(resolvePath(src));
+    const resolvedSrc = resolvePath(src);
     return (
       <Image
         src={

@@ -94,7 +94,7 @@ const body = defineComponent({
     config: z.object({ paragraphSpacing: z.string().optional() }).optional(),
   }),
   component: ({ spec, styles, getComponent }) => {
-    const Markdown = getComponent({ name: "markdown" });
+    const Markdown = getComponent(defaultComponents.markdown);
     return (
       <>
         <ReactPdf.View style={styles.container}>
