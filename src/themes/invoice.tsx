@@ -14,13 +14,13 @@ const header = defineComponent({
       .default({}),
     fromAddress: z.string().array().optional(),
     invoice: z.object({
-      invoiceNumber: z.string(),
+      invoiceNumber: z.string().or(z.number()),
       date: z.string(),
       dueDate: z.string(),
     }),
   }),
   component: ({ spec, styles, getComponent }) => {
-    const Markdown = getComponent({ name: "markdown" });
+    const Markdown = getComponent(defaultComponents.markdown);
     return (
       <>
         <ReactPdf.View style={styles.container}>
@@ -117,7 +117,7 @@ const toAddress = defineComponent({
     shipAddress: z.string().array().optional(),
   }),
   component: ({ spec, styles, getComponent }) => {
-    const Markdown = getComponent({ name: "markdown" });
+    const Markdown = getComponent(defaultComponents.markdown);
     const billTo = spec.toAddress;
     const shipTo = spec.shipAddress;
 
@@ -177,12 +177,12 @@ const invoiceTableRow = defineComponent({
         description: z.string(),
         unitPrice: z.number(),
       }),
-      count: z.number().optional(),
+      quantity: z.number().optional(),
     }),
     currency: z.string().optional(),
   }),
   component: ({ item, currency = "USD", styles }) => {
-    const lineTotal = item.definition.unitPrice * (item.count || 1);
+    const lineTotal = item.definition.unitPrice * (item.quantity || 1);
 
     return (
       <>
@@ -191,7 +191,7 @@ const invoiceTableRow = defineComponent({
             {item.definition.description}
           </ReactPdf.Text>
           <ReactPdf.Text style={[styles.cell, styles.qtyCol]}>
-            {item.count || 1}
+            {item.quantity || 1}
           </ReactPdf.Text>
           <ReactPdf.Text style={[styles.cell, styles.priceCol]}>
             {currency} {item.definition.unitPrice.toFixed(2)}
@@ -433,7 +433,7 @@ const invoiceTable = defineComponent({
           description: z.string(),
           unitPrice: z.number(),
         }),
-        count: z.number().optional(),
+        quantity: z.number().optional(),
       }),
     ),
     modifiers: z
@@ -457,7 +457,7 @@ const invoiceTable = defineComponent({
     const paymentMade = spec.invoice.paymentMade || 0;
 
     const subtotal = spec.items.reduce(
-      (sum, item) => sum + item.definition.unitPrice * (item.count || 1),
+      (sum, item) => sum + item.definition.unitPrice * (item.quantity || 1),
       0,
     );
 
@@ -554,13 +554,15 @@ const body = defineComponent({
     body: z.string().optional(),
   }),
   component: ({ spec, styles, getComponent }) => {
-    const Markdown = getComponent({ name: "markdown" });
+    const Markdown = getComponent(defaultComponents.markdown);
     if (!spec.body) return null;
 
     return (
       <>
         <ReactPdf.View style={styles.container}>
-          <Markdown style={styles.text}>{spec.body}</Markdown>
+          <Markdown style={styles.text} paragraphSpacing="14pt">
+            {spec.body}
+          </Markdown>
         </ReactPdf.View>
       </>
     );

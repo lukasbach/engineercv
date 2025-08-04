@@ -31,6 +31,12 @@ hb.registerHelper("phone", (number: string) => {
   return `[${number}](tel:${String(number).replace(/\D/g, "")})`;
 });
 hb.registerHelper("email", (email) => `[${email}](mailto:${email})`);
+hb.registerHelper("pathsafe", (value: string) =>
+  value
+    .toLocaleLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-zA-Z0-9_-]/g, ""),
+);
 hb.registerHelper("date", (format?: string, originalDate?: string) =>
   moment(nullish(originalDate) ?? new Date()).format(nullish(format)),
 );

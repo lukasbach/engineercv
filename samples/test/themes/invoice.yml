@@ -24,7 +24,7 @@ body: |
 
 items:
   - definition: "{{ use customProducts.hourOfWork }}"
-    count: 6
+    quantity: 6
   - definition: "{{ use customProducts.drive }}"
 
 modifiers:
