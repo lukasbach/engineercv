@@ -219,7 +219,6 @@ const invoiceTableRow = defineComponent({
     },
     qtyCol: {
       flex: 1,
-      textAlign: "center",
     },
     priceCol: {
       flex: 2,
@@ -405,12 +404,10 @@ const invoiceSummary = defineComponent({
     balanceLabel: {
       fontWeight: "bold",
       fontSize: "12pt",
-      color: "#d00",
     },
     balanceValue: {
       fontWeight: "bold",
       fontSize: "12pt",
-      color: "#d00",
     },
   } as const,
 });
@@ -533,7 +530,6 @@ const invoiceTable = defineComponent({
     },
     qtyCol: {
       flex: 1,
-      textAlign: "center",
     },
     priceCol: {
       flex: 2,
@@ -545,7 +541,7 @@ const invoiceTable = defineComponent({
       borderRight: "none",
     },
     summaryContainer: {
-      marginTop: "20pt",
+      marginTop: "10pt",
       width: "50%",
       marginLeft: "auto",
     },
@@ -573,10 +569,7 @@ const body = defineComponent({
     container: {
       marginTop: "20pt",
     },
-    text: {
-      fontSize: "10pt",
-      lineHeight: "1.4",
-    },
+    text: { fontSize: "10pt" },
   } as const,
 });
 
@@ -608,5 +601,13 @@ export default {
     totalLabel: "Total",
     paymentMade: "Payment Made",
     balanceDue: "Balance Due",
+  },
+  styles: {
+    page: {
+      container: {
+        paddingHorizontal: "48pt",
+        paddingVertical: "40pt",
+      },
+    },
   },
 };
