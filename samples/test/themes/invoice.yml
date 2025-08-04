@@ -1,0 +1,50 @@
+output: ../../out/test/themes/invoice.pdf
+
+imports:
+  - ../../../src/themes/invoice.tsx
+
+basics:
+  name: John Doe
+
+toAddress:
+  - Hiring Manager
+  - Tech Company
+  - 1234 Tech Street
+  - Karlsruhe, Germany
+
+shipAddress: "{{ use toAddress }}"
+
+fromAddress:
+  - John Doe
+  - 5678 Developer Lane
+  - Karlsruhe, Germany
+
+body: |
+  Payment is due within 30 days of receipt of this invoice.
+
+items:
+  - definition: "{{ use customProducts.hourOfWork }}"
+    count: 6
+  - definition: "{{ use customProducts.drive }}"
+
+modifiers:
+  - description: "Sales Tax"
+    rate: 0.19
+
+invoice:
+  paymentMade: 200
+  currency: USD
+  date: "{{ date 'YYYY-MM-DD' }}"
+  invoiceNumber: "INV-2023-001"
+  dueDate: "{{ dateadd (date) 14 'd' 'YYYY-MM-DD' }}" # TODO date add "{{ date 'YYY-MM-DD' '+14d' }}"
+
+customProducts:
+  hourOfWork:
+    description: "Hourly work rate"
+    unitPrice: 100
+  drive:
+    description: "Drive to client location"
+    unitPrice: 50
+  additionalExpenses:
+    description: "Additional expenses"
+    unitPrice: 20
