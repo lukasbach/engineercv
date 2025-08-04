@@ -6,9 +6,14 @@ import { advancedDeepmerge } from "./advanced-deepmerge.js";
 const hb = Handlebars.create();
 
 let parsedAsNumber = false;
+let parsedAsJson = false;
 hb.registerHelper("number", (value: string) => {
   parsedAsNumber = true;
   return value;
+});
+hb.registerHelper("use", (value: string) => {
+  parsedAsJson = true;
+  return new Handlebars.SafeString(JSON.stringify(value));
 });
 hb.registerHelper(
   "github",
@@ -22,8 +27,22 @@ hb.registerHelper("phone", (number: string) => {
   return `[${number}](tel:${String(number).replace(/\D/g, "")})`;
 });
 hb.registerHelper("email", (email) => `[${email}](mailto:${email})`);
-hb.registerHelper("date", (format: string, originalDate?: string) =>
-  moment(originalDate ?? new Date()).format(format),
+hb.registerHelper("date", (format?: string, originalDate?: string) =>
+  moment(originalDate ?? new Date(), format ?? moment.ISO_8601).format(),
+);
+hb.registerHelper(
+  "dateadd",
+  (originalDate: string, count: number, type: string, format?: string) =>
+    moment(originalDate ?? new Date(), format ?? moment.ISO_8601)
+      .add(count, type as any)
+      .format(),
+);
+hb.registerHelper(
+  "datesub",
+  (originalDate: string, count: number, type: string, format?: string) =>
+    moment(originalDate ?? new Date())
+      .subtract(count, type as any)
+      .format(format),
 );
 hb.registerHelper(
   "pathjoin",
@@ -46,9 +65,20 @@ const resolveTemplates = (
     const resolved = template(handlebarVars);
     try {
       const parsed = JSON.parse(resolved);
-      return typeof parsed === "number" && !parsedAsNumber
-        ? `${parsed}`
-        : parsed;
+
+      if (typeof parsed === "object" && parsed !== null) {
+        return parsed;
+      }
+
+      if (parsedAsJson) {
+        return JSON.parse(resolved);
+      }
+
+      if (typeof parsed === "number" && !parsedAsNumber) {
+        return `${parsed}`;
+      }
+
+      return parsed;
     } catch {
       return resolved;
     }

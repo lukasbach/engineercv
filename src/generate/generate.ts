@@ -8,6 +8,7 @@ import { Font, render } from "@react-pdf/renderer";
 import fsExtra from "fs-extra/esm";
 import grayMatter from "gray-matter";
 import { fileURLToPath } from "node:url";
+import chalk from "chalk";
 import { generatePdfDocument } from "./generate-pdf-document.js";
 import { logger } from "../cli/logging.js";
 import { merge } from "./deepmerge.js";
@@ -226,6 +227,17 @@ export const generate = async (pattern: string) => {
 
     try {
       const specs = resolveSpecsFromConfig(config, file);
+      (() => {
+        if (!process.argv.includes("--verbose") && !process.argv.includes("-v"))
+          return;
+        // eslint-disable-next-line no-shadow, unused-imports/no-unused-vars
+        for (const spec of specs) {
+          const { env, config, ...logSpec } = spec;
+          console.log(
+            `Resolved specification for ${file}: ${chalk.dim(JSON.stringify(logSpec, null, 2))}`,
+          );
+        }
+      })();
       for (const spec of specs) {
         if (spec.skip) {
           logger.debug(`Skipping file ${file} due to skip flag.`);
