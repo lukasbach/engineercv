@@ -5,6 +5,10 @@ import { advancedDeepmerge } from "./advanced-deepmerge.js";
 
 const hb = Handlebars.create();
 
+// Last hb parameter is the context object, so we use this to make sure the value is not
+// a context object
+const nullish = (value: any) => (typeof value === "object" ? undefined : value);
+
 let parsedAsNumber = false;
 let parsedAsJson = false;
 hb.registerHelper("number", (value: string) => {
@@ -28,21 +32,21 @@ hb.registerHelper("phone", (number: string) => {
 });
 hb.registerHelper("email", (email) => `[${email}](mailto:${email})`);
 hb.registerHelper("date", (format?: string, originalDate?: string) =>
-  moment(originalDate ?? new Date(), format ?? moment.ISO_8601).format(),
+  moment(nullish(originalDate) ?? new Date()).format(nullish(format)),
 );
 hb.registerHelper(
   "dateadd",
   (originalDate: string, count: number, type: string, format?: string) =>
-    moment(originalDate ?? new Date(), format ?? moment.ISO_8601)
+    moment(nullish(originalDate) ?? new Date())
       .add(count, type as any)
-      .format(),
+      .format(nullish(format)),
 );
 hb.registerHelper(
   "datesub",
   (originalDate: string, count: number, type: string, format?: string) =>
-    moment(originalDate ?? new Date())
+    moment(nullish(originalDate) ?? new Date())
       .subtract(count, type as any)
-      .format(format),
+      .format(nullish(format)),
 );
 hb.registerHelper(
   "pathjoin",

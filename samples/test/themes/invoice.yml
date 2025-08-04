@@ -20,7 +20,7 @@ fromAddress:
   - Karlsruhe, Germany
 
 body: |
-  Payment is due within 30 days of receipt of this invoice.
+  Payment is due within 14 days of receipt of this invoice, on {{ dateadd (date) 14 'd' 'MM/DD/YYYY' }}.
 
 items:
   - definition: "{{ use customProducts.hourOfWork }}"
@@ -36,7 +36,7 @@ invoice:
   currency: USD
   date: "{{ date 'YYYY-MM-DD' }}"
   invoiceNumber: "INV-2023-001"
-  dueDate: "{{ dateadd (date) 14 'd' 'YYYY-MM-DD' }}" # TODO date add "{{ date 'YYY-MM-DD' '+14d' }}"
+  dueDate: "{{ dateadd (date) 14 'd' 'YYYY-MM-DD' }}"
 
 customProducts:
   hourOfWork:
