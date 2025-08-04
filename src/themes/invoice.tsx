@@ -4,6 +4,14 @@ import React from "react";
 const header = defineComponent({
   name: "header",
   schema: z.object({
+    strings: z
+      .object({
+        invoice: z.string().default(""),
+        invoiceNumber: z.string().default(""),
+        date: z.string().default(""),
+        dueDate: z.string().default(""),
+      })
+      .default({}),
     fromAddress: z.string().array().optional(),
     invoice: z.object({
       invoiceNumber: z.string(),
@@ -18,26 +26,34 @@ const header = defineComponent({
         <ReactPdf.View style={styles.container}>
           <ReactPdf.View style={styles.headerRow}>
             <ReactPdf.View style={styles.fromSection}>
-              <ReactPdf.Text style={styles.title}>INVOICE</ReactPdf.Text>
+              <ReactPdf.Text style={styles.title}>
+                {spec.strings?.invoice}
+              </ReactPdf.Text>
               <Markdown style={styles.fromAddress}>
                 {spec.fromAddress?.join("\n")}
               </Markdown>
             </ReactPdf.View>
             <ReactPdf.View style={styles.invoiceDetails}>
               <ReactPdf.View style={styles.detailRow}>
-                <ReactPdf.Text style={styles.label}>Invoice #:</ReactPdf.Text>
+                <ReactPdf.Text style={styles.label}>
+                  {spec.strings?.invoiceNumber}
+                </ReactPdf.Text>
                 <ReactPdf.Text style={styles.value}>
                   {spec.invoice.invoiceNumber}
                 </ReactPdf.Text>
               </ReactPdf.View>
               <ReactPdf.View style={styles.detailRow}>
-                <ReactPdf.Text style={styles.label}>Date:</ReactPdf.Text>
+                <ReactPdf.Text style={styles.label}>
+                  {spec.strings?.date}
+                </ReactPdf.Text>
                 <ReactPdf.Text style={styles.value}>
                   {spec.invoice.date}
                 </ReactPdf.Text>
               </ReactPdf.View>
               <ReactPdf.View style={styles.detailRow}>
-                <ReactPdf.Text style={styles.label}>Due Date:</ReactPdf.Text>
+                <ReactPdf.Text style={styles.label}>
+                  {spec.strings?.dueDate}
+                </ReactPdf.Text>
                 <ReactPdf.Text style={styles.value}>
                   {spec.invoice.dueDate}
                 </ReactPdf.Text>
@@ -91,6 +107,12 @@ const header = defineComponent({
 const toAddress = defineComponent({
   name: "toAddress",
   schema: z.object({
+    strings: z
+      .object({
+        billTo: z.string().default(""),
+        shipTo: z.string().default(""),
+      })
+      .default({}),
     toAddress: z.string().array().optional(),
     shipAddress: z.string().array().optional(),
   }),
@@ -105,14 +127,14 @@ const toAddress = defineComponent({
           <ReactPdf.View style={styles.addressRow}>
             <ReactPdf.View style={styles.addressSection}>
               <ReactPdf.Text style={styles.addressLabel}>
-                Bill To:
+                {spec.strings?.billTo}
               </ReactPdf.Text>
               <Markdown style={styles.address}>{billTo?.join("\n")}</Markdown>
             </ReactPdf.View>
             {shipTo && (
               <ReactPdf.View style={styles.addressSection}>
                 <ReactPdf.Text style={styles.addressLabel}>
-                  Ship To:
+                  {spec.strings?.shipTo}
                 </ReactPdf.Text>
                 <Markdown style={styles.address}>{shipTo?.join("\n")}</Markdown>
               </ReactPdf.View>
@@ -155,11 +177,11 @@ const invoiceTableRow = defineComponent({
         description: z.string(),
         unitPrice: z.number(),
       }),
-      count: z.number().optional().default(1),
+      count: z.number().optional(),
     }),
-    currency: z.string().optional().default("USD"),
+    currency: z.string().optional(),
   }),
-  component: ({ item, currency, styles }) => {
+  component: ({ item, currency = "USD", styles }) => {
     const lineTotal = item.definition.unitPrice * (item.count || 1);
 
     return (
@@ -220,9 +242,9 @@ const invoiceSummaryModifier = defineComponent({
       rate: z.number(),
     }),
     subtotal: z.number(),
-    currency: z.string().optional().default("USD"),
+    currency: z.string().optional(),
   }),
-  component: ({ modifier, subtotal, currency, styles }) => {
+  component: ({ modifier, subtotal, currency = "USD", styles }) => {
     const modifierAmount = subtotal * modifier.rate;
 
     return (
@@ -269,15 +291,24 @@ const invoiceSummary = defineComponent({
         }),
       )
       .optional(),
-    paymentMade: z.number().optional().default(0),
-    currency: z.string().optional().default("USD"),
+    paymentMade: z.number().optional(),
+    currency: z.string().optional(),
+    strings: z
+      .object({
+        subtotal: z.string().default(""),
+        totalLabel: z.string().default(""),
+        paymentMade: z.string().default(""),
+        balanceDue: z.string().default(""),
+      })
+      .optional(),
   }),
   component: ({
     subtotal,
     total,
     modifiers,
-    paymentMade,
-    currency,
+    paymentMade = 0,
+    currency = "USD",
+    strings,
     styles,
     getComponent,
   }) => {
@@ -289,7 +320,9 @@ const invoiceSummary = defineComponent({
     return (
       <>
         <ReactPdf.View style={styles.summaryRow}>
-          <ReactPdf.Text style={styles.summaryLabel}>Subtotal:</ReactPdf.Text>
+          <ReactPdf.Text style={styles.summaryLabel}>
+            {strings?.subtotal}:
+          </ReactPdf.Text>
           <ReactPdf.Text style={styles.summaryValue}>
             {currency} {subtotal.toFixed(2)}
           </ReactPdf.Text>
@@ -307,7 +340,7 @@ const invoiceSummary = defineComponent({
 
         <ReactPdf.View style={[styles.summaryRow, styles.totalRow]}>
           <ReactPdf.Text style={[styles.summaryLabel, styles.totalLabel]}>
-            Total:
+            {strings?.totalLabel}:
           </ReactPdf.Text>
           <ReactPdf.Text style={[styles.summaryValue, styles.totalValue]}>
             {currency} {total.toFixed(2)}
@@ -318,7 +351,7 @@ const invoiceSummary = defineComponent({
           <>
             <ReactPdf.View style={styles.summaryRow}>
               <ReactPdf.Text style={styles.summaryLabel}>
-                Payment Made:
+                {strings?.paymentMade}:
               </ReactPdf.Text>
               <ReactPdf.Text style={styles.summaryValue}>
                 -{currency} {(paymentMade || 0).toFixed(2)}
@@ -326,7 +359,7 @@ const invoiceSummary = defineComponent({
             </ReactPdf.View>
             <ReactPdf.View style={[styles.summaryRow, styles.balanceRow]}>
               <ReactPdf.Text style={[styles.summaryLabel, styles.balanceLabel]}>
-                Balance Due:
+                {strings?.balanceDue}:
               </ReactPdf.Text>
               <ReactPdf.Text style={[styles.summaryValue, styles.balanceValue]}>
                 {currency} {balance.toFixed(2)}
@@ -385,13 +418,25 @@ const invoiceSummary = defineComponent({
 const invoiceTable = defineComponent({
   name: "invoiceTable",
   schema: z.object({
+    strings: z
+      .object({
+        description: z.string().default(""),
+        qty: z.string().default(""),
+        unitPrice: z.string().default(""),
+        total: z.string().default(""),
+        subtotal: z.string().default(""),
+        totalLabel: z.string().default(""),
+        paymentMade: z.string().default(""),
+        balanceDue: z.string().default(""),
+      })
+      .default({}),
     items: z.array(
       z.object({
         definition: z.object({
           description: z.string(),
           unitPrice: z.number(),
         }),
-        count: z.number().optional().default(1),
+        count: z.number().optional(),
       }),
     ),
     modifiers: z
@@ -403,13 +448,16 @@ const invoiceTable = defineComponent({
       )
       .optional(),
     invoice: z.object({
-      currency: z.string().optional().default("USD"),
-      paymentMade: z.number().optional().default(0),
+      currency: z.string().optional(),
+      paymentMade: z.number().optional(),
     }),
   }),
   component: ({ spec, styles, getComponent }) => {
     const InvoiceTableRow = getComponent({ name: "invoiceTableRow" });
     const InvoiceSummary = getComponent({ name: "invoiceSummary" });
+
+    const currency = spec.invoice.currency || "USD";
+    const paymentMade = spec.invoice.paymentMade || 0;
 
     const subtotal = spec.items.reduce(
       (sum, item) => sum + item.definition.unitPrice * (item.count || 1),
@@ -429,26 +477,22 @@ const invoiceTable = defineComponent({
           {/* Table Header */}
           <ReactPdf.View style={styles.tableHeader}>
             <ReactPdf.Text style={[styles.headerCell, styles.descriptionCol]}>
-              Description
+              {spec.strings?.description}
             </ReactPdf.Text>
             <ReactPdf.Text style={[styles.headerCell, styles.qtyCol]}>
-              Qty
+              {spec.strings?.qty}
             </ReactPdf.Text>
             <ReactPdf.Text style={[styles.headerCell, styles.priceCol]}>
-              Unit Price
+              {spec.strings?.unitPrice}
             </ReactPdf.Text>
             <ReactPdf.Text style={[styles.headerCell, styles.totalCol]}>
-              Total
+              {spec.strings?.total}
             </ReactPdf.Text>
           </ReactPdf.View>
 
           {/* Table Rows */}
           {spec.items.map((item, index) => (
-            <InvoiceTableRow
-              key={index}
-              item={item}
-              currency={spec.invoice.currency}
-            />
+            <InvoiceTableRow key={index} item={item} currency={currency} />
           ))}
 
           {/* Summary Section */}
@@ -457,8 +501,9 @@ const invoiceTable = defineComponent({
               subtotal={subtotal}
               total={total}
               modifiers={spec.modifiers}
-              paymentMade={spec.invoice.paymentMade}
-              currency={spec.invoice.currency}
+              paymentMade={paymentMade}
+              currency={currency}
+              strings={spec.strings}
             />
           </ReactPdf.View>
         </ReactPdf.View>
@@ -548,4 +593,20 @@ export default {
     },
   },
   order: ["header", "toAddress", "invoiceTable", "body"],
+  strings: {
+    invoice: "INVOICE",
+    invoiceNumber: "Invoice #:",
+    date: "Date:",
+    dueDate: "Due Date:",
+    billTo: "Bill To:",
+    shipTo: "Ship To:",
+    description: "Description",
+    qty: "Qty",
+    unitPrice: "Unit Price",
+    total: "Total",
+    subtotal: "Subtotal",
+    totalLabel: "Total",
+    paymentMade: "Payment Made",
+    balanceDue: "Balance Due",
+  },
 };
