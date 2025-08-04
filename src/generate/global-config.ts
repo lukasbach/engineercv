@@ -1,4 +1,5 @@
 export const globalConfig = {
+  date: new Date().toISOString(),
   config: {
     size: "A4",
     usePageNumbers: undefined,

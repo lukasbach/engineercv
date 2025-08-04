@@ -5,6 +5,7 @@ export const baseSpecSchema = z.object({
   output: z.string(),
   skip: z.boolean().optional(),
   isTemplate: z.boolean().optional(),
+  date: z.string().optional(),
   config: z
     .object({
       fonts: z

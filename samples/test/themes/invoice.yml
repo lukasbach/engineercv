@@ -6,6 +6,8 @@ imports:
 basics:
   name: John Doe
 
+date: "2020-01-01"
+
 toAddress:
   - Hiring Manager
   - Tech Company

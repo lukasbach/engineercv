@@ -14,7 +14,8 @@
     "strict": true,
     "declaration": true,
     "jsx": "react",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "noImplicitThis": false
   },
   "include": [
     "src"

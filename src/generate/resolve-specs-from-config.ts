@@ -37,22 +37,36 @@ hb.registerHelper("pathsafe", (value: string) =>
     .replace(/\s+/g, "-")
     .replace(/[^a-zA-Z0-9_-]/g, ""),
 );
-hb.registerHelper("date", (format?: string, originalDate?: string) =>
-  moment(nullish(originalDate) ?? new Date()).format(nullish(format)),
-);
+hb.registerHelper("date", function (format?: string, originalDate?: string) {
+  return moment(nullish(originalDate) ?? this.date ?? new Date()).format(
+    nullish(format),
+  );
+});
 hb.registerHelper(
   "dateadd",
-  (originalDate: string, count: number, type: string, format?: string) =>
-    moment(nullish(originalDate) ?? new Date())
+  function (
+    originalDate: string,
+    count: number,
+    type: string,
+    format?: string,
+  ) {
+    return moment(nullish(originalDate) ?? this.date ?? new Date())
       .add(count, type as any)
-      .format(nullish(format)),
+      .format(nullish(format));
+  },
 );
 hb.registerHelper(
   "datesub",
-  (originalDate: string, count: number, type: string, format?: string) =>
-    moment(nullish(originalDate) ?? new Date())
+  function (
+    originalDate: string,
+    count: number,
+    type: string,
+    format?: string,
+  ) {
+    return moment(nullish(originalDate) ?? this.date ?? new Date())
       .subtract(count, type as any)
-      .format(nullish(format)),
+      .format(nullish(format));
+  },
 );
 hb.registerHelper(
   "pathjoin",
