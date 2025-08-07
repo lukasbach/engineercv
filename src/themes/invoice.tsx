@@ -551,7 +551,7 @@ const invoiceTable = defineComponent({
 const body = defineComponent({
   name: "body",
   schema: z.object({
-    body: z.string().optional(),
+    body: z.string().or(z.string().array()).optional(),
   }),
   component: ({ spec, styles, getComponent }) => {
     const Markdown = getComponent(defaultComponents.markdown);

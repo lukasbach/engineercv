@@ -12,6 +12,8 @@ export const generatePdfDocument = async (spec: any, file: string) => {
 
   const getComponent = ({ name }: { name: string }) => {
     const { component: Comp, defaultStyles } = components.getComponent(name);
+    if (spec.styles?.[name])
+      logger.debug(`Applying custom styles for {${name}}`);
     const styles = merge(defaultStyles, spec.styles?.[name] || {});
     const stylesheet = StyleSheet.create(styles);
     const resolvePath = (filePath: string) => {
