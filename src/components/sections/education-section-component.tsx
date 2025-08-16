@@ -29,7 +29,7 @@ export const educationSectionComponent = defineComponent({
           studyType: z.string().optional(),
           startDate: z.string().optional(),
           endDate: z.string().optional(),
-          score: z.string().optional(),
+          score: z.string().or(z.number()).optional(),
           courses: z.string().array().optional(),
           summary: z.string().optional(),
         }),

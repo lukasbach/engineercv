@@ -2,6 +2,7 @@ import Handlebars from "handlebars";
 import path from "path";
 import moment from "moment";
 import { advancedDeepmerge } from "./advanced-deepmerge.js";
+import { resolveConfigImports } from "./generate.js";
 
 const hb = Handlebars.create();
 
@@ -158,7 +159,7 @@ const multiResolveTemplates = (config: any) => {
   return resolveTemplates(resolveTemplates(resolveTemplates(config)));
 };
 
-export const resolveSpecsFromConfig = (config: any, yamlFile: string) => {
+export const resolveSpecsFromConfig = async (config: any, yamlFile: string) => {
   const additionalVars = {
     source: {
       path: yamlFile,
@@ -172,7 +173,12 @@ export const resolveSpecsFromConfig = (config: any, yamlFile: string) => {
   };
 
   if (!config.variants) {
-    return [multiResolveTemplates({ ...config, ...additionalVars })];
+    return [
+      {
+        config: multiResolveTemplates({ ...config, ...additionalVars }),
+        paths: [yamlFile],
+      },
+    ];
   }
 
   const { variants, ...baseSpec } = config;
@@ -187,5 +193,9 @@ export const resolveSpecsFromConfig = (config: any, yamlFile: string) => {
     return multiResolveTemplates(mergedConfig);
   });
 
-  return specs;
+  return Promise.all(
+    specs.map(async (spec) => {
+      return resolveConfigImports(spec, yamlFile);
+    }),
+  );
 };

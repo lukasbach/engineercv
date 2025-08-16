@@ -148,5 +148,10 @@ function mergeTwo(object1: any, object2: any | undefined) {
   return object1;
 }
 
-export const advancedDeepmerge = (...objects: any[]): any =>
-  objects.reduce((result, current) => mergeTwo(result, current), {}) as any;
+export const advancedDeepmerge = (...objects: any[]): any => {
+  const result = objects.reduce(
+    (result, current) => mergeTwo(result, current),
+    {},
+  ) as any;
+  return result;
+};

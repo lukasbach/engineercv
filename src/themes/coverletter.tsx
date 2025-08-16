@@ -6,7 +6,7 @@ const header = defineComponent({
   schema: z.object({
     basics: z.object({ name: z.string(), subtitle: z.string().optional() }),
     fromAddress: z.string().array().optional(),
-    date: z.string().optional(),
+    letterDate: z.string().optional(),
   }),
   component: ({ spec, styles, getComponent }) => {
     const Markdown = getComponent({ name: "markdown" });
@@ -24,7 +24,7 @@ const header = defineComponent({
             </Markdown>
           </ReactPdf.View>
 
-          <Markdown style={styles.date}>{spec.date}</Markdown>
+          <Markdown style={styles.date}>{spec.letterDate}</Markdown>
         </ReactPdf.View>
       </>
     );

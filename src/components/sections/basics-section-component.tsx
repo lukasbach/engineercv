@@ -1,5 +1,5 @@
 import React from "react";
-import z from "zod";
+import { z } from "zod";
 import { View } from "@react-pdf/renderer";
 import { defineComponent } from "../define-component.js";
 import { markdownComponent } from "../atoms/markdown-component.js";
@@ -25,7 +25,7 @@ export const basicsSectionComponent = defineComponent({
       location: z
         .object({
           address: z.string().optional(),
-          postalCode: z.string().optional(),
+          postalCode: z.string().or(z.number()).optional(),
           city: z.string().optional(),
           countryCode: z.string().optional(),
           region: z.string().optional(),

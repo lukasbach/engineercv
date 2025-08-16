@@ -9,7 +9,7 @@ basics:
   subtitle: Senior Software Engineer
   subject: Application for Software Engineer Position
 
-date: "{{ date 'dddd, MMMM Do YYYY' }}"
+letterDate: "{{ date 'dddd, MMMM Do YYYY' }}"
 
 toAddress:
   - Hiring Manager

@@ -15,6 +15,7 @@ import { merge } from "./deepmerge.js";
 import { resolveSpecsFromConfig } from "./resolve-specs-from-config.js";
 import { globalConfig } from "./global-config.js";
 import { importJsSpec } from "./import-js-spec.js";
+import { advancedDeepmerge } from "./advanced-deepmerge.js";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 const nodeModulesPath = path.join(dirname, "..", "..", "..");
@@ -115,51 +116,62 @@ const isDefiningOutput = (config: any): boolean =>
   config.output ||
   Object.values(config.variants || {}).some((v: any) => !!v.output);
 
-const resolveConfig = async (
-  filePath: string,
+export const resolveConfigImports = async (
+  config: any,
+  configFilePath: string,
   resolvingImport = false,
 ): Promise<{ paths: string[]; config: any | null }> => {
-  logger.debug(`Resolving config for ${filePath}`);
-  const config = await readConfigFile(filePath);
-
   if (!resolvingImport && config.isTemplate) {
     logger.debug(
-      `Skipping template file ${filePath} because "isTemplate" is set.`,
+      `Skipping template file ${configFilePath} because "isTemplate" is set.`,
     );
     return { paths: [], config: null };
   }
 
   const importedPaths: string[] = await Promise.all(
     (config.imports || []).map((importPath: string) =>
-      resolveFileName(importPath, filePath),
+      resolveFileName(importPath, configFilePath),
     ),
   );
   const result = (
     await Promise.all(
-      importedPaths.map((importPath) => resolveConfig(importPath, true)),
+      importedPaths.map(async (importPath) =>
+        resolveConfigImports(
+          await readConfigFile(importPath),
+          importPath,
+          true,
+        ),
+      ),
     )
   ).reduce(
     (acc, { paths, config }) => {
       acc.paths.push(...paths);
-      acc.config = merge.withOptions(
-        {
-          allowUndefinedOverrides: false,
-          mergeArrays: false,
-        },
-        config,
-        acc.config,
-      );
+      acc.config = advancedDeepmerge(acc.config, config);
       return acc;
     },
-    { paths: [filePath], config },
+    { paths: [configFilePath], config },
   );
 
   if (!resolvingImport && !isDefiningOutput(result.config)) {
-    logger.debug(`No output defined in config for ${filePath}, ignoring file.`);
+    logger.debug(
+      `No output defined in config for ${configFilePath}, ignoring file.`,
+    );
     return { paths: [], config: null };
   }
 
+  result.config.imports = [];
+  result.config.isTemplate = false;
+
   return result;
+};
+
+const resolveConfig = async (
+  // TODO
+  filePath: string,
+  resolvingImport = false,
+): Promise<{ paths: string[]; config: any | null }> => {
+  const config = await readConfigFile(filePath);
+  return resolveConfigImports(config, filePath, resolvingImport);
 };
 
 type Error = {
@@ -226,23 +238,24 @@ export const generate = async (pattern: string) => {
     if (!config) continue;
 
     try {
-      const specs = resolveSpecsFromConfig(config, file);
+      const specs = await resolveSpecsFromConfig(config, file);
       (() => {
         if (!process.argv.includes("--verbose") && !process.argv.includes("-v"))
           return;
         // eslint-disable-next-line no-shadow, unused-imports/no-unused-vars
         for (const spec of specs) {
-          const { env, config, ...logSpec } = spec;
+          const { config, ...logSpec } = spec;
           console.log(
             `Resolved specification for ${file}: ${chalk.dim(JSON.stringify(logSpec, null, 2))}`,
           );
         }
       })();
       for (const spec of specs) {
-        if (spec.skip) {
+        if (spec.config?.skip) {
           logger.debug(`Skipping file ${file} due to skip flag.`);
-        } else {
-          await processSpec(file, spec);
+        } else if (spec.config) {
+          trackedFiles.push(...spec.paths);
+          await processSpec(file, spec.config);
         }
       }
     } catch (error) {
