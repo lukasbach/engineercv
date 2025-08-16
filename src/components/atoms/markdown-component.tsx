@@ -4,26 +4,20 @@ import ReactMarkdown from "react-markdown";
 import z from "zod";
 import { defineComponent } from "../define-component.js";
 
-export const markdownComponent = defineComponent({
-  name: "markdown",
-  schema: z.object({}),
-  additionalProps: z.object({
-    children: z.any(),
-    style: z.any().optional(),
-    paragraphSpacing: z.string().optional(),
-  }),
-  // https://www.npmjs.com/package/react-markdown#appendix-b-components
-  component: ({ children, styles, style, paragraphSpacing }) => {
-    if (!children) return null;
-    if (typeof children !== "string" && !Array.isArray(children))
-      return children;
-
-    const joinedChildren = !Array.isArray(children)
-      ? children
-      : children.join(" ");
-
-    return (
-      <View style={style}>
+export const Wrapper = ({
+  children,
+  paragraphSpacing,
+  styles,
+  style,
+}: {
+  children: any;
+  paragraphSpacing?: string;
+  styles: any;
+  style?: any;
+}) => {
+  return (
+    <View style={style}>
+      {typeof children === "string" ? (
         <ReactMarkdown
           allowedElements={["p", "a"]}
           components={{
@@ -46,9 +40,46 @@ export const markdownComponent = defineComponent({
             },
           }}
         >
-          {joinedChildren}
+          {children}
         </ReactMarkdown>
-      </View>
+      ) : (
+        children
+      )}
+    </View>
+  );
+};
+
+export const markdownComponent = defineComponent({
+  name: "markdown",
+  schema: z.object({}),
+  additionalProps: z.object({
+    children: z.any(),
+    style: z.any().optional(),
+    paragraphSpacing: z.string().optional(),
+  }),
+  // https://www.npmjs.com/package/react-markdown#appendix-b-components
+  component: ({ children, styles, style, paragraphSpacing }) => {
+    if (!children) return null;
+    if (typeof children !== "string" && !Array.isArray(children))
+      return children;
+
+    return Array.isArray(children) ? (
+      children.map((item, index) => (
+        <Wrapper
+          key={index}
+          children={item}
+          paragraphSpacing={paragraphSpacing}
+          styles={styles}
+          style={style}
+        />
+      ))
+    ) : (
+      <Wrapper
+        children={children}
+        paragraphSpacing={paragraphSpacing}
+        styles={styles}
+        style={style}
+      />
     );
   },
   defaultStyles: {
