@@ -80,7 +80,6 @@ const cleanUpLineBreaks = (text: string) => {
     .replace(/([^\n])\n{1}([^\n])/g, "$1$2")
     .replace(/\n(\n+)/g, "$1")
     .trim();
-  console.log("Cleaned up line breaks", cleaned);
   return cleaned;
 };
 
