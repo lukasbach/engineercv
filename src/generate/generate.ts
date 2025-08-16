@@ -112,9 +112,12 @@ const readConfigFile = async (filePath: string): Promise<any> => {
   throw new Error(`Unsupported file type: ${extension}`);
 };
 
-const isDefiningOutput = (config: any): boolean =>
-  config.output ||
-  Object.values(config.variants || {}).some((v: any) => !!v.output);
+const isDefiningOutput = (config: any): boolean => {
+  const output =
+    config.output ||
+    Object.values(config.variants || {}).find((v: any) => !!v.output);
+  return !!output && output !== "skip" && output !== "none";
+};
 
 export const resolveConfigImports = async (
   config: any,
