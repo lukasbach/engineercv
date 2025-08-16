@@ -75,10 +75,20 @@ hb.registerHelper(
     path.join(...[arg1, arg2, arg3, arg4, arg5].filter(Boolean)),
 );
 
+const cleanUpLineBreaks = (text: string) => {
+  const cleaned = text
+    .replace(/([^\n])\n{1}([^\n])/g, "$1$2")
+    .replace(/\n(\n+)/g, "$1")
+    .trim();
+  console.log("Cleaned up line breaks", cleaned);
+  return cleaned;
+};
+
 const resolveTemplates = (
   config: any,
   handlebarVars: object = config,
   templateKey?: string,
+  shouldCleanUpLineBreaks = false, // should only run once
 ): any => {
   if (templateKey === "locationFormat" || templateKey === "pageTemplate") {
     return config;
@@ -86,7 +96,9 @@ const resolveTemplates = (
 
   if (typeof config === "string") {
     parsedAsNumber = false;
-    const template = hb.compile(config);
+    const template = hb.compile(
+      shouldCleanUpLineBreaks ? cleanUpLineBreaks(config) : config,
+    );
     const resolved = template(handlebarVars);
     try {
       const parsed = JSON.parse(resolved);
@@ -110,13 +122,20 @@ const resolveTemplates = (
   }
 
   if (Array.isArray(config)) {
-    return config.map((item) => resolveTemplates(item, handlebarVars));
+    return config.map((item) =>
+      resolveTemplates(item, handlebarVars, undefined, shouldCleanUpLineBreaks),
+    );
   }
 
   if (config && typeof config === "object") {
     const result: Record<string, unknown> = {};
     for (const [key, value] of Object.entries(config)) {
-      result[key] = resolveTemplates(value, handlebarVars, key);
+      result[key] = resolveTemplates(
+        value,
+        handlebarVars,
+        key,
+        shouldCleanUpLineBreaks,
+      );
     }
     return result;
   }
@@ -156,7 +175,12 @@ const generateCartesianProduct = (
 
 // to resolve templates multiple times, e.g. for nested templates
 const multiResolveTemplates = (config: any) => {
-  return resolveTemplates(resolveTemplates(resolveTemplates(config)));
+  return resolveTemplates(
+    resolveTemplates(resolveTemplates(config)),
+    undefined,
+    undefined,
+    true,
+  );
 };
 
 export const resolveSpecsFromConfig = async (config: any, yamlFile: string) => {
