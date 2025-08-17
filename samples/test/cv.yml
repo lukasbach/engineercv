@@ -71,9 +71,12 @@ projects:
 education:
   - studyType: Master of Science in Software Engineering
     institution: Institute of Advanced Studies
-    endDate: 2018/06
+    area: Software Engineering # breaks things
+    # endDate: 2018/06
     score: 3.9/4.0
+    summary: "Focused on software development methodologies and best practices."
   - studyType: Bachelor of Science in Computer Science
     institution: University of Technology
+    startDate: 2012/09
     endDate: 2015/06
     score: 3.8/4.0

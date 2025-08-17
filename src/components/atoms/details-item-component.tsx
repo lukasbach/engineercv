@@ -54,9 +54,7 @@ export const detailsItemComponent = defineComponent({
           )}
         </View>
         {detailsInExtraLine && details && (
-          <View style={styles.extraLineDetails}>
-            <Markdown>{details}</Markdown>
-          </View>
+          <View style={styles.extraLineDetails}>{details}</View>
         )}
         <View style={styles.list}>
           {list?.map((item, itemIndex) => (
