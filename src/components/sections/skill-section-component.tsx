@@ -19,7 +19,7 @@ export const skillsSectionComponent = defineComponent({
           $id: z.string().nullish(),
           name: z.string(),
           level: z.string().nullish(),
-          keywords: z.string().array(),
+          keywords: z.string().array().nullish(),
         }),
       )
       .nullish(),
@@ -32,21 +32,23 @@ export const skillsSectionComponent = defineComponent({
         <SectionHeader style={styles.header}>
           {spec.strings?.skills}
         </SectionHeader>
-        {spec.skills.map((section, index) => (
-          <View key={index} style={styles.section}>
-            <Text style={styles.sectionTitle}>
-              {section.name}:{"\u00A0"}
-            </Text>
-            {joinComponents(
-              section.keywords.map((item, itemIndex) => (
-                <Text key={itemIndex} style={styles.item}>
-                  {item}
-                </Text>
-              )),
-              ", ",
-            )}
-          </View>
-        ))}
+        {spec.skills
+          .filter((section) => (section.keywords?.length ?? 0) > 0)
+          .map((section, index) => (
+            <View key={index} style={styles.section}>
+              <Text style={styles.sectionTitle}>
+                {section.name}:{"\u00A0"}
+              </Text>
+              {joinComponents(
+                section.keywords?.map((item, itemIndex) => (
+                  <Text key={itemIndex} style={styles.item}>
+                    {item}
+                  </Text>
+                )) ?? [],
+                ", ",
+              )}
+            </View>
+          ))}
       </View>
     );
   },
