@@ -22,17 +22,17 @@ export const volunteerSectionComponent = defineComponent({
     volunteer: z
       .array(
         z.object({
-          $id: z.string().optional(),
+          $id: z.string().nullish(),
           organization: z.string(),
           position: z.string(),
-          url: z.string().url().optional(),
-          startDate: z.string().optional(),
-          endDate: z.string().optional(),
-          summary: z.string().optional(),
-          highlights: z.string().array().optional(),
+          url: z.string().url().nullish(),
+          startDate: z.string().nullish(),
+          endDate: z.string().nullish(),
+          summary: z.string().nullish(),
+          highlights: z.string().array().nullish(),
         }),
       )
-      .optional(),
+      .nullish(),
   }),
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);

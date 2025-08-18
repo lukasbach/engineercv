@@ -16,12 +16,12 @@ export const languagesSectionComponent = defineComponent({
     languages: z
       .array(
         z.object({
-          $id: z.string().optional(),
+          $id: z.string().nullish(),
           language: z.string(),
-          fluency: z.string().optional(),
+          fluency: z.string().nullish(),
         }),
       )
-      .optional(),
+      .nullish(),
   }),
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);

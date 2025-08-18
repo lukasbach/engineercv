@@ -10,8 +10,8 @@ export const textWithIconComponent = defineComponent({
   additionalProps: z.object({
     icon: z.string().optional(),
     suite: z.string().optional(),
-    children: z.any().optional(),
-    right: z.boolean().optional(),
+    children: z.any().nullish(),
+    right: z.boolean().nullish(),
   }),
   component: ({ icon, suite, children, right, styles, getComponent }) => {
     const Icon = getComponent(iconComponent);

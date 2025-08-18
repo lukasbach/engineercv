@@ -9,13 +9,13 @@ export const dateComponent = defineComponent({
   schema: z.object({
     config: z
       .object({
-        dateFormat: z.string().optional(),
+        dateFormat: z.string().nullish(),
       })
       .default({}),
   }),
   additionalProps: z.object({
-    date: z.string().optional(),
-    format: z.string().optional(),
+    date: z.string().nullish(),
+    format: z.string().nullish(),
     style: z.any(),
   }),
   component: ({ spec, date, format, styles, style }) => {

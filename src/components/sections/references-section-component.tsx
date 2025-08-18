@@ -18,12 +18,12 @@ export const referencesSectionComponent = defineComponent({
     references: z
       .array(
         z.object({
-          $id: z.string().optional(),
+          $id: z.string().nullish(),
           name: z.string(),
-          reference: z.string().optional(),
+          reference: z.string().nullish(),
         }),
       )
-      .optional(),
+      .nullish(),
   }),
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);

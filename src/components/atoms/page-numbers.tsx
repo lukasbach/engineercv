@@ -8,10 +8,10 @@ export const pageNumbersComponent = defineComponent({
   name: "pageNumbers",
   schema: z.object({
     strings: z.object({
-      pageTemplate: z.string().optional(),
+      pageTemplate: z.string().nullish(),
     }),
     config: z.object({
-      usePageNumbers: z.boolean().optional(),
+      usePageNumbers: z.boolean().nullish(),
     }),
   }),
   additionalProps: z.object({}),

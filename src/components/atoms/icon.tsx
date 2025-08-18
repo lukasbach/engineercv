@@ -29,13 +29,13 @@ const library: Record<string, any> = {
 export const iconComponent = defineComponent({
   name: "icon",
   schema: z.object({
-    config: z.object({ useIcons: z.boolean().optional() }).optional(),
+    config: z.object({ useIcons: z.boolean().nullish() }).nullish(),
   }),
   additionalProps: z.object({
     icon: z.string(),
     suite: z.string().optional(),
     size: z.string().optional(),
-    color: z.string().optional(),
+    color: z.string().nullish(),
   }),
   component: ({ icon, suite = "fa", size = "16pt", color, spec, styles }) => {
     if (!spec.config?.useIcons) return null;

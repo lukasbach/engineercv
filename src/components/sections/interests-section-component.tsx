@@ -17,12 +17,12 @@ export const interestsSectionComponent = defineComponent({
     interests: z
       .array(
         z.object({
-          $id: z.string().optional(),
+          $id: z.string().nullish(),
           name: z.string(),
-          keywords: z.string().array().optional(),
+          keywords: z.string().array().nullish(),
         }),
       )
-      .optional(),
+      .nullish(),
   }),
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);

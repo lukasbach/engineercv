@@ -22,19 +22,19 @@ export const educationSectionComponent = defineComponent({
     education: z
       .array(
         z.object({
-          $id: z.string().optional(),
-          institution: z.string().optional(),
-          url: z.string().url().optional(),
-          area: z.string().optional(),
-          studyType: z.string().optional(),
-          startDate: z.string().optional(),
-          endDate: z.string().optional(),
-          score: z.string().or(z.number()).optional(),
-          courses: z.string().array().optional(),
-          summary: z.string().optional(),
+          $id: z.string().nullish(),
+          institution: z.string().nullish(),
+          url: z.string().url().nullish(),
+          area: z.string().nullish(),
+          studyType: z.string().nullish(),
+          startDate: z.string().nullish(),
+          endDate: z.string().nullish(),
+          score: z.string().or(z.number()).nullish(),
+          courses: z.string().array().nullish(),
+          summary: z.string().nullish(),
         }),
       )
-      .optional(),
+      .nullish(),
   }),
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);

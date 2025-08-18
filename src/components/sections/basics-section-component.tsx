@@ -7,7 +7,7 @@ import { basicsItemsComponent } from "../atoms/basics-items-component.js";
 import { textWithIconComponent } from "../atoms/text-with-icon.js";
 
 export const iconConfig = z.object({
-  suite: z.string().optional(),
+  suite: z.string().nullish(),
   icon: z.string(),
 });
 
@@ -16,22 +16,22 @@ export const basicsSectionComponent = defineComponent({
   schema: z.object({
     basics: z.object({
       name: z.string(),
-      label: z.string().optional(),
-      image: z.string().optional(),
-      email: z.string().optional(),
-      phone: z.string().optional(),
-      url: z.string().optional(),
-      summary: z.string().optional(),
+      label: z.string().nullish(),
+      image: z.string().nullish(),
+      email: z.string().nullish(),
+      phone: z.string().nullish(),
+      url: z.string().nullish(),
+      summary: z.string().nullish(),
       location: z
         .object({
-          address: z.string().optional(),
-          postalCode: z.string().or(z.number()).optional(),
-          city: z.string().optional(),
-          countryCode: z.string().optional(),
-          region: z.string().optional(),
+          address: z.string().nullish(),
+          postalCode: z.string().or(z.number()).nullish(),
+          city: z.string().nullish(),
+          countryCode: z.string().nullish(),
+          region: z.string().nullish(),
         })
-        .optional(),
-      locationFormat: z.string().optional(),
+        .nullish(),
+      locationFormat: z.string().nullish(),
       profiles: z
         .array(
           z.object({
@@ -40,10 +40,10 @@ export const basicsSectionComponent = defineComponent({
             url: z.string().url(),
           }),
         )
-        .optional(),
-      highlights: z.string().array().optional(),
-      order: z.string().array().optional(),
-      icons: z.record(z.string(), iconConfig).optional(),
+        .nullish(),
+      highlights: z.string().array().nullish(),
+      order: z.string().array().nullish(),
+      icons: z.record(z.string(), iconConfig).nullish(),
     }),
   }),
   component: ({ spec, styles, getComponent }) => {

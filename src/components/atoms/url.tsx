@@ -7,8 +7,8 @@ export const urlComponent = defineComponent({
   name: "url",
   schema: z.object({}),
   additionalProps: z.object({
-    url: z.string().url().optional(),
-    text: z.string().optional(),
+    url: z.string().url().nullish(),
+    text: z.string().nullish(),
     style: z.any(),
   }),
   component: ({ url, text, styles, style }) => {

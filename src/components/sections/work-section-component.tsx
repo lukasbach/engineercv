@@ -20,18 +20,18 @@ export const workSectionComponent = defineComponent({
     work: z
       .array(
         z.object({
-          $id: z.string().optional(),
-          name: z.string().optional(),
+          $id: z.string().nullish(),
+          name: z.string().nullish(),
           position: z.string(),
-          url: z.string().url().optional(),
-          location: z.string().optional(),
+          url: z.string().url().nullish(),
+          location: z.string().nullish(),
           startDate: z.string(),
-          endDate: z.string().optional(),
-          summary: z.string().optional(),
-          highlights: z.string().array().optional(),
+          endDate: z.string().nullish(),
+          summary: z.string().nullish(),
+          highlights: z.string().array().nullish(),
         }),
       )
-      .optional(),
+      .nullish(),
   }),
   component: ({ spec, styles, getComponent }) => {
     if (!spec.work) return null;

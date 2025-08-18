@@ -8,8 +8,8 @@ export const documentComponent = defineComponent({
   schema: z.object({
     basics: z.object({
       name: z.string(),
-      author: z.string().optional(),
-      language: z.string().optional(),
+      author: z.string().nullish(),
+      language: z.string().nullish(),
     }),
   }),
   additionalProps: z.object({ children: z.any() }),

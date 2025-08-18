@@ -22,16 +22,16 @@ export const projectsSectionComponent = defineComponent({
     projects: z
       .array(
         z.object({
-          $id: z.string().optional(),
+          $id: z.string().nullish(),
           name: z.string(),
-          startDate: z.string().optional(),
-          endDate: z.string().optional(),
-          description: z.string().optional(),
-          highlights: z.string().array().optional(),
-          url: z.string().url().optional(),
+          startDate: z.string().nullish(),
+          endDate: z.string().nullish(),
+          description: z.string().nullish(),
+          highlights: z.string().array().nullish(),
+          url: z.string().url().nullish(),
         }),
       )
-      .optional(),
+      .nullish(),
   }),
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);

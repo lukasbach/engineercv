@@ -14,9 +14,9 @@ export const dateRangeComponent = defineComponent({
       .default({}),
   }),
   additionalProps: z.object({
-    start: z.string().optional(),
-    end: z.string().optional(),
-    format: z.string().optional(),
+    start: z.string().nullish(),
+    end: z.string().nullish(),
+    format: z.string().nullish(),
     style: z.any(),
   }),
   component: ({ start, end, format, styles, style, getComponent, spec }) => {

@@ -32,7 +32,7 @@ const defaultOrder = [
 export const sectionOrderComponent = defineComponent({
   name: "sectionOrder" as const,
   schema: z.object({
-    order: z.array(z.enum(defaultOrder).or(z.string())).optional(),
+    order: z.array(z.enum(defaultOrder).or(z.string())).nullish(),
   }),
   additionalProps: z.object({ children: z.any() }),
   component: ({ spec, getComponent }) => {

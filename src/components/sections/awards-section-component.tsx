@@ -18,14 +18,14 @@ export const awardsSectionComponent = defineComponent({
     awards: z
       .array(
         z.object({
-          $id: z.string().optional(),
+          $id: z.string().nullish(),
           title: z.string(),
-          date: z.string().optional(),
-          awarder: z.string().optional(),
-          summary: z.string().optional(),
+          date: z.string().nullish(),
+          awarder: z.string().nullish(),
+          summary: z.string().nullish(),
         }),
       )
-      .optional(),
+      .nullish(),
   }),
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);

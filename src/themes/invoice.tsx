@@ -12,7 +12,7 @@ const header = defineComponent({
         dueDate: z.string().default(""),
       })
       .default({}),
-    fromAddress: z.string().array().optional(),
+    fromAddress: z.string().array().nullish(),
     invoice: z.object({
       invoiceNumber: z.string().or(z.number()),
       date: z.string(),
@@ -113,8 +113,8 @@ const toAddress = defineComponent({
         shipTo: z.string().default(""),
       })
       .default({}),
-    toAddress: z.string().array().optional(),
-    shipAddress: z.string().array().optional(),
+    toAddress: z.string().array().nullish(),
+    shipAddress: z.string().array().nullish(),
   }),
   component: ({ spec, styles, getComponent }) => {
     const Markdown = getComponent(defaultComponents.markdown);
@@ -177,9 +177,9 @@ const invoiceTableRow = defineComponent({
         description: z.string(),
         unitPrice: z.number(),
       }),
-      quantity: z.number().optional(),
+      quantity: z.number().nullish(),
     }),
-    currency: z.string().optional(),
+    currency: z.string().nullish(),
   }),
   component: ({ item, currency = "USD", styles }) => {
     const lineTotal = item.definition.unitPrice * (item.quantity || 1);
@@ -241,7 +241,7 @@ const invoiceSummaryModifier = defineComponent({
       rate: z.number(),
     }),
     subtotal: z.number(),
-    currency: z.string().optional(),
+    currency: z.string().nullish(),
   }),
   component: ({ modifier, subtotal, currency = "USD", styles }) => {
     const modifierAmount = subtotal * modifier.rate;
@@ -289,9 +289,9 @@ const invoiceSummary = defineComponent({
           rate: z.number(),
         }),
       )
-      .optional(),
-    paymentMade: z.number().optional(),
-    currency: z.string().optional(),
+      .nullish(),
+    paymentMade: z.number().nullish(),
+    currency: z.string().nullish(),
     strings: z
       .object({
         subtotal: z.string().default(""),
@@ -299,7 +299,7 @@ const invoiceSummary = defineComponent({
         paymentMade: z.string().default(""),
         balanceDue: z.string().default(""),
       })
-      .optional(),
+      .nullish(),
   }),
   component: ({
     subtotal,
@@ -433,7 +433,7 @@ const invoiceTable = defineComponent({
           description: z.string(),
           unitPrice: z.number(),
         }),
-        quantity: z.number().optional(),
+        quantity: z.number().nullish(),
       }),
     ),
     modifiers: z
@@ -443,10 +443,10 @@ const invoiceTable = defineComponent({
           rate: z.number(),
         }),
       )
-      .optional(),
+      .nullish(),
     invoice: z.object({
-      currency: z.string().optional(),
-      paymentMade: z.number().optional(),
+      currency: z.string().nullish(),
+      paymentMade: z.number().nullish(),
     }),
   }),
   component: ({ spec, styles, getComponent }) => {
@@ -551,7 +551,7 @@ const invoiceTable = defineComponent({
 const body = defineComponent({
   name: "body",
   schema: z.object({
-    body: z.string().or(z.string().array()).optional(),
+    body: z.string().or(z.string().array()).nullish(),
   }),
   component: ({ spec, styles, getComponent }) => {
     const Markdown = getComponent(defaultComponents.markdown);

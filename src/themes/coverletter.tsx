@@ -4,9 +4,9 @@ import React from "react";
 const header = defineComponent({
   name: "header",
   schema: z.object({
-    basics: z.object({ name: z.string(), subtitle: z.string().optional() }),
-    fromAddress: z.string().array().optional(),
-    letterDate: z.string().optional(),
+    basics: z.object({ name: z.string(), subtitle: z.string().nullish() }),
+    fromAddress: z.string().array().nullish(),
+    letterDate: z.string().nullish(),
   }),
   component: ({ spec, styles, getComponent }) => {
     const Markdown = getComponent({ name: "markdown" });
@@ -64,7 +64,7 @@ const header = defineComponent({
 const toAddress = defineComponent({
   name: "toAddress",
   schema: z.object({
-    toAddress: z.string().array().optional(),
+    toAddress: z.string().array().nullish(),
   }),
   component: ({ spec, styles, getComponent }) => {
     const Markdown = getComponent({ name: "markdown" });
@@ -90,10 +90,10 @@ const body = defineComponent({
   name: "body",
   schema: z.object({
     basics: z.object({
-      subject: z.string().optional(),
+      subject: z.string().nullish(),
     }),
     body: z.string(),
-    config: z.object({ paragraphSpacing: z.string().optional() }).optional(),
+    config: z.object({ paragraphSpacing: z.string().nullish() }).nullish(),
   }),
   component: ({ spec, styles, getComponent }) => {
     const Markdown = getComponent(defaultComponents.markdown);

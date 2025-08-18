@@ -54,7 +54,7 @@ export const markdownComponent = defineComponent({
   schema: z.object({}),
   additionalProps: z.object({
     children: z.any(),
-    style: z.any().optional(),
+    style: z.any().nullish(),
     paragraphSpacing: z.string().optional(),
   }),
   // https://www.npmjs.com/package/react-markdown#appendix-b-components

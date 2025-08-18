@@ -10,9 +10,9 @@ const basics = defineComponent({
       basics: z
         .object({
           image: z.string(),
-          roundedImage: z.boolean().optional(),
+          roundedImage: z.boolean().nullish(),
         })
-        .optional(),
+        .nullish(),
     }),
   ),
   component: ({ spec, styles, getComponent }) => {

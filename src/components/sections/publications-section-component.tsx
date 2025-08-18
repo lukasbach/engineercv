@@ -19,15 +19,15 @@ export const publicationsSectionComponent = defineComponent({
     publications: z
       .array(
         z.object({
-          $id: z.string().optional(),
+          $id: z.string().nullish(),
           name: z.string(),
-          publisher: z.string().optional(),
-          releaseDate: z.string().optional(),
-          url: z.string().url().optional(),
-          summary: z.string().optional(),
+          publisher: z.string().nullish(),
+          releaseDate: z.string().nullish(),
+          url: z.string().url().nullish(),
+          summary: z.string().nullish(),
         }),
       )
-      .optional(),
+      .nullish(),
   }),
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);

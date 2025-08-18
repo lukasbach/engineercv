@@ -127,6 +127,7 @@ function mergeTwo(object1: any, object2: any | undefined) {
   }
 
   Object.keys(object2).forEach((key) => {
+    console.log(key, object1[key], object2[key]);
     if (["__proto__", "constructor", "prototype"].includes(key)) {
       return;
     }
@@ -137,11 +138,13 @@ function mergeTwo(object1: any, object2: any | undefined) {
       object1[key] = mergeTwo(object1[key], object2[key]);
     } else if (!isObject(object1[key]) && isObject(object2[key])) {
       object1[key] = mergeTwo(object2[key], undefined);
-    } else {
+    } else if (object1[key] !== null && object2[key] !== null) {
       object1[key] =
         object2[key] === undefined || object2[key] === null
           ? null
           : object2[key];
+    } else {
+      object1[key] = null;
     }
   });
 

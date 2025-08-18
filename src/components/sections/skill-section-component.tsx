@@ -16,13 +16,13 @@ export const skillsSectionComponent = defineComponent({
     skills: z
       .array(
         z.object({
-          $id: z.string().optional(),
+          $id: z.string().nullish(),
           name: z.string(),
-          level: z.string().optional(),
+          level: z.string().nullish(),
           keywords: z.string().array(),
         }),
       )
-      .optional(),
+      .nullish(),
   }),
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);

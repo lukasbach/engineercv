@@ -12,7 +12,7 @@ const stylesSchema = z.object({
       z.enum(Object.values(defaultComponents).map((c) => c.name) as [string]),
       z.any(),
     )
-    .optional(),
+    .nullish(),
 });
 const specSchema = Object.values(defaultComponents).reduce(
   (prev, { schema }) => z.intersection(prev, schema),
@@ -23,7 +23,7 @@ const specSchemaWithVariants = z.intersection(
   z.object({
     variants: z
       .record(z.string(), z.any().array()) // zodDeepPartial(specSchema).array()
-      .optional(),
+      .nullish(),
   }),
 );
 

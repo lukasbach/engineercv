@@ -18,14 +18,14 @@ export const certificatesSectionComponent = defineComponent({
     certificates: z
       .array(
         z.object({
-          $id: z.string().optional(),
+          $id: z.string().nullish(),
           name: z.string(),
-          date: z.string().optional(),
-          issuer: z.string().optional(),
-          url: z.string().url().optional(),
+          date: z.string().nullish(),
+          issuer: z.string().nullish(),
+          url: z.string().url().nullish(),
         }),
       )
-      .optional(),
+      .nullish(),
   }),
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);
