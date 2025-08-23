@@ -1,6 +1,8 @@
 import { zodToJsonSchema } from "zod-to-json-schema";
 import * as fs from "fs";
 import { z } from "zod";
+import path from "path";
+import { glob } from "glob";
 import { defaultComponents } from "../components/default-components.js";
 import { baseSpecSchema } from "../generate/base-spec-schema.js";
 
@@ -56,3 +58,50 @@ await fs.promises.writeFile(
   JSON.stringify(schemaWithoutRequired, null, 2),
   "utf-8",
 );
+
+// Documentation builder
+
+const sampleFiles = [
+  ...(await glob("samples/src/*.yml")),
+  ...(await glob("samples/src/*.yaml")),
+  ...(await glob("samples/src/*.md")),
+];
+
+for (const file of sampleFiles) {
+  const fileName = path.basename(file);
+  const baseName = fileName.replace(/\.[^.]+$/, "");
+  const code = await fs.promises.readFile(file, "utf-8");
+  const lines = code.split(/\r?\n/);
+  const headerStart = lines.findIndex((l) => l.startsWith("# > "));
+  const headerLines = lines.slice(headerStart).filter((l) => l.startsWith("#"));
+  let title = "";
+  const docs = [];
+  for (const line of headerLines) {
+    if (line.startsWith("# > ")) {
+      title = line.replace(/^# > /, "");
+    } else if (line.startsWith("# ")) {
+      docs.push(line.replace(/^# /, ""));
+    }
+  }
+  const docText = docs.join("\n");
+  const pdfName = code.match(
+    /output:\s*\.\.\/out\/\{\{\s*source\.name\s*\}\}\.pdf/,
+  )
+    ? `${baseName}.pdf`
+    : null;
+  const pdfPath = pdfName ? path.join("pdf", pdfName) : null;
+  let md = "";
+  if (title) md += `# ${title}\n\n`;
+  if (docText) md += `${docText}\n\n`;
+  md += `## Source\n\n<details><summary>Show code</summary>\n\n`;
+  md += ["```yaml", code, "```\n", ""].join("\n");
+  md += "</details>\n\n";
+  if (pdfPath) {
+    md += `[Show PDF](${pdfPath})\n`;
+  }
+  await fs.promises.writeFile(
+    path.join("docs/samples", `${baseName}.md`),
+    md,
+    "utf-8",
+  );
+}
