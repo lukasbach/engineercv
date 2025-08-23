@@ -1,6 +1,6 @@
-# yaml-language-server: $schema=../../lib/schema.json
+# yaml-language-server: $schema=https://unpkg.com/engineercv@latest/lib/schema.json
 
-output: ../out/test/{{ source.name }}.pdf
+output: ../out/{{ source.name }}.pdf
 
 basics:
   name: John Doe

@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../lib/schema.json
 
-output: ../../out/test/themes/cover-letter.pdf
+output: ../../out/themes/cover-letter.pdf
 
 imports:
   - ../../../src/themes/coverletter.tsx

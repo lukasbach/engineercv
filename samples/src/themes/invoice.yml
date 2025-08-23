@@ -1,4 +1,4 @@
-output: ../../out/test/themes/invoice.pdf
+output: ../../out/themes/invoice.pdf
 
 imports:
   - ../../../src/themes/invoice.tsx

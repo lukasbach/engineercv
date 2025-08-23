@@ -1,5 +1,5 @@
 ---
-output: ../out/test/{{ source.name }}.pdf
+output: ../out/{{ source.name }}.pdf
 
 imports:
   - ../../src/themes/coverletter.tsx

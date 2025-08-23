@@ -1,5 +1,0 @@
-imports:
-  - "./import2.yml"
-
-basics:
-  name: John Doe

@@ -1,20 +1,11 @@
-# yaml-language-server: $schema=../../lib/schema.json
-
-config:
-  size: A4
-  fonts:
-    - family: abeezee
-      src: ./abeezee.ttf
-
-styles:
-  document:
-    container:
-      fontFamily: abeezee
-
-output: ../out/test/{{ source.name }}.pdf
+# yaml-language-server: $schema=https://unpkg.com/engineercv@latest/lib/schema.json
 
 basics:
   name: John Doe
+
+skip: true # dont generate a pdf for this file
+
+output: ../out/{{ source.name }}.pdf
 
 title:
   items:

@@ -1,12 +1,16 @@
-# yaml-language-server: $schema=../../../lib/schema.json
-
-imports:
-  - "./import1.yml"
-
-output: "../../out/test/importtest.pdf"
+# yaml-language-server: $schema=https://unpkg.com/engineercv@latest/lib/schema.json
 
 basics:
   name: John Doe
+
+output: ../out/{{ source.name }}.pdf
+
+order:
+  - basics
+  - education
+  - work
+  - skills
+  - projects
 
 title:
   items:
@@ -76,4 +80,4 @@ education:
   - studyType: Bachelor of Science in Computer Science
     institution: University of Technology
     endDate: 2015/06
-    score: 3.8/4.0 
+    score: 3.8/4.0

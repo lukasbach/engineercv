@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=../../lib/schema.json
+# yaml-language-server: $schema=https://unpkg.com/engineercv@latest/lib/schema.json
 
 basics:
   name: Jane Smith
@@ -13,7 +13,6 @@ basics:
     city: San Francisco
     countryCode: US
     region: CA
-  # locationFormat: "{{city}}, {{region}}"
   profiles:
     - network: LinkedIn
       username: janesmith
@@ -22,7 +21,7 @@ basics:
       username: janesmith
       url: https://github.com/janesmith
 
-output: ../out/test/{{ source.name }}.pdf
+output: ../out/{{ source.name }}.pdf
 
 skills:
   - name: Programming Languages

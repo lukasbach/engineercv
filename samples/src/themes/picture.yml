@@ -1,37 +1,28 @@
-# yaml-language-server: $schema=../../lib/schema.json
+# yaml-language-server: $schema=../../../lib/schema.json
 
-output: ../out/test/{{ source.name }}.pdf
+output: ../../out/themes/picture.pdf
 
-variants:
-  advanced-edits:
-    - skills:
-        - $id: languages
-          keywords:
-            - Java
-            - Python
-            - "{{ remove 'JavaScript' }}"
-      work:
-        - $id: company1
-          position: Great Software Engineer
-          highlights:
-            - "{{ remove 0 }}"
-            - Before
-            - "{{ rest }}"
-            - After
-        - $id: company2
-          position: Awesome Software Engineer
-        - "{{ remove 'company3' }}"
+imports:
+  - ../../../src/themes/picture.tsx
 
+
+config:
+  useIcons: true
 
 basics:
+  image: https://lukasbach.com/profile.jpg
+  roundedImage: true
   name: John Doe
-
-title:
-  items:
-    - "{{ email 'john.doe@outlook.com' }}"
-    - "{{ phone '+1 123-(456) 7890' }}"
-    - "{{ github 'johndoe' }}"
-    - "{{ linkedin 'johndoe' }}"
+  email: john.doe@outlook.com
+  phone: +1 (123) 456-7890
+  profiles:
+    - network: GitHub
+      username: johndoe
+      url: https://github.com/johndoe
+    - network: LinkedIn
+      username: johndoe
+      url: https://linkedin.com/in/johndoe
+  url: https://www.johndoe.com
   summary: |
     Experienced software engineer with a passion for building scalable web applications. Proficient in JavaScript, React, and Node.js. Strong problem-solving skills and a commitment to delivering high-quality code.
 

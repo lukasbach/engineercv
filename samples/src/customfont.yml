@@ -1,24 +1,29 @@
 # yaml-language-server: $schema=../../lib/schema.json
 
 config:
-  useIcons: true
+  size: A4
+  fonts:
+    - family: abeezee
+      src: ./abeezee.ttf
+
+styles:
+  document:
+    container:
+      fontFamily: abeezee
+
+output: ../out/{{ source.name }}.pdf
 
 basics:
   name: John Doe
-  email: john.doe@outlook.com
-  phone: +1 (123) 456-7890
-  profiles:
-    - network: GitHub
-      username: johndoe
-      url: https://github.com/johndoe
-    - network: LinkedIn
-      username: johndoe
-      url: https://linkedin.com/in/johndoe
-  url: https://www.johndoe.com
+
+title:
+  items:
+    - "[john.doe@outlook.com](mailto:john.doe@outlook.com)"
+    - "[+1 (123) 456-7890](tel:+11234567890)"
+    - "[johndoe.com](https://www.johndoe.com)"
+    - "[github.com/johndoe](https://github.com/johndoe)"
   summary: |
     Experienced software engineer with a passion for building scalable web applications. Proficient in JavaScript, React, and Node.js. Strong problem-solving skills and a commitment to delivering high-quality code.
-
-output: ../out/test/{{ source.name }}.pdf
 
 skills:
   - name: Languages
