@@ -127,7 +127,6 @@ function mergeTwo(object1: any, object2: any | undefined) {
   }
 
   Object.keys(object2).forEach((key) => {
-    console.log(key, object1[key], object2[key]);
     if (["__proto__", "constructor", "prototype"].includes(key)) {
       return;
     }
