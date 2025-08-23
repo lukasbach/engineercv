@@ -4,3 +4,10 @@ documents: ["**/*.md"]
 assets: ["**/*.png", "**/*.jpg"]
 out: ../docs-out
 relativeUrl: 
+headerButtons:
+  - title: "GitHub"
+    link: "https://github.com/lukasbach/engineercv"
+    icon: "FaGithub"
+  - title: "Sponsor"
+    link: "https://github.com/sponsors/lukasbach"
+    icon: "SiGithubsponsors"

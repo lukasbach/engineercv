@@ -19,7 +19,8 @@ templates
 samples/hidden
 .vscode
 
-docs/samples
-docs/themes
+docs/samples/*
+docs/themes/*
+!docs/**/folder.yml
 docs/schemas.md
 docs-out
