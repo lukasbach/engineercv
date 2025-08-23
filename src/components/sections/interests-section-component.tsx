@@ -6,24 +6,26 @@ import { sectionHeaderComponent } from "../atoms/section-header-component.js";
 import { joinComponents } from "../utils.js";
 import { skillsSectionComponent } from "./skill-section-component.js";
 
+export const interestsSectionSchema = z.object({
+  strings: z
+    .object({
+      interests: z.string().default(""),
+    })
+    .default({}),
+  interests: z
+    .array(
+      z.object({
+        $id: z.string().nullish(),
+        name: z.string(),
+        keywords: z.string().array().nullish(),
+      }),
+    )
+    .nullish(),
+});
+
 export const interestsSectionComponent = defineComponent({
   name: "interests" as const,
-  schema: z.object({
-    strings: z
-      .object({
-        interests: z.string().default(""),
-      })
-      .default({}),
-    interests: z
-      .array(
-        z.object({
-          $id: z.string().nullish(),
-          name: z.string(),
-          keywords: z.string().array().nullish(),
-        }),
-      )
-      .nullish(),
-  }),
+  schema: interestsSectionSchema,
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);
     if (!spec.interests) return null;

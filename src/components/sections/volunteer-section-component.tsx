@@ -10,30 +10,32 @@ import { workSectionComponent } from "./work-section-component.js";
 import { urlComponent } from "../atoms/url.js";
 import { detailsListComponent } from "../atoms/details-list-component.js";
 
+export const volunteerSectionSchema = z.object({
+  strings: z
+    .object({
+      volunteer: z.string().default(""),
+      untilNow: z.string().default(""),
+    })
+    .default({}),
+  volunteer: z
+    .array(
+      z.object({
+        $id: z.string().nullish(),
+        organization: z.string(),
+        position: z.string(),
+        url: z.string().url().nullish(),
+        startDate: z.string().nullish(),
+        endDate: z.string().nullish(),
+        summary: z.string().nullish(),
+        highlights: z.string().array().nullish(),
+      }),
+    )
+    .nullish(),
+});
+
 export const volunteerSectionComponent = defineComponent({
   name: "volunteer" as const,
-  schema: z.object({
-    strings: z
-      .object({
-        volunteer: z.string().default(""),
-        untilNow: z.string().default(""),
-      })
-      .default({}),
-    volunteer: z
-      .array(
-        z.object({
-          $id: z.string().nullish(),
-          organization: z.string(),
-          position: z.string(),
-          url: z.string().url().nullish(),
-          startDate: z.string().nullish(),
-          endDate: z.string().nullish(),
-          summary: z.string().nullish(),
-          highlights: z.string().array().nullish(),
-        }),
-      )
-      .nullish(),
-  }),
+  schema: volunteerSectionSchema,
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);
     const DetailsList = getComponent(detailsListComponent);

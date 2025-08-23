@@ -8,31 +8,33 @@ import { sectionHeaderComponent } from "../atoms/section-header-component.js";
 import { joinComponents } from "../utils.js";
 import { detailsListComponent } from "../atoms/details-list-component.js";
 
+export const workSectionSchema = z.object({
+  strings: z
+    .object({
+      work: z.string().default(""),
+      untilNow: z.string().default(""),
+    })
+    .default({}),
+  work: z
+    .array(
+      z.object({
+        $id: z.string().nullish(),
+        name: z.string().nullish(),
+        position: z.string(),
+        url: z.string().url().nullish(),
+        location: z.string().nullish(),
+        startDate: z.string(),
+        endDate: z.string().nullish(),
+        summary: z.string().nullish(),
+        highlights: z.string().array().nullish(),
+      }),
+    )
+    .nullish(),
+});
+
 export const workSectionComponent = defineComponent({
   name: "work" as const,
-  schema: z.object({
-    strings: z
-      .object({
-        work: z.string().default(""),
-        untilNow: z.string().default(""),
-      })
-      .default({}),
-    work: z
-      .array(
-        z.object({
-          $id: z.string().nullish(),
-          name: z.string().nullish(),
-          position: z.string(),
-          url: z.string().url().nullish(),
-          location: z.string().nullish(),
-          startDate: z.string(),
-          endDate: z.string().nullish(),
-          summary: z.string().nullish(),
-          highlights: z.string().array().nullish(),
-        }),
-      )
-      .nullish(),
-  }),
+  schema: workSectionSchema,
   component: ({ spec, styles, getComponent }) => {
     if (!spec.work) return null;
     const SectionHeader = getComponent(sectionHeaderComponent);

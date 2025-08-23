@@ -7,24 +7,26 @@ import { sectionHeaderComponent } from "../atoms/section-header-component.js";
 import { workSectionComponent } from "./work-section-component.js";
 import { detailsListComponent } from "../atoms/details-list-component.js";
 
+export const referencesSectionSchema = z.object({
+  strings: z
+    .object({
+      references: z.string().default(""),
+    })
+    .default({}),
+  references: z
+    .array(
+      z.object({
+        $id: z.string().nullish(),
+        name: z.string(),
+        reference: z.string().nullish(),
+      }),
+    )
+    .nullish(),
+});
+
 export const referencesSectionComponent = defineComponent({
   name: "references" as const,
-  schema: z.object({
-    strings: z
-      .object({
-        references: z.string().default(""),
-      })
-      .default({}),
-    references: z
-      .array(
-        z.object({
-          $id: z.string().nullish(),
-          name: z.string(),
-          reference: z.string().nullish(),
-        }),
-      )
-      .nullish(),
-  }),
+  schema: referencesSectionSchema,
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);
     const DetailsList = getComponent(detailsListComponent);

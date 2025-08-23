@@ -5,24 +5,26 @@ import { defineComponent } from "../define-component.js";
 import { sectionHeaderComponent } from "../atoms/section-header-component.js";
 import { skillsSectionComponent } from "./skill-section-component.js";
 
+export const languagesSectionSchema = z.object({
+  strings: z
+    .object({
+      languages: z.string().default(""),
+    })
+    .default({}),
+  languages: z
+    .array(
+      z.object({
+        $id: z.string().nullish(),
+        language: z.string(),
+        fluency: z.string().nullish(),
+      }),
+    )
+    .nullish(),
+});
+
 export const languagesSectionComponent = defineComponent({
   name: "languages" as const,
-  schema: z.object({
-    strings: z
-      .object({
-        languages: z.string().default(""),
-      })
-      .default({}),
-    languages: z
-      .array(
-        z.object({
-          $id: z.string().nullish(),
-          language: z.string(),
-          fluency: z.string().nullish(),
-        }),
-      )
-      .nullish(),
-  }),
+  schema: languagesSectionSchema,
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);
     if (!spec.languages) return null;

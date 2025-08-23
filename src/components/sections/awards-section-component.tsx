@@ -7,26 +7,28 @@ import { sectionHeaderComponent } from "../atoms/section-header-component.js";
 import { workSectionComponent } from "./work-section-component.js";
 import { detailsListComponent } from "../atoms/details-list-component.js";
 
+export const awardsSectionSchema = z.object({
+  strings: z
+    .object({
+      awards: z.string().default(""),
+    })
+    .default({}),
+  awards: z
+    .array(
+      z.object({
+        $id: z.string().nullish(),
+        title: z.string(),
+        date: z.string().nullish(),
+        awarder: z.string().nullish(),
+        summary: z.string().nullish(),
+      }),
+    )
+    .nullish(),
+});
+
 export const awardsSectionComponent = defineComponent({
   name: "awards" as const,
-  schema: z.object({
-    strings: z
-      .object({
-        awards: z.string().default(""),
-      })
-      .default({}),
-    awards: z
-      .array(
-        z.object({
-          $id: z.string().nullish(),
-          title: z.string(),
-          date: z.string().nullish(),
-          awarder: z.string().nullish(),
-          summary: z.string().nullish(),
-        }),
-      )
-      .nullish(),
-  }),
+  schema: awardsSectionSchema,
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);
     const DetailsItem = getComponent(detailsItemComponent);

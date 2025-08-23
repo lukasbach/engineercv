@@ -9,33 +9,35 @@ import { sectionHeaderComponent } from "../atoms/section-header-component.js";
 import { joinComponents } from "../utils.js";
 import { detailsListComponent } from "../atoms/details-list-component.js";
 
+export const educationSectionSchema = z.object({
+  strings: z
+    .object({
+      education: z.string().default(""),
+      gpa: z.string().default(""),
+      untilNow: z.string().default(""),
+    })
+    .default({}),
+  education: z
+    .array(
+      z.object({
+        $id: z.string().nullish(),
+        institution: z.string().nullish(),
+        url: z.string().url().nullish(),
+        area: z.string().nullish(),
+        studyType: z.string().nullish(),
+        startDate: z.string().nullish(),
+        endDate: z.string().nullish(),
+        score: z.string().or(z.number()).nullish(),
+        courses: z.string().array().nullish(),
+        summary: z.string().nullish(),
+      }),
+    )
+    .nullish(),
+});
+
 export const educationSectionComponent = defineComponent({
   name: "education" as const,
-  schema: z.object({
-    strings: z
-      .object({
-        education: z.string().default(""),
-        gpa: z.string().default(""),
-        untilNow: z.string().default(""),
-      })
-      .default({}),
-    education: z
-      .array(
-        z.object({
-          $id: z.string().nullish(),
-          institution: z.string().nullish(),
-          url: z.string().url().nullish(),
-          area: z.string().nullish(),
-          studyType: z.string().nullish(),
-          startDate: z.string().nullish(),
-          endDate: z.string().nullish(),
-          score: z.string().or(z.number()).nullish(),
-          courses: z.string().array().nullish(),
-          summary: z.string().nullish(),
-        }),
-      )
-      .nullish(),
-  }),
+  schema: educationSectionSchema,
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);
     const DetailsItem = getComponent(detailsItemComponent);

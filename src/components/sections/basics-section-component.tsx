@@ -11,41 +11,43 @@ export const iconConfig = z.object({
   icon: z.string(),
 });
 
+export const basicsSectionSchema = z.object({
+  basics: z.object({
+    name: z.string(),
+    label: z.string().nullish(),
+    image: z.string().nullish(),
+    email: z.string().nullish(),
+    phone: z.string().nullish(),
+    url: z.string().nullish(),
+    summary: z.string().nullish(),
+    location: z
+      .object({
+        address: z.string().nullish(),
+        postalCode: z.string().or(z.number()).nullish(),
+        city: z.string().nullish(),
+        countryCode: z.string().nullish(),
+        region: z.string().nullish(),
+      })
+      .nullish(),
+    locationFormat: z.string().nullish(),
+    profiles: z
+      .array(
+        z.object({
+          network: z.string(),
+          username: z.string(),
+          url: z.string().url(),
+        }),
+      )
+      .nullish(),
+    highlights: z.string().array().nullish(),
+    order: z.string().array().nullish(),
+    icons: z.record(z.string(), iconConfig).nullish(),
+  }),
+});
+
 export const basicsSectionComponent = defineComponent({
   name: "basics" as const,
-  schema: z.object({
-    basics: z.object({
-      name: z.string(),
-      label: z.string().nullish(),
-      image: z.string().nullish(),
-      email: z.string().nullish(),
-      phone: z.string().nullish(),
-      url: z.string().nullish(),
-      summary: z.string().nullish(),
-      location: z
-        .object({
-          address: z.string().nullish(),
-          postalCode: z.string().or(z.number()).nullish(),
-          city: z.string().nullish(),
-          countryCode: z.string().nullish(),
-          region: z.string().nullish(),
-        })
-        .nullish(),
-      locationFormat: z.string().nullish(),
-      profiles: z
-        .array(
-          z.object({
-            network: z.string(),
-            username: z.string(),
-            url: z.string().url(),
-          }),
-        )
-        .nullish(),
-      highlights: z.string().array().nullish(),
-      order: z.string().array().nullish(),
-      icons: z.record(z.string(), iconConfig).nullish(),
-    }),
-  }),
+  schema: basicsSectionSchema,
   component: ({ spec, styles, getComponent }) => {
     const TextWithIcon = getComponent(textWithIconComponent);
     const Markdown = getComponent(markdownComponent);

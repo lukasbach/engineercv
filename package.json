@@ -20,7 +20,7 @@
     "test": "tsx src/index.ts generate \"./samples/**/*\"",
     "debug": "tsx src/index.ts generate \"./samples/**/*\" --verbose",
     "dev": "nodemon --watch src --watch samples -e ts,tsx,yml --exec tsx src/index.ts generate \"./samples/**/*\" --verbose",
-    "postbuild": "tsx src/scripts/postbuild.ts"
+    "postbuild": "tsx src/scripts/postbuild.ts && zod2md  --entry src/schemas.ts --title \"Input Schema\" --output docs/schemas.md"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.3.0",
@@ -57,7 +57,8 @@
     "nodemon": "^3.1.10",
     "publish-fast": "^0.0.20",
     "tsx": "^4.20.3",
-    "typescript": "latest"
+    "typescript": "latest",
+    "zod2md": "^0.2.4"
   },
   "engines": {
     "node": ">=16"

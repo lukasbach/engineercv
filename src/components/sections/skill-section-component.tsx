@@ -5,25 +5,27 @@ import { defineComponent } from "../define-component.js";
 import { sectionHeaderComponent } from "../atoms/section-header-component.js";
 import { joinComponents } from "../utils.js";
 
+export const skillsSectionSchema = z.object({
+  strings: z
+    .object({
+      skills: z.string().default(""),
+    })
+    .default({}),
+  skills: z
+    .array(
+      z.object({
+        $id: z.string().nullish(),
+        name: z.string(),
+        level: z.string().nullish(),
+        keywords: z.string().array().nullish(),
+      }),
+    )
+    .nullish(),
+});
+
 export const skillsSectionComponent = defineComponent({
   name: "skills" as const,
-  schema: z.object({
-    strings: z
-      .object({
-        skills: z.string().default(""),
-      })
-      .default({}),
-    skills: z
-      .array(
-        z.object({
-          $id: z.string().nullish(),
-          name: z.string(),
-          level: z.string().nullish(),
-          keywords: z.string().array().nullish(),
-        }),
-      )
-      .nullish(),
-  }),
+  schema: skillsSectionSchema,
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);
     if (!spec.skills) return null;

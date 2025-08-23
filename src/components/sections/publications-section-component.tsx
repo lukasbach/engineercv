@@ -8,27 +8,29 @@ import { joinComponents } from "../utils.js";
 import { workSectionComponent } from "./work-section-component.js";
 import { detailsListComponent } from "../atoms/details-list-component.js";
 
+export const publicationsSectionSchema = z.object({
+  strings: z
+    .object({
+      publications: z.string().default(""),
+    })
+    .default({}),
+  publications: z
+    .array(
+      z.object({
+        $id: z.string().nullish(),
+        name: z.string(),
+        publisher: z.string().nullish(),
+        releaseDate: z.string().nullish(),
+        url: z.string().url().nullish(),
+        summary: z.string().nullish(),
+      }),
+    )
+    .nullish(),
+});
+
 export const publicationsSectionComponent = defineComponent({
   name: "publications" as const,
-  schema: z.object({
-    strings: z
-      .object({
-        publications: z.string().default(""),
-      })
-      .default({}),
-    publications: z
-      .array(
-        z.object({
-          $id: z.string().nullish(),
-          name: z.string(),
-          publisher: z.string().nullish(),
-          releaseDate: z.string().nullish(),
-          url: z.string().url().nullish(),
-          summary: z.string().nullish(),
-        }),
-      )
-      .nullish(),
-  }),
+  schema: publicationsSectionSchema,
   component: ({ spec, styles, getComponent }) => {
     const SectionHeader = getComponent(sectionHeaderComponent);
     const DetailsList = getComponent(detailsListComponent);
