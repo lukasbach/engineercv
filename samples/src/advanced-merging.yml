@@ -1,6 +1,16 @@
 # yaml-language-server: $schema=https://unpkg.com/engineercv@latest/lib/schema.json
 
+# > Advanced merging
+# Demonstrates advanced merging options for lists and objects using special helpers.
+
 output: ../out/{{ source.name }}.pdf
+
+# > Custom merge behavior
+# You can customize the merging behavior from imports or variants merging. 
+# Use `{{ remove "value"}}` as list item, to remove this item if it occurs in the other list instance.
+# Use `{{ rest }}` at one position in one list, to specify that the other list should be inserted at this position.
+# Use `{{ merge "concat" }}`, `{{ merge "uniques" }}`, or `{{ merge "replace" }}` as list item in one list, to specify how the two lists should be merged.
+# In a list of nested objects, add a `$id` property in an item in both lists to specify that those two items should be merged together.
 
 variants:
   advanced-edits:

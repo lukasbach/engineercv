@@ -1,5 +1,9 @@
 # yaml-language-server: $schema=../../../lib/schema.json
 
+# > Sidelinks theme
+# Renders the info blobs like email, phone, and social profiles on the side of the basics
+# section, instead of below it.
+
 imports:
   - ../../../src/themes/sidelinks.tsx
 

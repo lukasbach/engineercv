@@ -1,5 +1,8 @@
 # yaml-language-server: $schema=https://unpkg.com/engineercv@latest/lib/schema.json
 
+# > Custom order
+# Demonstrates how to customize the section order in the generated CV.
+
 basics:
   name: John Doe
 

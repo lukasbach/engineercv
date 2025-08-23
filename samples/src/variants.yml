@@ -1,5 +1,9 @@
 # yaml-language-server: $schema=https://unpkg.com/engineercv@latest/lib/schema.json
 
+# > Variants
+# You can define multiple variants that each generate their own output PDF, in one source file.
+# In this sample, a total of four variants are defined (private-frontend, private-backend, public-frontend and public-backend).
+
 variants:
   privacy:
     - name: John Doe

@@ -1,5 +1,10 @@
 # yaml-language-server: $schema=../../../lib/schema.json
 
+# > Cover Letter Theme
+# A theme for creating cover letters with engineercv.
+# Hint: You can use the variants-feature to write both a cover letter and
+# a resume from the same file.
+
 output: ../../out/themes/cover-letter.pdf
 
 imports:

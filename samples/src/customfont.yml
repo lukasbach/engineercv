@@ -1,5 +1,8 @@
 # yaml-language-server: $schema=../../lib/schema.json
 
+# > Custom font
+# Shows how to use a custom font by referencing a local TTF file and applying it in styles.
+
 config:
   size: A4
   fonts:

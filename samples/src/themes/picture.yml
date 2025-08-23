@@ -1,5 +1,10 @@
 # yaml-language-server: $schema=../../../lib/schema.json
 
+# > Picture theme
+# Render a profile picture on the left of the header section of the resume.
+# Provide the path to the picture with `basics.image`. You can configure
+# it to render as round picture with `basics.roundedImage`.
+
 output: ../../out/themes/picture.pdf
 
 imports:

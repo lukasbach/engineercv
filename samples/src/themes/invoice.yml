@@ -1,5 +1,8 @@
 output: ../../out/themes/invoice.pdf
 
+# > Invoice theme
+# A theme for creating invoices with engineercv.
+
 imports:
   - ../../../src/themes/invoice.tsx
 

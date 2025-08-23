@@ -1,5 +1,8 @@
 # yaml-language-server: $schema=https://unpkg.com/engineercv@latest/lib/schema.json
 
+# > Handlebars helpers
+# Example of using handlebars helpers for dynamic field rendering in highlights.
+
 output: ../out/{{ source.name }}.pdf
 
 basics:
