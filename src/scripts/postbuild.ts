@@ -59,49 +59,65 @@ await fs.promises.writeFile(
   "utf-8",
 );
 
-// Documentation builder
+// Reusable documentation builder function
+async function buildDocsFromFiles(files: string[], docsDir: string) {
+  for (const file of files) {
+    const fileName = path.basename(file);
+    const baseName = fileName.replace(/\.[^.]+$/, "");
+    const code = await fs.promises.readFile(file, "utf-8");
+    const lines = code.split(/\r?\n/);
+    const headerStart = lines.findIndex((l) => l.startsWith("# > "));
+    const headerLines = lines
+      .slice(headerStart)
+      .filter((l) => l.startsWith("#"));
+    let title = "";
+    const docs: string[] = [];
+    for (const line of headerLines) {
+      if (line.startsWith("# > ")) {
+        title = line.replace(/^# > /, "");
+      } else if (line.startsWith("# ")) {
+        docs.push(line.replace(/^# /, ""));
+      }
+    }
+    const docText = docs.join("\n");
+    // PDF name logic: if output contains a .pdf path, use it
+    const pdfMatch = code.match(/output:\s*([^\n]+)/);
+    let pdfPath: string | null = null;
+    if (pdfMatch) {
+      const pdfRel = pdfMatch[1].trim().replace(/['"]/g, "");
+      if (pdfRel.endsWith(".pdf")) {
+        pdfPath = pdfRel.replace(/^\.\.\//, "");
+      }
+    }
+    let md = "";
+    if (title) md += `# ${title}\n\n`;
+    if (docText) md += `${docText}\n\n`;
+    md += `## Source\n\n<details><summary>Show code</summary>\n\n`;
+    md += ["```yaml", code, "``\n", ""].join("\n");
+    md += "</details>\n\n";
+    if (pdfPath) {
+      md += `[Show PDF](${pdfPath})\n`;
+    }
+    await fs.promises.writeFile(
+      path.join(docsDir, `${baseName}.md`),
+      md,
+      "utf-8",
+    );
+  }
+}
 
+// Build docs for samples
 const sampleFiles = [
   ...(await glob("samples/src/*.yml")),
   ...(await glob("samples/src/*.yaml")),
   ...(await glob("samples/src/*.md")),
 ];
+await buildDocsFromFiles(sampleFiles, "docs/samples");
 
-for (const file of sampleFiles) {
-  const fileName = path.basename(file);
-  const baseName = fileName.replace(/\.[^.]+$/, "");
-  const code = await fs.promises.readFile(file, "utf-8");
-  const lines = code.split(/\r?\n/);
-  const headerStart = lines.findIndex((l) => l.startsWith("# > "));
-  const headerLines = lines.slice(headerStart).filter((l) => l.startsWith("#"));
-  let title = "";
-  const docs = [];
-  for (const line of headerLines) {
-    if (line.startsWith("# > ")) {
-      title = line.replace(/^# > /, "");
-    } else if (line.startsWith("# ")) {
-      docs.push(line.replace(/^# /, ""));
-    }
-  }
-  const docText = docs.join("\n");
-  const pdfName = code.match(
-    /output:\s*\.\.\/out\/\{\{\s*source\.name\s*\}\}\.pdf/,
-  )
-    ? `${baseName}.pdf`
-    : null;
-  const pdfPath = pdfName ? path.join("pdf", pdfName) : null;
-  let md = "";
-  if (title) md += `# ${title}\n\n`;
-  if (docText) md += `${docText}\n\n`;
-  md += `## Source\n\n<details><summary>Show code</summary>\n\n`;
-  md += ["```yaml", code, "```\n", ""].join("\n");
-  md += "</details>\n\n";
-  if (pdfPath) {
-    md += `[Show PDF](${pdfPath})\n`;
-  }
-  await fs.promises.writeFile(
-    path.join("docs/samples", `${baseName}.md`),
-    md,
-    "utf-8",
-  );
-}
+// Build docs for themes
+const themeFiles = [
+  ...(await glob("samples/src/themes/*.yml")),
+  ...(await glob("samples/src/themes/*.yaml")),
+  ...(await glob("samples/src/themes/*.md")),
+];
+await buildDocsFromFiles(themeFiles, "docs/themes");
