@@ -1,0 +1,6 @@
+title: engineercv
+description: A simple YAML based resume generator
+documents: ["**/*.md"]
+assets: ["**/*.png", "**/*.jpg"]
+out: ../docs-out
+relativeUrl: 
