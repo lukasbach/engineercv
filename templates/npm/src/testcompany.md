@@ -12,7 +12,7 @@ toAddress:
 
 # You can overwrite company-specific resume details:
 volunteer:
-  - "{{ merge 'replace' }}"
+  # - "{{ merge 'replace' }}"
   - organization: Bay Area Python Meetup
     position: Co-organizer
     url: https://www.meetup.com/bay-area-py/
@@ -21,7 +21,6 @@ volunteer:
       - Organizing monthly Python and web development meetups
       - Coordinating with speakers and managing event logistics for 40-60 attendees
 ---
-<!-- markdownlint-disable no-multiple-blanks -->
 
 Dear Hiring Manager,
 

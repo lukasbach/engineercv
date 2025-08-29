@@ -8,7 +8,7 @@ type: resume
 config:
   useIcons: true
 
-output: ../../pdf/{{ source.name }}/johndoe-{{ type }}.pdf
+output: ../pdf/{{ source.name }}/johndoe-{{ type }}.pdf
 
 basics:
   name: John Doe

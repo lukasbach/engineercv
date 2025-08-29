@@ -3,7 +3,17 @@
 
 ## Basic Usage Examples
 
-EngineerCV lets you create resumes using simple YAML files, split content into reusable chunks, and generate multiple variants for different targets. Here are some basic samples:
+EngineerCV lets you create resumes using simple YAML files, split content into reusable chunks, and generate multiple variants for different targets.
+
+To get started, run
+
+```
+npx engineercv setup
+```
+
+to start an interactive setup process.
+
+Here are some basic samples:
 
 **Single Resume Example**
 

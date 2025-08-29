@@ -1,12 +1,11 @@
 imports:
  - sidelinks
  - ./config/base.yml
- - ./config/sample-specification.yml # with additional configuration
+ - ./config/sample-specialization.yml # with additional configuration
 
  
 # You can overwrite company-specific resume details:
 volunteer:
-  - "{{ merge 'replace' }}"
   - organization: Bay Area Python Meetup
     position: Co-organizer
     url: https://www.meetup.com/bay-area-py/

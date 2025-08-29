@@ -41,4 +41,7 @@ setupCommand.action(async () => {
   );
 
   exec(`code ${target}`);
+  if (template === "npm") {
+    exec(`npm install`, { cwd: target });
+  }
 });
