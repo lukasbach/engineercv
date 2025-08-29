@@ -121,3 +121,53 @@ const themeFiles = [
   ...(await glob("samples/src/themes/*.md")),
 ];
 await buildDocsFromFiles(themeFiles, "docs/themes");
+
+// Style docs - Generate documentation for all component styles
+const componentFiles = [
+  ...(await glob("src/components/sections/*.tsx")),
+  ...(await glob("src/components/atoms/*.tsx")),
+];
+
+let stylesDoc = "# Component Styles Reference\n\n";
+stylesDoc += "This document lists all available style keys for each component in the EngineerCV system.\n\n";
+stylesDoc += "## Style Keys by Component\n\n";
+
+for (const file of componentFiles) {
+  try {
+    // Convert file path to proper file URL for dynamic import on Windows
+    const absolutePath = path.resolve(file);
+    const fileUrl = new URL(`file:///${absolutePath.replace(/\\/g, '/')}`);
+    const module = await import(fileUrl.href);
+    
+    // Look for component exports (they should have a name ending with 'Component')
+    const componentExports = Object.entries(module).filter(([key, value]) => 
+      key.endsWith('Component') && 
+      typeof value === 'object' && 
+      value !== null &&
+      'defaultStyles' in value
+    );
+    
+    for (const [exportName, component] of componentExports) {
+      const comp = component as any;
+      if (comp.defaultStyles && typeof comp.defaultStyles === 'object') {
+        const componentName = comp.name || exportName.replace('Component', '');
+        const styleKeys = Object.keys(comp.defaultStyles);
+        
+        stylesDoc += `### ${componentName}\n\n`;
+        if (styleKeys.length > 0) {
+          stylesDoc += "Available style keys:\n";
+          for (const key of styleKeys) {
+            stylesDoc += `- \`${key}\`\n`;
+          }
+        } else {
+          stylesDoc += "No style keys available.\n";
+        }
+        stylesDoc += "\n";
+      }
+    }
+  } catch (error) {
+    console.warn(`Could not process component file ${file}:`, error);
+  }
+}
+
+await fs.promises.writeFile("docs/styles.md", stylesDoc, "utf-8");

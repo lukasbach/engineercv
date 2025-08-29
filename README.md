@@ -44,12 +44,19 @@ output: ./out/john-doe.pdf
 variants:
    company:
       - name: John Doe
-         target: AcmeCorp
+        target: AcmeCorp
+        mainLanguage: JavaScript
       - name: John Doe
-         target: BetaInc
+        target: BetaInc
+        mainLanguage: TypeScript
 output: ./out/{{ target }}.pdf
 basics:
    name: "{{ name }}"
+
+skills:
+   - name: Languages
+      keywords:
+         - "{{ mainLanguage }}"
 ```
 
 EngineerCV is a powerful, flexible Resume/CV generator built on React-PDF. It enables you to create multiple targeted resume variants (for different companies, roles, or privacy levels) from a single source file. Modular YAML/JSON/TS/JS configs, imports, and advanced merging make it easy to split your resume into reusable chunks and generate tailored PDFs for every application scenario.

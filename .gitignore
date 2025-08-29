@@ -21,6 +21,7 @@ samples/hidden
 
 docs/samples/*
 docs/themes/*
+docs/styles.md
 !docs/**/folder.yml
 docs/schemas.md
 docs-out
