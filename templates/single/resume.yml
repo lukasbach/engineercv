@@ -1,0 +1,137 @@
+# yaml-language-server: $schema=https://unpkg.com/engineercv@latest/lib/schema.json
+
+# Put all your common CV configuration here.
+
+type: resume
+
+config:
+  useIcons: true
+
+output: ./resume.pdf
+
+basics:
+  name: John Doe
+  subtitle: Software Developer
+  email: john.doe@example.com
+  phone: "+1 555-0123"
+  url: https://johndoe-portfolio.com
+  summary: |
+    Passionate software developer with expertise in creating innovative technical solutions.
+  location:
+    address: 123 Main Street
+    postalCode: "12345"
+    city: Sample City
+    country: United States
+    countryCode: US
+    region: Sample State
+    generalArea: Metropolitan Area
+  locationFormat: "{{generalArea}}, {{country}}"
+  profiles:
+    - network: LinkedIn
+      username: johndoe
+      url: https://linkedin.com/in/johndoe
+    - network: GitHub
+      username: johndoe
+      url: https://github.com/johndoe
+  highlights:
+    - Multilingual professional
+  image: https://placecats.com/300/300
+  roundedImage: true
+
+skills:
+  - name: Frontend
+    $id: frontend
+    keywords:
+      - React
+      - Vue.js
+      - Angular
+  - name: Backend
+    $id: backend
+    keywords:
+      - Node.js
+      - Express
+      - Django
+  - name: Infrastructure
+    $id: infrastructure
+    keywords:
+      - AWS
+      - Docker
+      - Kubernetes
+  - name: Tooling
+    $id: tooling
+    keywords:
+      - Webpack
+      - Babel
+      - ESLint
+
+work:
+  - position: Senior Software Developer
+    name: TechFlow Solutions
+    location: San Francisco, CA
+    startDate: 2023/03
+    highlights:
+      - Developing AI-powered automation features using React and Python
+      - Leading frontend and backend development initiatives
+      - Collaborating on microservices architecture and cloud deployment
+      - Regular contribution to prototype development and customer-facing products
+  - position: Full Stack Developer
+    name: Digital Innovations Corp
+    location: Austin, TX
+    startDate: 2020/06
+    endDate: 2023/02
+    highlights:
+      - Full-stack development on e-commerce and SaaS applications
+      - Implemented REST APIs and third-party payment integrations
+      - Working with React, Node.js, PostgreSQL and AWS infrastructure
+      - Led code reviews and mentored junior developers
+  - position: Junior Web Developer
+    name: StartupHub Inc
+    location: Boston, MA
+    startDate: 2018/09
+    endDate: 2020/05
+    highlights:
+      - Frontend development using React and TypeScript
+      - Contributed to mobile-responsive web applications and UI/UX improvements
+
+volunteer:
+  - organization: Bay Area JavaScript Meetup
+    position: Co-organizer
+    url: https://www.meetup.com/bay-area-js/
+    startDate: 2022/01
+    highlights:
+      - Organizing monthly JavaScript and web development meetups
+      - Coordinating with speakers and managing event logistics for 40-60 attendees
+
+education:
+  - institution: University of California, Berkeley
+    url: https://www.berkeley.edu
+    studyType: Master of Science, Computer Science
+    startDate: 2016/08
+    endDate: 2018/05
+    summary: Focus on Software Engineering and Artificial Intelligence
+    $id: master
+  - institution: University of California, Berkeley
+    url: https://www.berkeley.edu
+    studyType: Bachelor of Science, Computer Science
+    startDate: 2012/08
+    endDate: 2016/05
+
+publications:
+  - name: Scalable Web Application Architecture Patterns
+    publisher: IEEE Computer Society
+    releaseDate: 2021/11/15
+    url: https://doi.org/10.1109/example.2021.123456
+
+projects:
+  - name: React Dashboard Kit
+    startDate: 2022/03
+    highlights:
+      - Modular dashboard components with TypeScript and Storybook
+      - Open-source library with active community contributions
+    url: https://github.com/johndoe/react-dashboard-kit
+  - name: Task Manager Pro
+    startDate: 2021/01
+    highlights:
+      - Full-stack productivity app with real-time collaboration features
+      - Built with React, Node.js, and Socket.io
+    url: https://github.com/johndoe/task-manager-pro

@@ -1,0 +1,16 @@
+imports:
+ - sidelinks
+ - ./config/base.yml
+ - ./config/sample-specification.yml # with additional configuration
+
+ 
+# You can overwrite company-specific resume details:
+volunteer:
+  - "{{ merge 'replace' }}"
+  - organization: Bay Area Python Meetup
+    position: Co-organizer
+    url: https://www.meetup.com/bay-area-py/
+    startDate: 2022/01
+    highlights:
+      - Organizing monthly Python and web development meetups
+      - Coordinating with speakers and managing event logistics for 40-60 attendees

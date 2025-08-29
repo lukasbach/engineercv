@@ -5,6 +5,7 @@ import { fileURLToPath } from "url";
 import { Command } from "commander";
 import { generateCommand } from "./commands/generate.js";
 import { watchCommand } from "./commands/watch.js";
+import { setupCommand } from "./commands/setup.js";
 
 const program = new Command();
 
@@ -37,6 +38,7 @@ program
   .version(cliVersion)
   .option("-v, --verbose", "Enable verbose logging")
   .addCommand(generateCommand)
-  .addCommand(watchCommand);
+  .addCommand(watchCommand)
+  .addCommand(setupCommand);
 
 program.parse();

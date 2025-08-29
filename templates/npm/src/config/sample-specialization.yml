@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://unpkg.com/engineercv@latest/lib/schema.json
+
+# You can use partial resume files that overwrite information in those files
+# that include this file.
+
+skills:
+  # Add an $id value to both this list and the corresponding entry in the main skills list
+  # so their items gets merged properly.
+  - name: Backend
+    $id: backend
+    keywords:
+      - Additional backend skills
+      - Lots of experience
+      # As additional list items, add `- "{{ merge 'uniques' }}"` if the lists should be merged
+      # and uniques should be deduplicated, or `- "{{ merge 'replace'}}`, if the new list should
+      # completely replace the old one, or `- "{{ merge 'concat'}}`, if the new list should be
+      # appended to the old one. Default is uniques.
+  - name: Infrastructure
+    $id: infrastructure
+    keywords:
+      # Use the sample below to replace "AWS" from the original List with "Amazon Web Services".
+      # The remaining list stays the same.
+      - "{{ remove 'AWS' }}"
+      - Amazon Web Services

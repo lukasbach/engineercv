@@ -1,0 +1,14 @@
+{
+  "name": "resume",
+  "private": true,
+  "scripts": {
+    "engineercv": "engineercv",
+    "build": "engineercv generate \"./src/**/*\"",
+    "watch": "engineercv watch \"./src/**/*\"",
+    "start": "engineercv watch \"./src/**/*\"",
+    "debug": "engineercv watch \"./src/**/*\" --verbose"
+  },
+  "dependencies": {
+    "engineercv": "latest"
+  }
+}

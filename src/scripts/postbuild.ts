@@ -129,30 +129,32 @@ const componentFiles = [
 ];
 
 let stylesDoc = "# Component Styles Reference\n\n";
-stylesDoc += "This document lists all available style keys for each component in the EngineerCV system.\n\n";
+stylesDoc +=
+  "This document lists all available style keys for each component in the EngineerCV system.\n\n";
 stylesDoc += "## Style Keys by Component\n\n";
 
 for (const file of componentFiles) {
   try {
     // Convert file path to proper file URL for dynamic import on Windows
     const absolutePath = path.resolve(file);
-    const fileUrl = new URL(`file:///${absolutePath.replace(/\\/g, '/')}`);
+    const fileUrl = new URL(`file:///${absolutePath.replace(/\\/g, "/")}`);
     const module = await import(fileUrl.href);
-    
+
     // Look for component exports (they should have a name ending with 'Component')
-    const componentExports = Object.entries(module).filter(([key, value]) => 
-      key.endsWith('Component') && 
-      typeof value === 'object' && 
-      value !== null &&
-      'defaultStyles' in value
+    const componentExports = Object.entries(module).filter(
+      ([key, value]) =>
+        key.endsWith("Component") &&
+        typeof value === "object" &&
+        value !== null &&
+        "defaultStyles" in value,
     );
-    
+
     for (const [exportName, component] of componentExports) {
       const comp = component as any;
-      if (comp.defaultStyles && typeof comp.defaultStyles === 'object') {
-        const componentName = comp.name || exportName.replace('Component', '');
+      if (comp.defaultStyles && typeof comp.defaultStyles === "object") {
+        const componentName = comp.name || exportName.replace("Component", "");
         const styleKeys = Object.keys(comp.defaultStyles);
-        
+
         stylesDoc += `### ${componentName}\n\n`;
         if (styleKeys.length > 0) {
           stylesDoc += "Available style keys:\n";
