@@ -2,6 +2,8 @@
 
 EngineerCV provides comprehensive styling capabilities that allow you to customize the appearance of your resume. Styles are based on React-PDF's styling system and support CSS-like properties.
 
+You can find all available style properties on [the ReactPDF documentation](https://react-pdf.org/styling).
+
 ## Style Override System
 
 ### Global Style Configuration

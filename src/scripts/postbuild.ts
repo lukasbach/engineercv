@@ -87,7 +87,9 @@ async function buildDocsFromFiles(files: string[], docsDir: string) {
     if (pdfMatch) {
       const pdfRel = pdfMatch[1].trim().replace(/['"]/g, "");
       if (pdfRel.endsWith(".pdf")) {
-        pdfPath = pdfRel.replace(/^\.\.\//, "");
+        pdfPath = pdfRel
+          .replace(/^\.\.\//, "")
+          .replaceAll("{{ source.name }}", baseName);
       }
     }
     let md = "";
@@ -129,11 +131,24 @@ const componentFiles = [
   ...(await glob("src/components/atoms/*.tsx")),
 ];
 
-let stylesDoc = "# Component Styles Reference\n\n";
-stylesDoc += `This document lists all available style keys for each component in the EngineerCV system.
+let stylesDoc = `# Component Styles Reference
+
+This document lists all available style keys for each component in the EngineerCV system.
+
+To change the styles of the \`container\` style of \`work\` component, add to your specification:
+
+\`\`\`
+styles:
+  work:
+    container:
+      color: red
+\`\`\`
+
+You can find all available style properties on [the ReactPDF documentation](https://react-pdf.org/styling).
+
+## Style Keys by Component
 
 `;
-stylesDoc += "## Style Keys by Component\n\n";
 
 for (const file of componentFiles) {
   try {
@@ -161,7 +176,14 @@ for (const file of componentFiles) {
         if (styleKeys.length > 0) {
           stylesDoc += "Available style keys:\n";
           for (const key of styleKeys) {
-            stylesDoc += `- \`${key}\`\n`;
+            stylesDoc += `<details><summary>\`${key}\`</summary>\n\n`;
+            stylesDoc += [
+              "Default styles:\n\n```yaml",
+              JSON.stringify(comp.defaultStyles[key], null, 2),
+              "```",
+              "",
+            ].join("\n");
+            stylesDoc += "</details>\n\n";
           }
         } else {
           stylesDoc += "No style keys available.\n";
