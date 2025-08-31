@@ -35,7 +35,7 @@ export const certificatesSectionComponent = defineComponent({
     const DetailsList = getComponent(detailsListComponent);
     if (!spec.certificates) return null;
     return (
-      <View wrap={false} style={styles.container}>
+      <View style={styles.container}>
         <SectionHeader style={styles.header}>
           {spec.strings?.certificates}
         </SectionHeader>

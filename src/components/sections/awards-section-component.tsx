@@ -35,7 +35,7 @@ export const awardsSectionComponent = defineComponent({
     const DetailsList = getComponent(detailsListComponent);
     if (!spec.awards) return null;
     return (
-      <View wrap={false} style={styles.container}>
+      <View style={styles.container}>
         <SectionHeader style={styles.header}>
           {spec.strings?.awards}
         </SectionHeader>

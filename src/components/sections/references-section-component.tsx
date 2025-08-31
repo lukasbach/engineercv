@@ -33,7 +33,7 @@ export const referencesSectionComponent = defineComponent({
     const DetailsItem = getComponent(detailsItemComponent);
     if (!spec.references) return null;
     return (
-      <View wrap={false} style={styles.container}>
+      <View style={styles.container}>
         <SectionHeader style={styles.header}>
           {spec.strings?.references}
         </SectionHeader>

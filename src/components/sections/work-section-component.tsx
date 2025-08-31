@@ -42,7 +42,7 @@ export const workSectionComponent = defineComponent({
     const DetailsList = getComponent(detailsListComponent);
     const DateRange = getComponent(dateRangeComponent);
     return (
-      <View wrap={false} style={styles.container}>
+      <View style={styles.container}>
         <SectionHeader style={styles.header}>
           {spec.strings?.work}
         </SectionHeader>

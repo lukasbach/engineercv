@@ -37,7 +37,7 @@ export const publicationsSectionComponent = defineComponent({
     const DetailsItem = getComponent(detailsItemComponent);
     if (!spec.publications) return null;
     return (
-      <View wrap={false} style={styles.container}>
+      <View style={styles.container}>
         <SectionHeader style={styles.header}>
           {spec.strings?.publications}
         </SectionHeader>

@@ -43,7 +43,7 @@ export const projectsSectionComponent = defineComponent({
     const Url = getComponent(urlComponent);
     if (!spec.projects) return null;
     return (
-      <View wrap={false} style={styles.container}>
+      <View style={styles.container}>
         <SectionHeader style={styles.header}>
           {spec.strings?.projects}
         </SectionHeader>

@@ -46,7 +46,7 @@ export const educationSectionComponent = defineComponent({
     if (!spec.education) return null;
 
     return (
-      <View wrap={false} style={styles.container}>
+      <View style={styles.container}>
         <SectionHeader style={styles.header}>
           {spec.strings?.education}
         </SectionHeader>

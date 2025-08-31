@@ -34,7 +34,7 @@ export const detailsItemComponent = defineComponent({
     const Markdown = getComponent(markdownComponent);
     const ListItem = getComponent(listItemComponent);
     return (
-      <View>
+      <View wrap={false}>
         <View style={[styles.container, style]}>
           <View style={styles.leftContent}>
             {joinComponents(

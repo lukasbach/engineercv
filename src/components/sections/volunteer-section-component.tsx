@@ -44,7 +44,7 @@ export const volunteerSectionComponent = defineComponent({
     const Url = getComponent(urlComponent);
     if (!spec.volunteer) return null;
     return (
-      <View wrap={false} style={styles.container}>
+      <View style={styles.container}>
         <SectionHeader style={styles.header}>
           {spec.strings?.volunteer}
         </SectionHeader>
