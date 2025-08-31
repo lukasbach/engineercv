@@ -28,6 +28,7 @@ jobs:
       - run: yarn build
       - run: yarn test
       - run: yarn postbuild
+      - run: yarn build
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./docs-out
