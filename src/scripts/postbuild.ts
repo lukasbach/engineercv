@@ -130,8 +130,9 @@ const componentFiles = [
 ];
 
 let stylesDoc = "# Component Styles Reference\n\n";
-stylesDoc +=
-  "This document lists all available style keys for each component in the EngineerCV system.\n\n";
+stylesDoc += `This document lists all available style keys for each component in the EngineerCV system.
+
+`;
 stylesDoc += "## Style Keys by Component\n\n";
 
 for (const file of componentFiles) {
