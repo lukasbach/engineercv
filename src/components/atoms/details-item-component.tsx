@@ -1,4 +1,4 @@
-import { View } from "@react-pdf/renderer";
+import { Text, View } from "@react-pdf/renderer";
 import React from "react";
 import z from "zod";
 import { defineComponent } from "../define-component.js";
@@ -36,7 +36,7 @@ export const detailsItemComponent = defineComponent({
     return (
       <View wrap={false}>
         <View style={[styles.container, style]}>
-          <View style={styles.leftContent}>
+          <Text style={styles.leftContent}>
             {joinComponents(
               [
                 title && <Markdown style={styles.title}>{title}</Markdown>,
@@ -46,11 +46,11 @@ export const detailsItemComponent = defineComponent({
               ],
               separator ?? ", ",
             )}
-          </View>
+          </Text>
           {right && (
-            <View style={styles.rightContent}>
+            <Text style={styles.rightContent}>
               {typeof right === "string" ? <Markdown>{right}</Markdown> : right}
-            </View>
+            </Text>
           )}
         </View>
         {detailsInExtraLine && details && (
@@ -71,6 +71,7 @@ export const detailsItemComponent = defineComponent({
     container: {
       display: "flex",
       flexDirection: "row",
+      gap: "8pt",
     },
     title: {
       fontWeight: "bold",
@@ -80,9 +81,8 @@ export const detailsItemComponent = defineComponent({
       flexDirection: "row",
     },
     leftContent: {
-      display: "flex",
-      flexDirection: "row",
       flexGrow: 1,
+      flex: 1,
     },
     rightContent: {},
     summary: {

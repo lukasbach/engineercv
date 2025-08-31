@@ -30,7 +30,6 @@ var:
 
 body: "{{ content }}"
 ---
-<!-- markdownlint-disable no-multiple-blanks -->
 
 Dear Hiring Manager,
 
