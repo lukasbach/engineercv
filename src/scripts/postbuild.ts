@@ -200,3 +200,6 @@ await fs.promises.writeFile("docs/styles.md", stylesDoc, "utf-8");
 
 // Copy samples/out to docs-out/out
 await fsExtra.copy("samples/out", "docs-out/out");
+
+// Copy README.md to docs/index.md
+await fs.promises.copyFile("README.md", "docs/index.md");
