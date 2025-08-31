@@ -3,6 +3,7 @@ import * as fs from "fs";
 import { z } from "zod";
 import path from "path";
 import { glob } from "glob";
+import fsExtra from "fs-extra/esm";
 import { defaultComponents } from "../components/default-components.js";
 import { baseSpecSchema } from "../generate/base-spec-schema.js";
 
@@ -173,3 +174,6 @@ for (const file of componentFiles) {
 }
 
 await fs.promises.writeFile("docs/styles.md", stylesDoc, "utf-8");
+
+// Copy samples/out to docs-out/out
+await fsExtra.copy("samples/out", "docs-out/out");
