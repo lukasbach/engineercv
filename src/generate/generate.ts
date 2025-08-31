@@ -235,12 +235,12 @@ export const generate = async (pattern: string) => {
   }
 
   for (const file of files) {
-    const { paths, config } = await resolveConfig(file);
-    trackedFiles.push(...paths);
-    // eslint-disable-next-line no-continue
-    if (!config) continue;
-
     try {
+      const { paths, config } = await resolveConfig(file);
+      trackedFiles.push(...paths);
+      // eslint-disable-next-line no-continue
+      if (!config) continue;
+
       const specs = await resolveSpecsFromConfig(config, file);
       (() => {
         if (!process.argv.includes("--verbose") && !process.argv.includes("-v"))
