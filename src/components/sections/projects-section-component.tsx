@@ -54,9 +54,17 @@ export const projectsSectionComponent = defineComponent({
               style={styles.item}
               title={project.name}
               details={joinComponents([
-                <DateRange start={project.startDate} end={project.endDate} />,
+                project.url ? (
+                  <DateRange start={project.startDate} end={project.endDate} />
+                ) : null,
               ])}
-              right={<Url url={project.url} />}
+              right={
+                project.url ? (
+                  <Url url={project.url} />
+                ) : (
+                  <DateRange start={project.startDate} end={project.endDate} />
+                )
+              }
               separator=", "
               summary={project.description}
               list={project.highlights}
