@@ -1,4 +1,14 @@
 itemOrder:
+  - root
   - schemas
   - samples
   - themes
+  - advanced-merging
+  - cover-letters
+  - custom-components
+  - handlebar-helpers
+  - icons
+  - imports
+  - page-numbers
+  - styling
+  - variants
