@@ -16,7 +16,7 @@ samples/**/*.pdf
 todos.md
 
 samples/hidden
-.vscode
+./.vscode
 
 docs/samples/*
 docs/themes/*
