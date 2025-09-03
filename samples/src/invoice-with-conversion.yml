@@ -1,0 +1,57 @@
+imports:
+  - ../../src/themes/invoice.tsx
+
+output: ../out/invoice-with-conversion.pdf
+
+basics:
+  name: John Doe
+
+fromAddress:
+  - "**John Smith Consulting**"
+  - "123 Business Street"
+  - "New York, NY 10001"
+  - "john@example.com"
+  - "Tel: +1 (555) 123-4567"
+
+invoice:
+  invoiceNumber: "INV-2024-001"
+  date: "2024-01-15"
+  dueDate: "2024-02-15"
+  currency: "USD"
+  targetCurrency: "EUR"
+  conversionRate: 0.85
+  paymentMade: 500
+
+toAddress:
+  - "**ABC Corporation**"
+  - "456 Client Avenue"
+  - "Los Angeles, CA 90210"
+  - "billing@abc-corp.com"
+
+items:
+  - definition:
+      description: "Website Development Services"
+      unitPrice: 2500
+    quantity: 1
+  - definition:
+      description: "Logo Design"
+      unitPrice: 750
+    quantity: 1
+  - definition:
+      description: "SEO Optimization"
+      unitPrice: 1200
+    quantity: 1
+
+modifiers:
+  - description: "Sales Tax"
+    rate: 0.08
+  - description: "Service Fee"
+    rate: 0.05
+
+body: |
+  **Payment Terms:**
+  - Payment is due within 30 days of invoice date
+  - Late payments subject to 1.5% monthly service charge
+  - Please include invoice number with payment
+  
+  **Thank you for your business!**

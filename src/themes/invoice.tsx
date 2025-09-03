@@ -292,12 +292,16 @@ const invoiceSummary = defineComponent({
       .nullish(),
     paymentMade: z.number().nullish(),
     currency: z.string().nullish(),
+    targetCurrency: z.string().nullish(),
+    conversionRate: z.number().nullish(),
     strings: z
       .object({
         subtotal: z.string().default(""),
         totalLabel: z.string().default(""),
         paymentMade: z.string().default(""),
         balanceDue: z.string().default(""),
+        exchangeRate: z.string().default(""),
+        convertedTotal: z.string().default(""),
       })
       .nullish(),
   }),
@@ -307,6 +311,8 @@ const invoiceSummary = defineComponent({
     modifiers,
     paymentMade = 0,
     currency = "USD",
+    targetCurrency,
+    conversionRate,
     strings,
     styles,
     getComponent,
@@ -315,6 +321,15 @@ const invoiceSummary = defineComponent({
     const InvoiceSummaryModifier = getComponent({
       name: "invoiceSummaryModifier",
     });
+
+    const convertedTotal =
+      targetCurrency && conversionRate ? total * conversionRate : null;
+
+    // Payment made is assumed to already be in target currency if target currency is defined
+    const convertedBalance =
+      targetCurrency && conversionRate && convertedTotal !== null
+        ? convertedTotal - (paymentMade || 0)
+        : null;
 
     return (
       <>
@@ -346,6 +361,34 @@ const invoiceSummary = defineComponent({
           </ReactPdf.Text>
         </ReactPdf.View>
 
+        {/* Currency conversion section */}
+        {targetCurrency && conversionRate && convertedTotal !== null && (
+          <>
+            <ReactPdf.View style={styles.summaryRow}>
+              <ReactPdf.Text style={styles.summaryLabel}>
+                {strings?.exchangeRate}:
+              </ReactPdf.Text>
+              <ReactPdf.Text style={styles.summaryValue}>
+                {currency} 1 = {targetCurrency} {conversionRate.toFixed(4)}
+              </ReactPdf.Text>
+            </ReactPdf.View>
+            <ReactPdf.View
+              style={[styles.summaryRow, styles.convertedTotalRow]}
+            >
+              <ReactPdf.Text
+                style={[styles.summaryLabel, styles.convertedTotalLabel]}
+              >
+                {strings?.convertedTotal}:
+              </ReactPdf.Text>
+              <ReactPdf.Text
+                style={[styles.summaryValue, styles.convertedTotalValue]}
+              >
+                {targetCurrency} {convertedTotal.toFixed(2)}
+              </ReactPdf.Text>
+            </ReactPdf.View>
+          </>
+        )}
+
         {(paymentMade || 0) > 0 && (
           <>
             <ReactPdf.View style={styles.summaryRow}>
@@ -353,7 +396,8 @@ const invoiceSummary = defineComponent({
                 {strings?.paymentMade}:
               </ReactPdf.Text>
               <ReactPdf.Text style={styles.summaryValue}>
-                -{currency} {(paymentMade || 0).toFixed(2)}
+                {targetCurrency && conversionRate ? targetCurrency : currency}{" "}
+                {(paymentMade || 0).toFixed(2)}
               </ReactPdf.Text>
             </ReactPdf.View>
             <ReactPdf.View style={[styles.summaryRow, styles.balanceRow]}>
@@ -361,7 +405,10 @@ const invoiceSummary = defineComponent({
                 {strings?.balanceDue}:
               </ReactPdf.Text>
               <ReactPdf.Text style={[styles.summaryValue, styles.balanceValue]}>
-                {currency} {balance.toFixed(2)}
+                {targetCurrency && conversionRate ? targetCurrency : currency}{" "}
+                {targetCurrency && conversionRate
+                  ? convertedBalance?.toFixed(2)
+                  : balance.toFixed(2)}
               </ReactPdf.Text>
             </ReactPdf.View>
           </>
@@ -396,6 +443,21 @@ const invoiceSummary = defineComponent({
       fontWeight: "bold",
       fontSize: "12pt",
     },
+    convertedTotalRow: {
+      borderTop: "0.5pt solid #999",
+      paddingTop: "4pt",
+      marginTop: "4pt",
+    },
+    convertedTotalLabel: {
+      fontWeight: "bold",
+      fontSize: "11pt",
+      fontStyle: "italic",
+    },
+    convertedTotalValue: {
+      fontWeight: "bold",
+      fontSize: "11pt",
+      fontStyle: "italic",
+    },
     balanceRow: {
       borderTop: "1pt solid #000",
       paddingTop: "6pt",
@@ -408,6 +470,11 @@ const invoiceSummary = defineComponent({
     balanceValue: {
       fontWeight: "bold",
       fontSize: "12pt",
+    },
+    convertedBalanceText: {
+      fontSize: "10pt",
+      fontStyle: "italic",
+      color: "#666",
     },
   } as const,
 });
@@ -446,6 +513,8 @@ const invoiceTable = defineComponent({
       .nullish(),
     invoice: z.object({
       currency: z.string().nullish(),
+      targetCurrency: z.string().nullish(),
+      conversionRate: z.number().nullish(),
       paymentMade: z.number().nullish(),
     }),
   }),
@@ -500,6 +569,8 @@ const invoiceTable = defineComponent({
               modifiers={spec.modifiers}
               paymentMade={paymentMade}
               currency={currency}
+              targetCurrency={spec.invoice.targetCurrency}
+              conversionRate={spec.invoice.conversionRate}
               strings={spec.strings}
             />
           </ReactPdf.View>
@@ -603,6 +674,8 @@ export default {
     totalLabel: "Total",
     paymentMade: "Payment Made",
     balanceDue: "Balance Due",
+    exchangeRate: "Exchange Rate",
+    convertedTotal: "Total (Converted)",
   },
   styles: {
     page: {

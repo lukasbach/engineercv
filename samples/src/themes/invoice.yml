@@ -39,6 +39,8 @@ modifiers:
 invoice:
   paymentMade: 200
   currency: USD
+  targetCurrency: EUR
+  conversionRate: 0.85
   date: "{{ date 'YYYY-MM-DD' }}"
   invoiceNumber: "INV-2023-001"
   dueDate: "{{ dateadd (date) 14 'd' 'YYYY-MM-DD' }}"
