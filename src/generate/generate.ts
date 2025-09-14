@@ -10,7 +10,7 @@ import grayMatter from "gray-matter";
 import { fileURLToPath } from "node:url";
 import chalk from "chalk";
 import { generatePdfDocument } from "./generate-pdf-document.js";
-import { logger } from "../cli/logging.js";
+import { logger, logger } from "../cli/logging.js";
 import { merge } from "./deepmerge.js";
 import { resolveSpecsFromConfig } from "./resolve-specs-from-config.js";
 import { globalConfig } from "./global-config.js";
@@ -131,28 +131,38 @@ export const resolveConfigImports = async (
     return { paths: [], config: null };
   }
 
+  const basePaths: string[] = await Promise.all(
+    (config.base || []).map((importPath: string) =>
+      resolveFileName(importPath, configFilePath),
+    ),
+  );
   const importedPaths: string[] = await Promise.all(
     (config.imports || []).map((importPath: string) =>
       resolveFileName(importPath, configFilePath),
     ),
   );
-  const result = (
-    await Promise.all(
-      importedPaths.map(async (importPath) =>
-        resolveConfigImports(
-          await readConfigFile(importPath),
-          importPath,
-          true,
-        ),
-      ),
-    )
-  ).reduce(
+  const baseItems = await Promise.all(
+    basePaths.map(async (basePath) =>
+      resolveConfigImports(await readConfigFile(basePath), basePath, true),
+    ),
+  );
+  const importedItems = await Promise.all(
+    importedPaths.map(async (importPath) =>
+      resolveConfigImports(await readConfigFile(importPath), importPath, true),
+    ),
+  );
+  const result = [
+    ...baseItems,
+    { paths: [configFilePath], config },
+    ...importedItems,
+  ].reduce(
     (acc, { paths, config }) => {
       acc.paths.push(...paths);
       acc.config = advancedDeepmerge(acc.config, config);
       return acc;
     },
-    { paths: [configFilePath], config },
+    // { paths: [configFilePath], config },
+    { paths: [], config: {} },
   );
 
   if (!resolvingImport && !isDefiningOutput(result.config)) {
