@@ -10,7 +10,7 @@ import grayMatter from "gray-matter";
 import { fileURLToPath } from "node:url";
 import chalk from "chalk";
 import { generatePdfDocument } from "./generate-pdf-document.js";
-import { logger, logger } from "../cli/logging.js";
+import { logger } from "../cli/logging.js";
 import { merge } from "./deepmerge.js";
 import { resolveSpecsFromConfig } from "./resolve-specs-from-config.js";
 import { globalConfig } from "./global-config.js";
