@@ -58,7 +58,7 @@
     "eslint": "8",
     "markbase": "^0.0.6",
     "nodemon": "^3.1.10",
-    "publish-fast": "^0.0.20",
+    "publish-fast": "^0.0.22",
     "tsx": "^4.20.3",
     "typescript": "latest",
     "zod2md": "^0.2.4"
