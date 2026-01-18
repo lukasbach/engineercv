@@ -1,0 +1,53 @@
+# yaml-language-server: $schema=https://unpkg.com/engineercv@latest/lib/schema.json
+
+# > Markdown Demo
+# A sample showing various Markdown features in different fields.
+
+basics:
+  name: Markdown Enthusiast
+  email: markdown@example.com
+  url: https://github.com/lukasbach/engineercv
+  summary: |
+    Expert in **rich text** and *styled content*. I love writing code like `const cv = "awesome"`.
+    
+    Here is why I use Markdown:
+    - **Speed**: Type while you write
+    - *Flexibility*: Works everywhere
+    - `Clarity`: Easy to read
+
+output: ../out/{{ source.name }}.pdf
+
+work:
+  - position: "**Lead** *Markdown* Architect"
+    name: Formatting Corp
+    startDate: 2020/01
+    summary: |
+      Managed a team of developers to implement ~~legacy formats~~ modern Markdown solutions.
+      We used `ReactMarkdown` to render components.
+    highlights:
+      - Implemented **bold** and *italics* support
+      - Added support for `inline code blocks`
+      - Fixed ~~bugs~~ features in the rendering engine
+      - |
+        Created structured lists:
+        1. First major milestone
+        2. Second important task
+        3. Final verification
+
+projects:
+  - name: engineercv
+    summary: |
+      A tool for creating **best-practice** engineering resumes.
+      Supported features:
+      - YAML/JSON/MD input
+      - *Custom* themes
+      - **Automatic** PDF generation
+    url: https://github.com/lukasbach/engineercv
+
+education:
+  - institution: University of Markup
+    area: Computer Science
+    studyType: Bachelor
+    summary: |
+      Thesis on *Optimizing Render Performance* of `markdown-to-pdf` converters.
+      Received **Honors** for the project.

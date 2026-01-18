@@ -19,9 +19,19 @@ export const Wrapper = ({
     <View style={style}>
       {typeof children === "string" ? (
         <ReactMarkdown
-          allowedElements={["p", "a"]}
+          allowedElements={[
+            "p",
+            "a",
+            "strong",
+            "em",
+            "code",
+            "del",
+            "ul",
+            "ol",
+            "li",
+          ]}
           components={{
-            p: (props) =>
+            p: (props: any) =>
               paragraphSpacing ? (
                 <View
                   style={[styles.paragraph, { marginBottom: paragraphSpacing }]}
@@ -31,13 +41,33 @@ export const Wrapper = ({
               ) : (
                 <Text style={styles.paragraph}>{props.children}</Text>
               ),
-            a: (props) => {
+            a: (props: any) => {
               return (
                 <Link src={props.href} style={styles.link}>
                   {props.children}
                 </Link>
               );
             },
+            strong: (props: any) => (
+              <Text style={styles.strong}>{props.children}</Text>
+            ),
+            em: (props: any) => <Text style={styles.em}>{props.children}</Text>,
+            code: (props: any) => (
+              <Text style={styles.code}>{props.children}</Text>
+            ),
+            del: (props: any) => (
+              <Text style={styles.del}>{props.children}</Text>
+            ),
+            ul: (props: any) => <View style={styles.ul}>{props.children}</View>,
+            ol: (props: any) => <View style={styles.ol}>{props.children}</View>,
+            li: (props: any) => (
+              <View style={styles.li}>
+                <Text style={styles.liBullet}>
+                  {props.ordered ? `${(props.index ?? 0) + 1}. ` : "• "}
+                </Text>
+                <View style={styles.liContent}>{props.children}</View>
+              </View>
+            ),
           }}
         >
           {children}
@@ -85,5 +115,14 @@ export const markdownComponent = defineComponent({
   defaultStyles: {
     link: { color: "black", textDecoration: "none" },
     paragraph: {},
+    strong: { fontWeight: "bold" },
+    em: { fontStyle: "italic" },
+    code: { fontFamily: "Courier" },
+    del: { textDecoration: "line-through" },
+    ul: { marginLeft: 10 },
+    ol: { marginLeft: 10 },
+    li: { flexDirection: "row" },
+    liBullet: { width: 10 },
+    liContent: { flex: 1 },
   } as const,
 });
