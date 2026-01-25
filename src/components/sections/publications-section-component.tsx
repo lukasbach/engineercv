@@ -9,6 +9,11 @@ import { workSectionComponent } from "./work-section-component.js";
 import { detailsListComponent } from "../atoms/details-list-component.js";
 
 export const publicationsSectionSchema = z.object({
+  config: z
+    .object({
+      wrap: z.object({ publications: z.boolean().nullish() }).nullish(),
+    })
+    .nullish(),
   strings: z
     .object({
       publications: z.string().default(""),
@@ -37,7 +42,10 @@ export const publicationsSectionComponent = defineComponent({
     const DetailsItem = getComponent(detailsItemComponent);
     if (!spec.publications) return null;
     return (
-      <View style={styles.container}>
+      <View
+        style={styles.container}
+        wrap={spec.config?.wrap?.publications ?? true}
+      >
         <SectionHeader style={styles.header}>
           {spec.strings?.publications}
         </SectionHeader>

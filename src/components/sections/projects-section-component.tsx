@@ -11,6 +11,11 @@ import { urlComponent } from "../atoms/url.js";
 import { detailsListComponent } from "../atoms/details-list-component.js";
 
 export const projectsSectionSchema = z.object({
+  config: z
+    .object({
+      wrap: z.object({ projects: z.boolean().nullish() }).nullish(),
+    })
+    .nullish(),
   strings: z
     .object({
       projects: z.string().default(""),
@@ -43,7 +48,7 @@ export const projectsSectionComponent = defineComponent({
     const Url = getComponent(urlComponent);
     if (!spec.projects) return null;
     return (
-      <View style={styles.container}>
+      <View style={styles.container} wrap={spec.config?.wrap?.projects ?? true}>
         <SectionHeader style={styles.header}>
           {spec.strings?.projects}
         </SectionHeader>

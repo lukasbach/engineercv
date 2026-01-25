@@ -8,6 +8,11 @@ import { workSectionComponent } from "./work-section-component.js";
 import { detailsListComponent } from "../atoms/details-list-component.js";
 
 export const referencesSectionSchema = z.object({
+  config: z
+    .object({
+      wrap: z.object({ references: z.boolean().nullish() }).nullish(),
+    })
+    .nullish(),
   strings: z
     .object({
       references: z.string().default(""),
@@ -33,7 +38,10 @@ export const referencesSectionComponent = defineComponent({
     const DetailsItem = getComponent(detailsItemComponent);
     if (!spec.references) return null;
     return (
-      <View style={styles.container}>
+      <View
+        style={styles.container}
+        wrap={spec.config?.wrap?.references ?? true}
+      >
         <SectionHeader style={styles.header}>
           {spec.strings?.references}
         </SectionHeader>

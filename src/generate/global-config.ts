@@ -3,6 +3,20 @@ export const globalConfig = {
   config: {
     size: "A4",
     usePageNumbers: undefined,
+    wrap: {
+      work: true,
+      education: true,
+      volunteer: true,
+      projects: true,
+      skills: true,
+      awards: true,
+      certificates: true,
+      publications: true,
+      languages: true,
+      interests: true,
+      references: true,
+      basics: true,
+    },
   },
   strings: {
     work: "Experience",

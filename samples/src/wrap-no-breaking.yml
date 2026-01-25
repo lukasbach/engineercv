@@ -1,0 +1,121 @@
+# yaml-language-server: $schema=https://unpkg.com/engineercv@latest/lib/schema.json
+
+# > Wrap Enabled
+# This sample shows a section WITH wrap enabled (default behavior).
+# The section CAN break across pages if it doesn't fit.
+
+basics:
+  name: Alex Johnson
+  email: alex.johnson@mail.com
+  phone: +1 (555) 987-6543
+  profiles:
+    - network: GitHub
+      username: alexjohnson
+      url: https://github.com/alexjohnson
+    - network: LinkedIn
+      username: alexjohnson
+      url: https://linkedin.com/in/alexjohnson
+  summary: |
+    Full-stack developer with expertise in modern web technologies.
+    Passionate about creating user-friendly applications.
+    
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
+    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
+    irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia 
+    deserunt mollit anim id est laborum.
+    
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
+    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
+    irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia 
+    deserunt mollit anim id est laborum.
+    
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
+    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
+    irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia 
+    deserunt mollit anim id est laborum.
+    
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
+    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
+    irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia 
+    deserunt mollit anim id est laborum.
+    
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
+    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
+    irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia 
+    deserunt mollit anim id est laborum.
+    
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
+    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
+    irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia 
+    deserunt mollit anim id est laborum.
+    
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
+    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
+    irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia 
+    deserunt mollit anim id est laborum.
+    
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
+    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
+    irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia 
+    deserunt mollit anim id est laborum.
+
+# Skills section will wrap normally (can break across pages)
+config:
+  wrap:
+    skills: true  # This is the default, explicitly set here for demonstration
+
+output: ../out/{{ source.name }}.pdf
+
+skills:
+  - name: Frontend
+    keywords:
+      - React
+  - name: Backend
+    keywords:
+      - Node.js
+  - name: DevOps
+    keywords:
+      - Docker
+  - name: Frontend
+    keywords:
+      - React
+  - name: Backend
+    keywords:
+      - Node.js
+  - name: DevOps
+    keywords:
+      - Docker
+  - name: Frontend
+    keywords:
+      - React
+  - name: Backend
+    keywords:
+      - Node.js
+  - name: DevOps
+    keywords:
+      - Docker
+  - name: Frontend
+    keywords:
+      - React
+  - name: Backend
+    keywords:
+      - Node.js
+  - name: DevOps
+    keywords:
+      - Docker

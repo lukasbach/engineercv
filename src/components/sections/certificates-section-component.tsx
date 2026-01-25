@@ -8,6 +8,11 @@ import { workSectionComponent } from "./work-section-component.js";
 import { detailsListComponent } from "../atoms/details-list-component.js";
 
 export const certificatesSectionSchema = z.object({
+  config: z
+    .object({
+      wrap: z.object({ certificates: z.boolean().nullish() }).nullish(),
+    })
+    .nullish(),
   strings: z
     .object({
       certificates: z.string().default(""),
@@ -35,7 +40,10 @@ export const certificatesSectionComponent = defineComponent({
     const DetailsList = getComponent(detailsListComponent);
     if (!spec.certificates) return null;
     return (
-      <View style={styles.container}>
+      <View
+        style={styles.container}
+        wrap={spec.config?.wrap?.certificates ?? true}
+      >
         <SectionHeader style={styles.header}>
           {spec.strings?.certificates}
         </SectionHeader>

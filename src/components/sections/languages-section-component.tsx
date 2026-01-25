@@ -6,6 +6,11 @@ import { sectionHeaderComponent } from "../atoms/section-header-component.js";
 import { skillsSectionComponent } from "./skill-section-component.js";
 
 export const languagesSectionSchema = z.object({
+  config: z
+    .object({
+      wrap: z.object({ languages: z.boolean().nullish() }).nullish(),
+    })
+    .nullish(),
   strings: z
     .object({
       languages: z.string().default(""),
@@ -29,7 +34,10 @@ export const languagesSectionComponent = defineComponent({
     const SectionHeader = getComponent(sectionHeaderComponent);
     if (!spec.languages) return null;
     return (
-      <View wrap={false} style={styles.container}>
+      <View
+        wrap={spec.config?.wrap?.languages ?? true}
+        style={styles.container}
+      >
         <SectionHeader style={styles.header}>
           {spec.strings?.languages}
         </SectionHeader>

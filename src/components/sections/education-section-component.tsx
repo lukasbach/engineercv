@@ -10,6 +10,11 @@ import { joinComponents } from "../utils.js";
 import { detailsListComponent } from "../atoms/details-list-component.js";
 
 export const educationSectionSchema = z.object({
+  config: z
+    .object({
+      wrap: z.object({ education: z.boolean().nullish() }).nullish(),
+    })
+    .nullish(),
   strings: z
     .object({
       education: z.string().default(""),
@@ -46,7 +51,10 @@ export const educationSectionComponent = defineComponent({
     if (!spec.education) return null;
 
     return (
-      <View style={styles.container}>
+      <View
+        style={styles.container}
+        wrap={spec.config?.wrap?.education ?? true}
+      >
         <SectionHeader style={styles.header}>
           {spec.strings?.education}
         </SectionHeader>

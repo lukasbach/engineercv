@@ -9,6 +9,11 @@ import { joinComponents } from "../utils.js";
 import { detailsListComponent } from "../atoms/details-list-component.js";
 
 export const workSectionSchema = z.object({
+  config: z
+    .object({
+      wrap: z.object({ work: z.boolean().nullish() }).nullish(),
+    })
+    .nullish(),
   strings: z
     .object({
       work: z.string().default(""),
@@ -42,7 +47,7 @@ export const workSectionComponent = defineComponent({
     const DetailsList = getComponent(detailsListComponent);
     const DateRange = getComponent(dateRangeComponent);
     return (
-      <View style={styles.container}>
+      <View style={styles.container} wrap={spec.config?.wrap?.work ?? true}>
         <SectionHeader style={styles.header}>
           {spec.strings?.work}
         </SectionHeader>

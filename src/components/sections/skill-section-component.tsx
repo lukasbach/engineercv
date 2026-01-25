@@ -6,6 +6,11 @@ import { sectionHeaderComponent } from "../atoms/section-header-component.js";
 import { joinComponents } from "../utils.js";
 
 export const skillsSectionSchema = z.object({
+  config: z
+    .object({
+      wrap: z.object({ skills: z.boolean().nullish() }).nullish(),
+    })
+    .nullish(),
   strings: z
     .object({
       skills: z.string().default(""),
@@ -30,7 +35,7 @@ export const skillsSectionComponent = defineComponent({
     const SectionHeader = getComponent(sectionHeaderComponent);
     if (!spec.skills) return null;
     return (
-      <View wrap={false} style={styles.container}>
+      <View wrap={spec.config?.wrap?.skills ?? true} style={styles.container}>
         <SectionHeader style={styles.header}>
           {spec.strings?.skills}
         </SectionHeader>

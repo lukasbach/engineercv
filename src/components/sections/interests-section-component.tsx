@@ -7,6 +7,11 @@ import { joinComponents } from "../utils.js";
 import { skillsSectionComponent } from "./skill-section-component.js";
 
 export const interestsSectionSchema = z.object({
+  config: z
+    .object({
+      wrap: z.object({ interests: z.boolean().nullish() }).nullish(),
+    })
+    .nullish(),
   strings: z
     .object({
       interests: z.string().default(""),
@@ -30,7 +35,10 @@ export const interestsSectionComponent = defineComponent({
     const SectionHeader = getComponent(sectionHeaderComponent);
     if (!spec.interests) return null;
     return (
-      <View wrap={false} style={styles.container}>
+      <View
+        wrap={spec.config?.wrap?.interests ?? true}
+        style={styles.container}
+      >
         <SectionHeader style={styles.header}>
           {spec.strings?.interests}
         </SectionHeader>

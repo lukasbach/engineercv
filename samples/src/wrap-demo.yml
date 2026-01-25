@@ -1,0 +1,115 @@
+# yaml-language-server: $schema=https://unpkg.com/engineercv@latest/lib/schema.json
+
+# > Wrap Demo
+# This sample demonstrates how to control section wrapping behavior.
+# When wrap is set to false for a section, that section won't break across pages.
+
+basics:
+  name: Jane Smith
+  email: jane.smith@example.com
+  phone: +1 (555) 123-4567
+  url: https://janesmith.dev
+  summary: |
+    Full-stack developer with expertise in modern web technologies.
+    Passionate about creating user-friendly applications.
+    
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
+    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
+    irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia 
+    deserunt mollit anim id est laborum.
+    
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
+    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
+    irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia 
+    deserunt mollit anim id est laborum.
+    
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
+    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
+    irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia 
+    deserunt mollit anim id est laborum.
+    
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
+    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
+    irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia 
+    deserunt mollit anim id est laborum.
+    
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
+    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
+    irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia 
+    deserunt mollit anim id est laborum.
+    
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
+    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
+    irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia 
+    deserunt mollit anim id est laborum.
+    
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
+    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
+    irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia 
+    deserunt mollit anim id est laborum.
+    
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
+    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
+    irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia 
+    deserunt mollit anim id est laborum.
+
+# Configure wrap behavior - skills section will NOT break across pages
+config:
+  wrap:
+    skills: false
+
+output: ../out/{{ source.name }}.pdf
+
+skills:
+  - name: Frontend
+    keywords:
+      - React
+  - name: Backend
+    keywords:
+      - Node.js
+  - name: DevOps
+    keywords:
+      - Docker
+  - name: Frontend
+    keywords:
+      - React
+  - name: Backend
+    keywords:
+      - Node.js
+  - name: DevOps
+    keywords:
+      - Docker
+  - name: Frontend
+    keywords:
+      - React
+  - name: Backend
+    keywords:
+      - Node.js
+  - name: DevOps
+    keywords:
+      - Docker
+  - name: Frontend
+    keywords:
+      - React
+  - name: Backend
+    keywords:
+      - Node.js
+  - name: DevOps
+    keywords:
+      - Docker

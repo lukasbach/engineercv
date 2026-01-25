@@ -12,6 +12,11 @@ export const iconConfig = z.object({
 });
 
 export const basicsSectionSchema = z.object({
+  config: z
+    .object({
+      wrap: z.object({ basics: z.boolean().nullish() }).nullish(),
+    })
+    .nullish(),
   basics: z.object({
     name: z.string(),
     label: z.string().nullish(),
@@ -56,7 +61,7 @@ export const basicsSectionComponent = defineComponent({
     } as typeof basicsItemsComponent);
 
     return (
-      <View style={styles.container}>
+      <View style={styles.container} wrap={spec.config?.wrap?.basics ?? true}>
         <Markdown style={styles.name}>{spec.basics.name}</Markdown>
         <View style={styles.itemContainer}>
           <BasicsItems
